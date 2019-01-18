@@ -21,6 +21,7 @@ In python, there are many ways in python to read in information from a text file
 outfile = open("ethanol.out","r")
 data=outfile.readlines()
 ```
+{: .language-python}
 This code opens a file for reading (that's the `r` part in the `open` function), assigns it to the filehandle outfile and then uses the `readlines()` function.  Notice the dot notation introduced last lesson; readlines acts on the filehandle given right before the dot.  The function creates a list called data where each element of the list is a string that is one line of the file.  This is always how the `readlines()` function works.  
 
 Exercise: Check that your file was read in correctly by determining how many lines are in the file.
@@ -34,9 +35,12 @@ for line in data:
         energy_line = line
         print(energy_line)
 ```
+{: .language-python}
+
 ```
-      @DF-RHF Final Energy:  -154.09130176573018
+@DF-RHF Final Energy:  -154.09130176573018
 ```
+{: .output}
 
 Remember that `readlines()` saves each line of the file as a string, so `energy_line` is a string that contains the whole line.  For our analysis, if we are most interested in the energy, we need to split up the line so we can save just the number as a different variable name. To do this, we use a new function called `split`.  The `split` function takes a string and divides it into its components, which can then be saved as a new list.  If you don't put anything in the parenthesis, it splits based on whitespace.  In the example below, we take the line we found in the `for` loop and split it up into its individual words.
 
@@ -44,24 +48,33 @@ Remember that `readlines()` saves each line of the file as a string, so `energy_
 words = energy_line.split()
 print(words)
 ```
+{: .language-python}
+
 ```
 ['@DF-RHF', 'Final', 'Energy:', '-154.09130176573018']
 ```
+{: .output}
 
 From this `print` statement, we now see that we have a list called words, where we have split `energy_line`.  The energy is actually the fourth element of this list, so we can now save it as a new variable.
 
 ```
 energy = words[3]
 print(energy)
+```
+{: .language-python}
 
+```
 -154.09130176573018
 ```
+{: .output}
+
 If we now try to do a math operation on energy, we get an error message?  Why do you think that is?
 
 
 ```
 energy + 50
 ```
+{: .language-python}
 ```
 TypeError                                 Traceback (most recent call last)
 <ipython-input-52-7bda8dd3f95d> in <module>()
@@ -69,16 +82,23 @@ TypeError                                 Traceback (most recent call last)
 
 TypeError: must be str, not int
 ```
+{: .output}
 Even though `energy` looks like a number to us, it is really a string, so we can not add an integer to it.  We need to change the data type of energy to a float.
+
+Even though `energy` looks like a number to us, it is really a string, so we can not add an integer to it.  We need to change the data type of energy.
 
 ```
 energy = float(energy)
 ```
+{: .language-python}
+
 Now it will work.  If we thought ahead we could have changed the data type when we assigned the variable originally.
 
 ```
 energy = float(words[3])
 ```
+{: .language-python}
+
 ## Exercise on File parsing (should we move this to the end?)
 Use the provided sapt.out file.  In this output file, the program calculates the interaction energy for an ethene-ethyne complex.  The output reports four interaction energy components: electrostatics, induction, exchange, and dispersion.  Parse each of these energies, in kcal/mole, from the output file.  (Hint: study the file in a text editor to help you decide what to search for.) Calculate the total interaction energy by adding the four components together.  Your code's output should look something like this:
 ```
@@ -122,6 +142,7 @@ for line in important_lines:
 total_energy=energies[0]+energies[1]+energies[2]+energies[3]
 print('Total Energy', ':', total_energy, 'kcal/mole')
 ```
+{: .languate-python}
 There is a lot of other information in the output file we might be interested in.  For example, We might want to pull out the initial coordinates for the molecule.  If we look through the file in a text editor, we notice that the coordinates begin with a line that says
 
 Center              X                  Y                   Z               Mass
