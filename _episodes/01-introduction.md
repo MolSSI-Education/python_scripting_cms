@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-teaching: ??
+teaching: 20
 exercises: ??
 questions:
 - "What is the basic syntax of the python programming language?"
