@@ -18,7 +18,7 @@ keypoints:
 Python is a computer programming language that has become ubiquitous in scientific programming.  Our initial lessons will run python *interactively* through a python interpreter.  The Startup page should have provided information
 on how to start a python interpreter.  Everything included in a code block is something you could type into your python interpreter and evaluate.
 
-## Assigning variables
+## Assigning variables and data types
 
 Any python interpreter can work just like a calculator.  This is not very useful.
 
@@ -68,20 +68,27 @@ print(deltaG)
 ```
 {: .output}
 
-Each variable is some particular type of data.  The most common types of data are strings (`str`), integers (`int`), and floating point numbers (`float`).  In the code block below `label` is a string and `DeltaG` is a float.  You can identify the data type of any variable with the function `type(variable_name)`.  This code block also demonstrates how to print multiple variables.  
+Each variable is some particular type of data.  The most common types of data are strings (`str`), integers (`int`), and floating point numbers (`float`).  You can identify the data type of any variable with the function `type(variable_name)`.
 ```
-label = 'Delta G'    #this is a string
-print(label, ':', deltaG)
+type(deltaG)
 ```
-{: .language-python}
-
+{: .language.python}
 ```
-Delta G : -3640.7000000000003
+float
 ```
 {: .output}
+You can change the data type of a variable like this.  This is called casting.
+```
+deltaG = str(deltaG)
+type(deltaG)
+```
+{: .language-python}
+```
+str
+```
 
 ## Lists and Slices
-Another common data structure in python is the list.  Lists can be used to group several values or variables together, and are declared using square brackets [ ]. List values are separated by commas. Python has several built in functions which can be used on lists. The built-in function `len` can be used to determine the length of a list.
+Another common data structure in python is the list.  Lists can be used to group several values or variables together, and are declared using square brackets [ ]. List values are separated by commas. Python has several built in functions which can be used on lists. The built-in function `len` can be used to determine the length of a list. This code block also demonstrates how to print multiple variables.
 ```
 #This is a list; I can determine it's length
 energy_kcal = [-13.4, -2.7, 5.4, 42.1]
