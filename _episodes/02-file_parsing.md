@@ -18,7 +18,7 @@ keypoints:
 ## Reading in a file
 One of the most common tasks in research is analyzing data.  Many computational chemistry programs output text files that include a large amount of information including text and data that you need to analyze.  Often, you need to sort through the output file and identify particular pieces of information that are most important to you.  In general, this is called file parsing.
 
-In python, there are many ways in python to read in information from a text file.  The best method to use depends on the type of data and the type of analysis you are performing.  If you have a file with lots of different types of information, text and numbers, with different types of formatting, the most generic way to read in information is the `readlines()` function.  Before you can read in a file, you have to open it and give it a *filehandle*.
+In python, there are many ways in python to read in information from a text file.  The best method to use depends on the type of data and the type of analysis you are performing.  If you have a file with lots of different types of information, text and numbers, with different types of formatting, the most generic way to read in information is the `readlines()` function.  Before you can read in a file, you have to open it and give it a *filehandle*.  The file we will be analyzing in this example is a [PSI4](http://www.psicode.org) output file for a SCF/cc-pVDZ energy calculation for an ethanol molecule.
 
 ```
 outfile = open("ethanol.out","r")
@@ -96,7 +96,7 @@ TypeError                                 Traceback (most recent call last)
 TypeError: must be str, not int
 ```
 {: .error}
-Even though `energy` looks like a number to us, it is really a string, so we can not add an integer to it.  We need to change the data type of energy to a float.
+Even though `energy` looks like a number to us, it is really a string, so we can not add an integer to it.  We need to change the data type of energy to a float. This is called *casting*.
 
 ```
 energy = float(energy)
