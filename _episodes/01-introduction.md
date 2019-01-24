@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
 teaching: 20
-exercises: ??
+exercises: 10
 questions:
 - "What is the basic syntax of the python programming language?"
 objectives:
@@ -11,8 +11,8 @@ objectives:
 - "Use a for loop to perform the same action on the items in a list."
 - "Use the append function to create new lists in for loops."
 keypoints:
-- "You can assign multiple assignment to assign several variables at once."
-- "Indentation is very important in `for` loops.  Don't forget the : and to indent the items in the loop."
+- "You can assign the values of several variables at once."
+- "Indentation is very important in `for` loops and `if` statements.  Don't forget the `:` and to indent the items in the loop."
 ---
 ## Getting Started
 Python is a computer programming language that has become ubiquitous in scientific programming.  Our initial lessons will run python *interactively* through a python interpreter.  The Startup page should have provided information
@@ -78,7 +78,8 @@ Delta G : -3640.7000000000003
 ```
 {: .output}
 
-Another common data structure in python is the list.  Python has a built-in function `len` to determine the length of a list.
+## Lists and Slices
+Another common data structure in python is the list.  Lists can be used to group several values or variables together, and are declared using square brackets [ ]. List values are separated by commas. Python has several built in functions which can be used on lists. The built-in function `len` can be used to determine the length of a list.
 ```
 #This is a list; I can determine it's length
 energy_kcal = [-13.4, -2.7, 5.4, 42.1]
@@ -104,16 +105,61 @@ print(energy_kcal[1])
 ```
 {: .output}
 
+You can use an element of a list as a variable in a calculation.  
 ```
-energy_kcal[1] = -2.9
-print(energy_kcal)
+energy_kilojoules = energy_kcal[1]*4.184
+print(energy_kilojoules)
 ```
 {: .language-python}
 
 ```
-[-13.4, -2.9, 5.4, 42.1]
+-11.296800000000001
 ```
 {: .output}
+
+Sometimes you will want to make a new list that is a subset of an existing list.  For example, we might want to make a new list that is just the first few elements of our previous list.  This is called a `slice`.  The general syntax is
+```
+new_list = list_name[start:end]
+```
+{: .language-python}
+
+When taking a slice, it is very important to remember how counting works in python.  Remember that counting starts at zero so the first element of a list is `list_name[0]`.  When you specify the last element for the slice, it goes *up to but not including* that element of the list.  So a slice like
+```
+short_list = energy_kcal[0:2]
+```
+{: .language-python}
+includes energy_kcal[0] and energy_kcal[1] but *not* energy_kcal[2].
+```
+print(short_list)
+```
+{: .language-python}
+```
+[-13.4, -2.7]
+```
+{: .output}
+
+If you do not include a start index, the slice automatically starts at `list_name[0]`.  If you do not include an end index, the slice automatically goes to the end of the list.  
+
+> ## Check your Understanding
+>
+> What does the following code print?
+> ~~~
+> slice1 = energy_kcal[1:]
+> slice2 = energy_kcal[:3]
+> print('slice1 is', slice1)
+> print('slice2 is', slice2)
+> ~~~
+> {: .language-python}
+>
+>> ## Answer
+>>
+>> ~~~
+>> slice1 is [-2.7, 5.4, 42.1]
+>> slice2 is [-13.4, -2.7, 5.4]
+>> ~~~
+>> {: .output}
+> {: .solution}
+{: .challenge}
 
 ## For loops
 Often, you will want to do something to every element of a list.  The structure
@@ -134,7 +180,7 @@ for number in energy_kcal:
 
 ```
 -56.0656
--12.1336
+-11.296800000000001
 22.593600000000002
 176.1464
 ```
@@ -155,6 +201,19 @@ for number in energy_kcal:
 print(energy_kJ)
 ```
 {: .language-python}
+```
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-12-595146886489> in <module>()
+      2 for number in energy_kcal:
+      3     kJ = number*4.184
+----> 4     energy_kJ.append(kJ)
+      5
+      6 print(energy_kJ)
+
+NameError: name 'energy_kJ' is not defined
+```
+{: .error}
 
 This code doesn't work because on the first iteration of our loop, the list `energy_kJ` doesn't exist.  To make it work, we have to start the list outside of the loop.  The list can be blank when we start it, but we have to start it.
 
@@ -174,10 +233,10 @@ print(energy_kJ)
 {: .output}
 
 ## A note about jupyter notebooks
-If you use the jupyter notebook for your python interpreter, the notebook only executes the current code block.  If you change a value and then go back and run an earlier code block, it will use the new value, which may give you incorrect analysis.  Similarly, if you open your jupyter notebook later, and try to run a code block in the middle, it may tell you that your variables are undefined, even though you can clearly see them defined in earlier code blocks.  But if you didn't re-run those code blocks, then python doesn't know they exist.  
+If you use the jupyter notebook for your python interpreter, the notebook only executes the current code block.  This can have several unintended consequences. If you change a value and then go back and run an earlier code block, it will use the new value, not the first defined value, which may give you incorrect analysis.  Similarly, if you open your jupyter notebook later, and try to run a code block in the middle, it may tell you that your variables are undefined, even though you can clearly see them defined in earlier code blocks.  But if you didn't re-run those code blocks, then python doesn't know they exist.  
 
-Add some exercises here.  
+## Check Your Understanding
 
-
+Insert some kind of activity here.
 
 {% include links.md %}
