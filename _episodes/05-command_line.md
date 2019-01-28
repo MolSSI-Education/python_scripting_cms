@@ -1,7 +1,7 @@
 ---
 title: "Running code from the Linux Command Line"
-teaching: 10
-exercises: 5
+teaching: 15
+exercises: 10
 questions:
 - "How do I move my code from the interactive jupyter notebook to run from the Linux command line?"
 objectives:
@@ -40,7 +40,7 @@ Now that you have imported the `sys` library, you can use its functions.  The li
 ```
 filename = sys.argv[1]
 ```
-Then you need to go the part of your code where you read in the data from the xyz file and change the name of the input file to `filename`.  
+Then you need to go the part of your code where you read in the data from the xyz file and change the name of the file to read to `filename`.  
 
 Save your code and go back to the Terminal window.  Make sure you are in the directory where your code is saved and type
 ```
@@ -60,6 +60,26 @@ Check that the output of your code is what you expected.
 > {: .solution}
 {: .challenge}
 
-We could add more here, like creating defaults if the user doesn't enter in an output file name or throwing an error message if they don't enter an xyz file name.
+What would happen if the user forgot to specify the name of the output file to write the bond lengths?  The way the code is written now, it would give an error message.
+```
+Traceback (most recent call last):
+  File "geom_analysis.py", line 5, in <module>
+    output_file = sys.argv[2]
+IndexError: list index out of range
+```
+{: .error}
+It would be better to print an error message and let the user know that they didn't enter the input correctly.  Our code is expecting exactly three inputs: the script name, the xyz file name, and the output file name.  The easiest way to add an error message is to check the length of the sys.argv list and print an error message if it does not equal the expected length.  
+```
+import sys
+import numpy
+
+if len(sys.argv) != 3:
+        print('Incorrect number of inputs! Please try again.')
+        exit()
+filename = sys.argv[1]
+output_file = sys.argv[2]
+xyz_file = numpy.genfromtxt(fname=filename, skip_header=2, dtype='unicode')
+```
+{: .language-python}
 
 {% include links.md %}
