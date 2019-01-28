@@ -3,6 +3,11 @@ layout: page
 title: "Licenses"
 root: .
 ---
+*The Molecular Sciences Software Institute educational tutorials build on the
+work of [Software Carpentry]({{site.swc_site}}) and [Data
+Carpentry]({{site.dc_site}}). It uses the same license as these projects. This
+can be found below.*
+
 ## Instructional Material
 
 All Software Carpentry, Data Carpentry, and Library Carpentry instructional material is
