@@ -1,3 +1,8 @@
+*The Molecular Sciences Software Institute educational tutorials build on the
+work of [Software Carpentry]({{site.swc_site}}) and [Data
+Carpentry]({{site.dc_site}}). It uses the same contributing process as these
+projects. This can be found below.*
+
 # Contributing
 
 [The Carpentries][c-site] ([Software Carpentry][swc-site], [Data Carpentry][dc-site], and [Library Carpentry][lc-site]) are open source projects,
@@ -73,7 +78,7 @@ and submitting [bug reports][issues]
 about things that don't work, aren't clear, or are missing.
 If you are looking for ideas, please see the 'Issues' tab for
 a list of issues associated with this repository,
-or you may also look at the issues for [Data Carpentry][dc-issues], 
+or you may also look at the issues for [Data Carpentry][dc-issues],
 [Software Carpentry][swc-issues], and [Library Carpentry][lc-issues] projects.
 
 Comments on issues and reviews of pull requests are just as welcome:
