@@ -1,6 +1,6 @@
 ---
 title: "Processing Multiple Files and Writing Files"
-teaching: 20
+teaching: 25
 exercises: 10
 questions:
 - "How do I analyze multiple files at once?"
@@ -19,18 +19,31 @@ keypoints:
 
 In our previous lesson, we parsed values from output files.  While you might have seen the utility of doing such a thing, you might have also wondered why we didn't just search the file and cut and paste the values we wanted into a spreadsheet.  If you only have 1 or 2 files, this might be a very reasonable thing to do.  But what if you had 100 files to analyze?  What if you had 1000?  In such a case the cutting and pasting method would be very tedious and time consuming.  
 
-One of the real powers of writing a program to analyze your data is that you can just as easily analyze 100 files as 1 file.  In this example, we are going to parse the output files for a whole series of aliphatic alcohol compounds and parse the energy value for each one.  The output files are all saved in a folder called outfiles that you should have donwloaded in the setup for this lesson.  Make sure the folder is in the same directory as the directory where you are writing and executing your code.
+One of the real powers of writing a program to analyze your data is that you can just as easily analyze 100 files as 1 file.  In this example, we are going to parse the output files for a whole series of aliphatic alcohol compounds and parse the energy value for each one.  The output files are all saved in a folder called outfiles that you should have downloaded in the setup for this lesson.  Make sure the folder is in the same directory as the directory where you are writing and executing your code.
 
 To analyze multiple files, we will need to import a python **library**.  A **library** is a set of functions that have some purpose.  We will be using the `glob` library, which will help us read in multiple files from our computer.  Within a library there are **functions** which do a specific computational task.  Usually a function has some type of input and gives a particular output.  To use a function that is in a library, you often use the dot notation introduced in the previous lesson.  In general
 ```
 import library_name
 output = library_name.funtion_name(input)
 ```
-We are going to use a function called `glob` in the library called `glob`.  It is a little confusing since the function and the library have the same name, but we will see other examples where this is not the case later.  The output of the function `glob` is a list of all the filenames that fit the pattern specified in the input.  In the input, we need to specific what files we want `glob` to find.  The * is often called the wildcard and matches any character.
+{: .language-python}
 
+We are going to import two libraries.  One is the `os` library which controls functions related to the operating system of your computer.  The other is the `glob` library which contains functions to help us analyze multiple files.  If we are going to analyze multiple files, we first need to specify where those files are located.
+```
+file_location = os.path.join('outfiles', '*.out')
+print(file_location)
+```
+{: .language-python}
+```
+outfiles/*.out
+```
+{: .output}
+This specifies that we want to look for all the files in a directory called `outfiles` that end in ".out".  The * is the wildcard character which matches any character.  
+
+Next we are going to use a function called `glob` in the library called `glob`.  It is a little confusing since the function and the library have the same name, but we will see other examples where this is not the case later.  The output of the function `glob` is a list of all the filenames that fit the pattern specified in the input.   The input is the file location.
 ```
 import glob
-filenames = glob.glob('outfiles/*.out')
+filenames = glob.glob(file_location)
 print(filenames)
 ```
 {: .language-python}
@@ -39,7 +52,7 @@ print(filenames)
 ```
 {: .output}
 
-This code imports the library `glob` and then uses the function called glob within that library.  The input for the glob function is the list of files we want to match.  In this case, we want to match all the files in the folder `outfiles` that have the file extension .out.  We save the output of the function to a variable called `filenames`.
+You may wonder why using the `os` library was necessary considering that all it did was specifcy the filepath.  The problem with typing in the filepath is that different operating systems use different notations and we want our code to work on any computer.  
 
 Now if we want to parse every file we just read in, we will use a `for` loop to go through each file.
 ```
