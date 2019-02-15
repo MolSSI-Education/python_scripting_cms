@@ -18,7 +18,7 @@ keypoints:
 Python is a computer programming language that has become ubiquitous in scientific programming.  Our initial lessons will run python *interactively* through a python interpreter.  The Startup page should have provided information
 on how to start a python interpreter.  Everything included in a code block is something you could type into your python interpreter and evaluate.
 
-## Assigning variables
+## Assigning variables and data types
 
 Any python interpreter can work just like a calculator.  This is not very useful.
 
@@ -47,7 +47,9 @@ print(deltaG)
 ```
 {: .output}
 
-Notice several things about this code.  The lines that begin with `#` are comment lines.  The computer does not do anything with these comments.  They have been used here to remind the user what units each of their values are in. Comments are also often used to explain what the code is doing, or leave information for future people who might use the code.
+Notice several things about this code.  The lines that begin with `#` are comment lines.  The computer does not do anything with these comments.  They have been used here to remind the user what units each of their values are in. Comments are also often used to explain what the code is doing, or leave information for future people who might use the code.  
+
+When choosing variable names, you should choose informative names so that someone reading your code can tell what they represent.  Naming a variable temp or temperature is much more informative than naming that variable t.
 
 In the previous code block, we also introduced the `print()` function.  Often, we will use the print function just to make sure our code is working correctly.
 
@@ -66,20 +68,27 @@ print(deltaG)
 ```
 {: .output}
 
-Each variable is some particular type of data.  The most common types of data are strings, integers, and floats or floating point numbers.  In the code block below `label` is a string and `DeltaG` is a float.  It also shows how you can print more than one thing.
+Each variable is some particular type of data.  The most common types of data are strings (`str`), integers (`int`), and floating point numbers (`float`).  You can identify the data type of any variable with the function `type(variable_name)`.
 ```
-label = 'Delta G'    #this is a string
-print(label, ':', deltaG)
+type(deltaG)
 ```
-{: .language-python}
-
+{: .language.python}
 ```
-Delta G : -3640.7000000000003
+float
 ```
 {: .output}
+You can change the data type of a variable like this.  This is called casting.
+```
+deltaG = str(deltaG)
+type(deltaG)
+```
+{: .language-python}
+```
+str
+```
 
 ## Lists and Slices
-Another common data structure in python is the list.  Lists can be used to group several values or variables together, and are declared using square brackets [ ]. List values are separated by commas. Python has several built in functions which can be used on lists. The built-in function `len` can be used to determine the length of a list.
+Another common data structure in python is the list.  Lists can be used to group several values or variables together, and are declared using square brackets [ ]. List values are separated by commas. Python has several built in functions which can be used on lists. The built-in function `len` can be used to determine the length of a list. This code block also demonstrates how to print multiple variables.
 ```
 #This is a list; I can determine it's length
 energy_kcal = [-13.4, -2.7, 5.4, 42.1]
@@ -161,7 +170,7 @@ If you do not include a start index, the slice automatically starts at `list_nam
 > {: .solution}
 {: .challenge}
 
-## For loops
+## Repeating an operation many times: for loops
 Often, you will want to do something to every element of a list.  The structure
 to do this is called a `for` loop.  The general structure of a `for` loop is
 ```
@@ -232,11 +241,53 @@ print(energy_kJ)
 ```
 {: .output}
 
+## Making choices: logic Statements
+Within your code, you may need to evaluate a variable and then do something if the variable has a particular value.  This type of logic is handled by an `if` statement.  In the following example, we only append the negative numbers to a new list.  
+```
+negative_numbers = []
+for number in energy_kJ:
+    if number<0:
+        negative_numbers.append(number)
+
+print(negative_numbers)
+```
+{: .language-python}
+```
+[-56.0656, -11.296800000000001]
+```
+{: .output}
+Other logic operations include
+- equal to `==`
+- greater than `>`
+- less than `<`
+- greater than or equal to `>=`
+- less than or equal to `<=`
+
+>## Exercise
+>
+> The following list contains some floating point numbers and some numbers which  have been saved as strings.  Copy this list exactly into your code.
+> ~~~
+> data_list = ['-12.5', 14.4, 8.1, '42']
+> ~~~
+> {: .language-python}
+> Set up a `for` loop to go over each element of `data_list`.  If the element is a string (`str`), recast it as a float.  Save *all* of the numbers to a new list called `number_list`.  Pay close attention to your indentation!
+>
+>> ## Solution
+>> ~~~
+>> data_list = ['-12.5', 14.4, 8.1, '42']
+>> number_list = []
+>> for item in data_list:
+>>     if type(item) is str:
+>>         item = float(item)
+>>     number_list.append(item)
+>>
+>> print(number_list)
+>> ~~~
+>> {: .output}
+> {: .solution}
+{: .challenge}
+
 ## A note about jupyter notebooks
 If you use the jupyter notebook for your python interpreter, the notebook only executes the current code block.  This can have several unintended consequences. If you change a value and then go back and run an earlier code block, it will use the new value, not the first defined value, which may give you incorrect analysis.  Similarly, if you open your jupyter notebook later, and try to run a code block in the middle, it may tell you that your variables are undefined, even though you can clearly see them defined in earlier code blocks.  But if you didn't re-run those code blocks, then python doesn't know they exist.  
-
-## Check Your Understanding
-
-Insert some kind of activity here.
 
 {% include links.md %}
