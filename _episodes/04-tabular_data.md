@@ -65,6 +65,8 @@ print(headers)
 ```
 {: .output}
 
+
+
 >## Check Your Understanding
 >
 > Take a slice of the data that is just the numerical values.  To be uniform for later activities, call this slice data.
@@ -332,26 +334,30 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 >>
 >> ~~~
 >> import numpy
+>>
 >> xyz_file = numpy.genfromtxt(fname='water.xyz', skip_header=2, dtype='unicode')
 >> symbols = xyz_file[:,0]
 >> coord = (xyz_file[:,1:])
 >> coord = coord.astype(numpy.float)
+>>
 >> for numA, atomA in enumerate(coord):
 >>     for numB, atomB in enumerate(coord):
->>        BL_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
->>        BL_AB = round(BL_AB,3)
->>        print(symbols[numA], "to", symbols[numB], ":", BL_AB)
+>>        bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
+>>        print("%s to %s : %.3f" %(symbols[numA], symbols[numB], bond_length_AB)))
 >> ~~~
 >> {: .language-python}
 >>
 >> This is a solution that uses `readlines()`.
 >> ~~~
 >> import numpy
+>>
 >> xyzfile = open("water.xyz","r")
 >> data=xyzfile.readlines()
 >> data = data[2:]
+>>
 >> symbols = []
 >> coordinates = []
+>>
 >> for atom in data:
 >>     atom_data = atom.split()
 >>     symbol = atom_data[0]
@@ -361,24 +367,31 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 >>
 >> for numA, atomA in enumerate(coordinates):
 >>     for numB, atomB in enumerate(coordinates):
->>         BL_AB = BL = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]-atomB[1])**2+(atomA[2]-atomB[2])**2)
->>         BL_AB = round(BL_AB,3)
->>         print(symbols[numA], "to", symbols[numB], ":", BL_AB)  
+>>         bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]-atomB[1])**2+(atomA[2]-atomB[2])**2)
+>>         print("%s to %s : %.3f" %(symbols[numA], symbols[numB], bond_length_AB))
 >> ~~~
 >> {: .language-python}
 > {: .solution}
 {: .challenge}
 
+
+
+> ## Variable Names
+>
+> ** This note (or similar) needs to be in one of the first episodes **
+> In our solution above, we called our bond length variable `bond_length_AB`. We could have called this variable anything we wanted. Consider the following two potential variable names for bond length - `BL_AB` and `bond_length_AB`. Which is more clear to you? While you might know what `BL` means, and it is possible for others to figure it out through context, it's easier on others if you give your variables clear names.
+{: .callout}
+
 > ## Project Extension 1
 >
-> Your initial project calculated the distance between every set of atoms.   However, some of these atoms aren't really bonded to each other.  H1 and H2 are not bonded for example, and all of the distances between an atom and itself are zero.  Use a simple distance cutoff of 1.2 angstroms to define a bond (that is, if the bond length is greater than 1.2 angstroms, consider the atoms not bonded). Modify your code to only print the atoms that are actually bonded to each other.  
+> Your initial project calculated the distance between every set of atoms.   However, some of these atoms aren't really bonded to each other.  H1 and H2 are not bonded for example, and all of the distances between an atom and itself are zero.  Use a istance cutoff of 1.2 angstroms to define a bond (that is, if the bond length is greater than 1.2 angstroms, consider the atoms not bonded). Modify your code to only print the atoms that are actually bonded to each other.  
 >
 >> ## Solution
 >>
 >> Add an `if` statement before your print statement.
 >> ~~~
->> if BL_AB > 0 and BL_AB <= 1.3:
->>       print(symbols[numA], "to", symbols[numB], ":", BL_AB)
+>> if bond_length_AB > 0 and bond_length_AB <= 1.3:
+>>       print("%s to %s : %.3f" %(symbols[numA], symbols[numB], bond_length_AB))
 >> ~~~
 >> {: .language-python}
 >>
@@ -398,28 +411,25 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 >
 >> ## Solution
 >>
->> The new lines of code all have #comments explaining what they do.
 >>
 >> ~~~
->> import numpy
->> xyz_file = numpy.genfromtxt(fname='water.xyz', skip_header=2, dtype='unicode')
->> symbols = xyz_file[:,0]
->> coord = (xyz_file[:,1:])
->> coord = coord.astype(numpy.float)
->> bond_lengths = []  #A list of the ones I have
->> for numA, atomA in enumerate(coord):
+>>import numpy
+>>
+>>xyz_file = numpy.genfromtxt(fname='water.xyz', skip_header=2, dtype='unicode')
+>>symbols = xyz_file[:,0]
+>>coord = (xyz_file[:,1:])
+>>coord = coord.astype(numpy.float)
+>>
+>>for numA, atomA in enumerate(coord):
 >>    for numB, atomB in enumerate(coord):
->>       BL_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
->>       BL_AB = round(BL_AB,3)
->>       if BL_AB > 0 and BL_AB <= 1.2:
->>            this_bond_length = F'{symbols[numA]} to {symbols[numB]}'    #Make a record of which bond length this is
->>            if not this_bond_length in bond_lengths:                    #If the bond length isn't already on the list
->>                 print(symbols[numA], "to", symbols[numB], ":", BL_AB)   #Then print it   
->>                 bond_lengths.append(this_bond_length)                   #And add it to the list
->>                 bond_length_reverse = F'{symbols[numB]} to {symbols[numA]}' #And add the reverse to the list
->>                 bond_lengths.append(bond_length_reverse)            
+>>        if numB > numA:
+>>            bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
+>>            
+>>            if bond_length_AB > 0 and bond_length_AB <= 1.3:
+>>                print("%s to %s : %.3f" %(symbols[numA], symbols[numB], bond_length_AB))         
 >> ~~~
 >> {: .language-python}
+>> For this solution, we've
 >>
 >> Now your output should be
 >> ~~~
