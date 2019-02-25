@@ -15,12 +15,37 @@ keypoints:
 - "Indentation is very important in `for` loops and `if` statements.  Don't forget the `:` and to indent the items in the loop."
 ---
 ## Getting Started
-Python is a computer programming language that has become ubiquitous in scientific programming.  Our initial lessons will run python *interactively* through a python interpreter.  The Startup page should have provided information
-on how to start a python interpreter.  Everything included in a code block is something you could type into your python interpreter and evaluate.
+Python is a computer programming language that has become ubiquitous in scientific programming.  Our initial lessons will run python *interactively* through a python interpreter. We will first use a Jupyter notebook.  The [setup] page should have provided information
+on how to install and start a Jupyter notebook.  Everything included in a code block is something you could type into your python interpreter and evaluate.
+
+### Setting up your Jupyter notebooks
+In the [setup], you learned how to start a Jupyter notebook. Now, we will use the notebook to execute Python code. Jupyter notebooks are divided into cells. You run a jupyter notebook one cell at a time. To execute a cell, click inside the cell and press `shift+enter`.
+
+In the upper left corner, click where it says "Untitled" and change the name to "MolSSI Workshop". We have now changed the name of the Jupyter Notebook.
+
+Jupyter notebooks allow us to also use something called **markdown** in some cells. We can use markdown to write descriptions about our notebooks for others to read. It's a good practice to have your first cell be markdown to explain the purpose of the notebook. Let's do that in our first cell. Click inside the first cell, then on the top of the screen select `Cell->Cell Type->Markdown` (shown below).
+
+<img src="../fig/lesson01_fig1.png">
+
+Now, return to the cell and type the following:
+
+~~~
+# MolSSI Workshop
+## Introduction
+
+This lesson covers Python basics like variable creation and assignment and using the Jupyter notebook
+~~~
+{: .language-markdown}
+
+In Markdown, we create headers using a single `#` sign. Using two (`##`) creates a subheader. After typing this into a cell, press `shift+enter` to evaluate. Now your notebook should look like the following.
+
+<img src="../fig/lesson01_fig2.png">
+
+Now that our notebook is set-up, we're ready to start learning some Python!
 
 ## Assigning variables and data types
 
-Any python interpreter can work just like a calculator.  This is not very useful.
+Any python interpreter can work just like a calculator.  This is not very useful. Type the following into the next cell of your jupyter notebook.
 
 ```
 3+7
@@ -32,14 +57,30 @@ Any python interpreter can work just like a calculator.  This is not very useful
 ```
 {: .output}
 
-You can assign values to variable names and then you can use those variables in subsequent commands.  
+Here, Python has performed a calculation for us. To save this value, or other values, we assign them to a variable for later use. The syntax for assigning variables is the following:
+~~~
+variable_name = variable_value
+~~~
+{: .language-python}
+
+Let's see this in action with a calculation. Type the following into the next cell of your Jupyter notebook.
 ```
 deltaH = -541.5   #kJ/mole
 deltaS =  10.4     #kJ/(mole K)
 temp = 298      #Kelvin
 deltaG = deltaH - temp*deltaS
-print(deltaG)
 ```
+{: .language-python}
+
+Notice several things about this code.  The lines that begin with `#` are comment lines.  The computer does not do anything with these comments.  They have been used here to remind the user what units each of their values are in. Comments are also often used to explain what the code is doing, or leave information for future people who might use the code.  
+
+When choosing variable names, you should choose informative names so that someone reading your code can tell what they represent.  Naming a variable temp or temperature is much more informative than naming that variable t.
+
+We can now access any of the variables from other cells. Let's print the value that we calculated. In the next cell,
+
+~~~
+print(deltaG)
+~~~
 {: .language-python}
 
 ```
@@ -47,11 +88,7 @@ print(deltaG)
 ```
 {: .output}
 
-Notice several things about this code.  The lines that begin with `#` are comment lines.  The computer does not do anything with these comments.  They have been used here to remind the user what units each of their values are in. Comments are also often used to explain what the code is doing, or leave information for future people who might use the code.  
-
-When choosing variable names, you should choose informative names so that someone reading your code can tell what they represent.  Naming a variable temp or temperature is much more informative than naming that variable t.
-
-In the previous code block, we also introduced the `print()` function.  Often, we will use the print function just to make sure our code is working correctly.
+In the previous code block, we introduced the `print()` function.  Often, we will use the print function just to make sure our code is working correctly.
 
 Python can do what is called multiple assignment where you assign several variables their values on one line of code.  The following code block does the exact same thing as the previous code block.
 
@@ -79,8 +116,8 @@ float
 {: .output}
 You can change the data type of a variable like this.  This is called casting.
 ```
-deltaG = str(deltaG)
-type(deltaG)
+deltaG_string = str(deltaG)
+type(deltaG_string)
 ```
 {: .language-python}
 ```
@@ -90,10 +127,13 @@ str
 ## Lists and Slices
 Another common data structure in python is the list.  Lists can be used to group several values or variables together, and are declared using square brackets [ ]. List values are separated by commas. Python has several built in functions which can be used on lists. The built-in function `len` can be used to determine the length of a list. This code block also demonstrates how to print multiple variables.
 ```
-#This is a list; I can determine it's length
+# This is a list
 energy_kcal = [-13.4, -2.7, 5.4, 42.1]
-length = len(energy_kcal)
-print('The length of this list is', length)
+# I can determine its length
+energy_length = len(energy_kcal)
+
+# print the list length
+print('The length of this list is', energy_length)
 ```
 {: .language-python}
 
@@ -105,17 +145,19 @@ The length of this list is 4
 If I want to operate on a particular element of the list, you use the list name and then put in brackets which element of the list you want.  **In python counting starts at zero.  So the first element of the list is `list[0]`**
 
 ```
-print(energy_kcal[1])
+# Print the first element of the list
+print(energy_kcal[0])
 ```
 {: .language-python}
 
 ```
--2.7
+-13.4
 ```
 {: .output}
 
 You can use an element of a list as a variable in a calculation.  
 ```
+# Convert the second list element to kilojoules.
 energy_kilojoules = energy_kcal[1]*4.184
 print(energy_kilojoules)
 ```
@@ -244,12 +286,13 @@ print(energy_kJ)
 ## Making choices: logic Statements
 Within your code, you may need to evaluate a variable and then do something if the variable has a particular value.  This type of logic is handled by an `if` statement.  In the following example, we only append the negative numbers to a new list.  
 ```
-negative_numbers = []
+negative_energy_kJ = []
+
 for number in energy_kJ:
     if number<0:
-        negative_numbers.append(number)
+        negative_energy_kJ.append(number)
 
-print(negative_numbers)
+print(negative_energy_kJ)
 ```
 {: .language-python}
 ```
