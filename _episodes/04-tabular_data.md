@@ -343,7 +343,7 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 >> for numA, atomA in enumerate(coord):
 >>     for numB, atomB in enumerate(coord):
 >>        bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
->>        print("%s to %s : %.3f" %(symbols[numA], symbols[numB], bond_length_AB)))
+>>        print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 >> ~~~
 >> {: .language-python}
 >>
@@ -368,7 +368,7 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 >> for numA, atomA in enumerate(coordinates):
 >>     for numB, atomB in enumerate(coordinates):
 >>         bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]-atomB[1])**2+(atomA[2]-atomB[2])**2)
->>         print("%s to %s : %.3f" %(symbols[numA], symbols[numB], bond_length_AB))
+>>         print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 >> ~~~
 >> {: .language-python}
 > {: .solution}
@@ -378,20 +378,19 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 
 > ## Variable Names
 >
-> ** This note (or similar) needs to be in one of the first episodes **
 > In our solution above, we called our bond length variable `bond_length_AB`. We could have called this variable anything we wanted. Consider the following two potential variable names for bond length - `BL_AB` and `bond_length_AB`. Which is more clear to you? While you might know what `BL` means, and it is possible for others to figure it out through context, it's easier on others if you give your variables clear names.
 {: .callout}
 
 > ## Project Extension 1
 >
-> Your initial project calculated the distance between every set of atoms.   However, some of these atoms aren't really bonded to each other.  H1 and H2 are not bonded for example, and all of the distances between an atom and itself are zero.  Use a istance cutoff of 1.2 angstroms to define a bond (that is, if the bond length is greater than 1.2 angstroms, consider the atoms not bonded). Modify your code to only print the atoms that are actually bonded to each other.  
+> Your initial project calculated the distance between every set of atoms.   However, some of these atoms aren't really bonded to each other.  H1 and H2 are not bonded for example, and all of the distances between an atom and itself are zero.  Use a distance cutoff of 1.5 angstroms to define a bond (that is, if the bond length is greater than 1.5 angstroms, consider the atoms not bonded). Modify your code to only print the atoms that are actually bonded to each other.  
 >
 >> ## Solution
 >>
 >> Add an `if` statement before your print statement.
 >> ~~~
->> if bond_length_AB > 0 and bond_length_AB <= 1.3:
->>       print("%s to %s : %.3f" %(symbols[numA], symbols[numB], bond_length_AB))
+>> if bond_length_AB > 0 and bond_length_AB <= 1.5:
+>>       print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 >> ~~~
 >> {: .language-python}
 >>
@@ -407,7 +406,7 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 {: .challenge}
 
 > ## Project Extension 2
-> Some of these are actually the same bond length; for example, O to H1 and H1 to O refer to the same bond length.  Remove the duplicates from your list.  (This is by far the hardest extension to the project.)
+> Some of these are actually the same bond length; for example, O to H1 and H1 to O refer to the same bond length.  Remove the duplicates from your list.  
 >
 >> ## Solution
 >>
@@ -425,11 +424,10 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 >>        if numB > numA:
 >>            bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
 >>            
->>            if bond_length_AB > 0 and bond_length_AB <= 1.3:
->>                print("%s to %s : %.3f" %(symbols[numA], symbols[numB], bond_length_AB))         
+>>            if bond_length_AB > 0 and bond_length_AB <= 1.5:
+>>                print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')     
 >> ~~~
 >> {: .language-python}
->> For this solution, we've
 >>
 >> Now your output should be
 >> ~~~
@@ -453,7 +451,7 @@ Wait!  That's not right!  What is wrong with that output?  How can we fix it?
 >>
 >> Then inside your loop change your `print` statement to a `BLfile.write()` statement.
 >> ~~~
->> BLfile.write(F'{symbols[numA]} to {symbols[numB]} : {BL_AB}\n')
+>> BLfile.write(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 >> ~~~
 >> {: .language-python}
 >>

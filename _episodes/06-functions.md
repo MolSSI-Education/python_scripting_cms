@@ -1,16 +1,19 @@
 ---
 title: "Writing Functions"
-teaching: ??
-exercises: ??
+teaching: 25
+exercises: 15
 questions:
 - "How do I write include functions in my code?"
 objectives:
-- "First objective goes here."
+- "Define functions to perform one computational task."
+- "Use functions within code and inside `for` loops."
+- "Write functions that accept user inputs."
+- "Assign default values for function inputs."
 keypoints:
-- "First point goes here."
-
+- "Functions make your code easier to read, more reuseable, more portable, and easier to test."
+- "If a function returns True or False, you can use it in an `if` statement as a condition."
 ---
-## Function
+## Why functions?
 
 Most code is organized into blocks of code which perform a particular task.  These code blocks are called *functions*.  A commercial software package likely has hundreds of thousands or millions of functions. Functions break up our code into smaller, more easily understandable statements, and also allow our code to be more *modular*, meaning we can take pieces and reuse them. Functions also make your code easier to test, which we will see in a later lesson.
 
@@ -23,32 +26,15 @@ In Python, the following syntax is used to declare a function:
 ~~~
 def function_name(parameters):
   ** function body code **
+    return value_to_return
 ~~~
 {: .language-python}
 
-Functions are defined using the `def` keyword, followed by the name of the function. The function may have parameters which are passed to it, which are in parenthesis following the function name. A function can have no parameters as well. It is important to note here that defining a function does not execute it. Consider the following example with no parameters.
-
-~~~
-def print_hello():
-  print("Hello!")
-~~~
-{: .language-python}
-
-We then call the function in the next cell
-
-~~~
-print_hello()
-~~~
-{: .language-python}
-
-~~~
-Hello!
-~~~
-{: .output}
+Functions are defined using the `def` keyword, followed by the name of the function. The function may have parameters which are passed to it, which are in parenthesis following the function name. A function can have no parameters as well.  Most (though not all) functions return some type of information.  It is important to note here that defining a function does not execute it.  
 
 ## Writing functions into our geometry analysis project
 
-Let's go back and consider a simple solution for the geometry analysis project.
+Let's go back and consider a possible solution for the geometry analysis project.
 ```
 import numpy
 
@@ -63,7 +49,7 @@ for numA, atomA in enumerate(coord):
            bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
 
            if bond_length_AB > 0 and bond_length_AB <= 1.5:
-               print(symbols[numA], "to", symbols[numB], ":", bond_length_AB)
+                print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')  
 ```
 {: .language-python}
 
@@ -84,7 +70,7 @@ for numA, atomA in enumerate(coord):
    for numB, atomB in enumerate(coord):
        if numB > numA:
            bond_length_AB = calculate_distance(atomA, atomB)
-           print(symbols[numA], "to", symbols[numB], ":", bond_length_AB)
+           print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 ```
 {: .language-python}
 
@@ -117,7 +103,7 @@ This is great! Our function will currently return `True` if our bond distance is
 {: .challenge}
 
 ### Function Default arguments
-When there are parameters in a function definition, we can set these parameters to default values. For example, if we want the default values in bond check to be 0 and 1.5, we can change the function definition to the following:
+When there are parameters in a function definition, we can set these parameters to default values.  This way, if the user does not input values, the default values can be used instead of the code just not working. For example, if we want the default values in bond check to be 0 and 1.5, we can change the function definition to the following:
 
 ~~~
 def bond_check(atom_distance, minimum_length=0, maximum_length=1.5):
@@ -156,9 +142,9 @@ Now that we have our `bond_check` function, we can use it in our `for` loop to o
 for numA, atomA in enumerate(coord):
    for numB, atomB in enumerate(coord):
        if numB > numA:
-           bond_length_AB = atom_distance(atomA, atomB)
+           bond_length_AB = calculate_distance(atomA, atomB)
            if bond_check(bond_length_AB):
-               print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB}')
+               print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 ```
 {: .language-python}
 ```
@@ -199,9 +185,15 @@ for numA, atomA in enumerate(coord):
            bond_length_AB = calculate_distance(atomA, atomB)
 
            if bond_check(bond_length_AB):
-               print(symbols[numA], "to", symbols[numB], ":", bond_length_AB)
+               print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 ~~~
 {: .language-python}
+
+> ## Time Check
+>
+> If you are running out of time, this is a good place to end the lesson.  You can still complete the testing lesson even if you only got this far.
+{: .callout}
+
 
 You can probably think of a further extension to use functions here. What if we wanted to print the bonds for another `xyz` file besides water? One option would be to copy and paste the two two `for` loops we've written. However, the smarter move is to put them in a function.
 
@@ -217,10 +209,11 @@ def print_bonds(atom_symbols, atom_coordinates):
                 bond_length_AB = calculate_distance(atomA, atomB)
 
                 if bond_check(bond_length_AB):
-                    print(atom_symbols[numA], "to", atom_symbols[numB], ":", bond_length_AB)
+                    print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 ~~~
+{: .language-python}
 
-If you were to put all the functions we wrote into a single cell, it looks like this
+If you were to put all the functions we wrote into a single cell, it looks like this:
 
 ~~~
 import numpy
@@ -248,14 +241,14 @@ def print_bonds(atom_symbols, atom_coordinates):
     for numA, atomA in enumerate(atom_coordinates):
         for numB, atomB in enumerate(atom_coordinates):
             if numB > numA:
-                bond_length_AB = cacluate_distance(atomA, atomB)
+                bond_length_AB = calculate_distance(atomA, atomB)
 
                 if bond_check(bond_length_AB):
-                    print(atom_symbols[numA], "to", atom_symbols[numB], ":", bond_length_AB)
+                    print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 ~~~
 {: .language-python}
 
-We can now open an arbitrary `xyz` file and print the bonded atoms. For example, to do this for water and benze, we could execute a cell like this:
+We can now open an arbitrary `xyz` file and print the bonded atoms. For example, to do this for water and benzene, we could execute a cell like this:
 
 ~~~
 water_symbols, water_coords = open_xyz('water.xyz')
