@@ -19,7 +19,7 @@ Regardless of how you choose to install it, *please make sure you install Python
 3. Double click the installer icon and follow the setup instructions.  You can use all of the default options.
 
 ## Obtain lesson materials
-1. Put link to download materials here.
+1. Download the files needed for these lessons [here](./data/data.zip)
 2. Create a folder called `cms-workshop` on your Desktop.
 3. Move the downloaded materials to the new folder.
 4. Unzip the file.  
@@ -33,9 +33,11 @@ In the Terminal window, type
 ```
 $ jupyter notebook
 ```
-It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to the `cms-workshop` folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list.  You're ready to go!
+It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to the `cms-workshop` folder, if you did not start the jupyter notebook from this folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list (shown below)
 
+<img src="../fig/setup_fig1.png" width="70%">
 
+This will start a new Jupyter notebook using Python 3. You're ready to go!
 
 
 {% include links.md %}
