@@ -35,7 +35,7 @@ $ jupyter notebook
 ```
 It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to the `cms-workshop` folder, if you did not start the jupyter notebook from this folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list (shown below)
 
-<img src="../fig/setup_fig1.png" width="70%">
+<img src="fig/setup_fig1.png" width="70%">
 
 This will start a new Jupyter notebook using Python 3. You're ready to go!
 
