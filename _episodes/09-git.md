@@ -264,6 +264,8 @@ Once you have pushed changes to your repository on GitHub, you may want to tell 
 
 On the next page, in the left box that says *base*, the main repository should be listed.  If it is not, use the dropdown menu to select it.  In the right box that says *compare*, use the dropdown menu to select your repository.  If you don't see it in the list, then you need to click the blue link above the boxes that says *compare across forks*.  Click *Create Pull Request*.  
 
+On the next page, you will type a message to the developers telling them what changes you have made.  You can also suggest reviewers for your lesson.  When you are finished, click *Create Pull Request*.
+
 The developers will receive a notification of your pull request and then they can review your changes and decide if they are going to merge them into the main repository.  You will receive a notification letting you know if/when the pull request has been merged.  
 
 ### Using branches
