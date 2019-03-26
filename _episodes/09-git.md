@@ -262,7 +262,7 @@ Notice that in this flow of information, if you want to pull new changes from th
 
 Once you have pushed changes to your repository on GitHub, you may want to tell the main developers about your changes and ask them to consider merging them into the main repository.  This is called making a *pull request*.  Essentially, you are suggesting to the developers that they pull changes from your repository into their repository.   To make a pull request, navigate to the GitHub page of the main repository and click on Pull Request in the navigation bar across the top.  On the next page, click the green button that says New Pull Request.
 
-On the next page, in the left box that says *base*, the main repository should be listed.  If it is not, use the dropdown menu to select it.  In the right box that says *compare*, use the dropdown menu to select your repository.  If you don't see it in the list, then you need to click the blue link above the boxes that says *compare across forks*.  Type a message to the developers telling them what changes you are contributing and then click *Create Pull Request*.  
+On the next page, in the left box that says *base*, the main repository should be listed.  If it is not, use the dropdown menu to select it.  In the right box that says *compare*, use the dropdown menu to select your repository.  If you don't see it in the list, then you need to click the blue link above the boxes that says *compare across forks*.  Click *Create Pull Request*.  
 
 The developers will receive a notification of your pull request and then they can review your changes and decide if they are going to merge them into the main repository.  You will receive a notification letting you know if/when the pull request has been merged.  
 
