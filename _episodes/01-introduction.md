@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
-teaching: 20
-exercises: 10
+teaching: 30
+exercises: 15
 questions:
 - "What is the basic syntax of the python programming language?"
 objectives:
@@ -19,7 +19,7 @@ Python is a computer programming language that has become ubiquitous in scientif
 on how to install and start a Jupyter notebook.  Everything included in a code block is something you could type into your python interpreter and evaluate.
 
 ### Setting up your Jupyter notebooks
-In the [setup], you learned how to start a Jupyter notebook. Now, we will use the notebook to execute Python code. Jupyter notebooks are divided into cells. You run a jupyter notebook one cell at a time. To execute a cell, click inside the cell and press `shift+enter`.
+In the [setup], you learned how to start a Jupyter notebook. Now, we will use the notebook to execute Python code. Jupyter notebooks are divided into cells. You run a Jupyter notebook one cell at a time. To execute a cell, click inside the cell and press `shift+enter`.
 
 In the upper left corner, click where it says "Untitled" and change the name to "MolSSI Workshop". We have now changed the name of the Jupyter Notebook.
 
@@ -45,7 +45,7 @@ Now that our notebook is set-up, we're ready to start learning some Python!
 
 ## Assigning variables and data types
 
-Any python interpreter can work just like a calculator.  This is not very useful. Type the following into the next cell of your jupyter notebook.
+Any python interpreter can work just like a calculator.  This is not very useful. Type the following into the next cell of your Jupyter notebook.
 
 ```
 3+7
@@ -72,7 +72,7 @@ deltaG = deltaH - temp*deltaS
 ```
 {: .language-python}
 
-Notice several things about this code.  The lines that begin with `#` are comment lines.  The computer does not do anything with these comments.  They have been used here to remind the user what units each of their values are in. Comments are also often used to explain what the code is doing, or leave information for future people who might use the code.  
+Notice several things about this code.  The lines that begin with `#` are comment lines.  The computer does not do anything with these comments.  They have been used here to remind the user what units each of their values are in. Comments are also often used to explain what the code is doing or leave information for future people who might use the code.  
 
 When choosing variable names, you should choose informative names so that someone reading your code can tell what they represent.  Naming a variable temp or temperature is much more informative than naming that variable t.
 
@@ -90,6 +90,48 @@ print(deltaG)
 
 In the previous code block, we introduced the `print()` function.  Often, we will use the print function just to make sure our code is working correctly.
 
+Note that if you do not specify a new name for a variable, then it doesn't automatically change the value of the variable; this is called being *immutable*.  For example if we typed
+```
+print(deltaG)
+deltaG*1000
+print(deltaG)
+```
+{: .language-python}
+```
+-3640.7000000000003
+-3640.7000000000003
+```
+{: .output}
+
+Nothing happened to the value of `deltaG`.  If we wanted to change the value of `deltaG` we would have to re-save the variable using the same name to overwrite the existing value.
+```
+print(deltaG)
+deltaG = deltaG*1000
+print(deltaG)
+```
+{: .language-python}
+```
+-3640.7000000000003
+-3640700.0000000005
+```
+{: .output}
+
+There are situations where it is reasonable to overwrite a variable with a new value, but you should always think carefully about this.  Usually it is a better practice to give the variable a new name and leave the existing variable as is.  
+```
+print(deltaG)
+deltaG_joules = deltaG*1000
+print(deltaG)
+print(deltaG_joules)
+```
+{: .language-python}
+```
+-3640700.0000000005
+-3640700.0000000005
+-3640700000.0000005
+```
+{: .output}
+
+## Assigning multiple variables at once
 Python can do what is called multiple assignment where you assign several variables their values on one line of code.  The following code block does the exact same thing as the previous code block.
 
 ```
@@ -105,6 +147,7 @@ print(deltaG)
 ```
 {: .output}
 
+## Data types
 Each variable is some particular type of data.  The most common types of data are strings (`str`), integers (`int`), and floating point numbers (`float`).  You can identify the data type of any variable with the function `type(variable_name)`.
 ```
 type(deltaG)
@@ -124,7 +167,7 @@ type(deltaG_string)
 str
 ```
 
-## Lists and Slices
+## Lists
 Another common data structure in python is the list.  Lists can be used to group several values or variables together, and are declared using square brackets [ ]. List values are separated by commas. Python has several built in functions which can be used on lists. The built-in function `len` can be used to determine the length of a list. This code block also demonstrates how to print multiple variables.
 ```
 # This is a list
@@ -168,6 +211,7 @@ print(energy_kilojoules)
 ```
 {: .output}
 
+## Slices
 Sometimes you will want to make a new list that is a subset of an existing list.  For example, we might want to make a new list that is just the first few elements of our previous list.  This is called a `slice`.  The general syntax is
 ```
 new_list = list_name[start:end]
@@ -211,6 +255,20 @@ If you do not include a start index, the slice automatically starts at `list_nam
 >> {: .output}
 > {: .solution}
 {: .challenge}
+
+Again, the list is immutable so if you don't specify a new variable name nothing happens. Looking at our example above if we only type
+```
+print(energy_kcal)
+energy_kcal[0:2]
+print(energy_kcal)
+```
+{: .language-python}
+nothing happens.
+```
+[-13.4, -2.7, 5.4, 42.1]
+[-13.4, -2.7, 5.4, 42.1]
+```
+{: .output}
 
 ## Repeating an operation many times: for loops
 Often, you will want to do something to every element of a list.  The structure
@@ -301,10 +359,28 @@ print(negative_energy_kJ)
 {: .output}
 Other logic operations include
 - equal to `==`
+- not equal to `!=`
 - greater than `>`
 - less than `<`
 - greater than or equal to `>=`
 - less than or equal to `<=`
+
+You can also use `and`, `or`, and `not` to check more than one condition.
+```
+negative_numbers = []
+for number in energy_kJ:
+    if number<0 or number==0:
+        negative_numbers.append(number)
+
+print(negative_numbers)
+```
+{: .language-python}
+```
+[-56.0656, -11.296800000000001]
+```
+{: .output}
+
+If you are comparing strings, not numbers, you use different logic operators like `is`, `in`, or `is not`.  We will see these types of logic operators used in our next lesson.  
 
 >## Exercise
 >
