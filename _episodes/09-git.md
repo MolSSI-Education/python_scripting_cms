@@ -46,22 +46,28 @@ In git, a collection of files related to a specific project is called a *resposi
 ```
 $ git init
 ```
-{: .input}
+{: .langugae-bash}
 
-After you type this command, git will initialize an empty repository.  Now you need to add files to your repository.  In the Terminal window, type
+After you type this command, git will initialize an empty repository. Now we need to **add** files to be tracked by `git`, and commit the files.
+
+In the Terminal window, type
 ```
 $ git add .
 ```
+{: .language-bash}
+
 The `.` in the git add statement says to add everything in the current folder to the repository.  If you don't want to add everything, don't put the `.` and instead just list the specific files you do want to include.  
 
-Oddly, `git add` doesn't add the files to your repository.  It really just tells git which files you want to add.  This is called *staging*. To finish adding the files to the repository, you have to *make a commit*.
+`git add` does not add the files to your repository.  It really just tells git which files you want it to track, and are ready to commit.  This is called *staging*. To finish adding the files to the repository, you have to *make a commit*.
 
 ## Making commits
-Once you have staged a file to add to your repository, you commit it to the repository.  In the Terminal window, type
+Once you have staged a file to add to your repository, you commit it to the repository. To make a commit, you use the `git commit` command, and have to write a commit message which explains what has changed in that commit.  We will do this in one command with the `-m` option. In the Terminal window, type
 ```
 $ git commit -m "Initial commit to the test repository."
 ```
-Every time you make a commit, this is now part of the official record of what is in the repository, so you have to write a commit message telling people what is being added.  You can write anything you want in these comments, but the best practice is to write something short but descriptive about the files that are being added or changed.  Even if you think no one else is ever going to use your code, writing good commit messages is a great way to remind yourself of what you have done in the past.  It is not a good practice to have your commit messages be non-descriptive like "Commit #5."
+{: .language-bash}
+
+Every time you make a commit, this is now part of the official record of what is in the repository, so you have to write a commit message telling people what is being added.  You can write anything you want in these comments, but the best practice is to write something short but descriptive about the files that are being added or changed.  Even if you think no one else is ever going to use your code, writing good commit messages is a great way to remind yourself of what you have done in the past.  It is good practice for these to be descriptive rather than general, so a message like "Add function for calculating bond lengths" is much better than something non-descriptive like "Commit #5."
 
 > ## Using git status
 > If you are working with git, at any time you can type
@@ -72,7 +78,7 @@ Every time you make a commit, this is now part of the official record of what is
 {: .callout}
 
 ## Putting your code on GitHub
-Let's get your project put on GitHub so you can share it with others.  In your browser, navigate to github.com.  If you already have a GitHub account, click the Sign In button.  If you need to create an account, click the Sign Up button.  
+Let's get your project put on GitHub so you can share it with others.  In your browser, navigate to [github.com](https://github.com/).  If you already have a GitHub account, click the Sign In button.  If you need to create an account, click the Sign Up button.  
 
 > ## Choosing your GitHub username
 > To create a GitHub account, all you need is a valid e-mail address and to choose a GitHub username, which will be public.  It is now *very* common in many technical disciplines for potential research advisors or employers to look at your GitHub page to see what kind of projects you have contributed to and what kind of work you have done.  Consequently, you want to choose a recognizable, professional username and always keep your GitHub profile up-to-date and professional.
@@ -80,36 +86,109 @@ Let's get your project put on GitHub so you can share it with others.  In your b
 
 Once you are signed in to GitHub, on the left side of the page, click the green button that says New to create a new repository.  On the next page, choose a name for your repository and write a short description of your project.  You can choose whether your repository will be public or private.  Even if you choose private, you can identify other specific GitHub users who can see your repository and commit to it.  However, if you want other people to be able to find your project without you specifically sharing it with them, you should choose public.
 
+For this workshop, make your repository **public.**
+
 Note the last question, “Initialize this repository with a README”.  We will leave this unchecked in our case because we have an existing repository we are adding to GitHub. If you were creating the repository for the first time on GitHub, you would select this.  There are also options for adding a .gitignore file or a license, but you don't have to do that right now.  
 
 Click Create repository.
 
 On the next page, GitHub now very helpfully gives us directions for how to get our code on GitHub.  The most relevant set of instructions for our current situation is the third set **push an existing repository from the command line**.  
 
-Before we follow these directions, let’s look at a few things in the repository. When you want to be able to put your code online in a repository, you have to add what git calls remotes. Currently, our repository has no remotes, so the first line helps us create our remote.  In the Terminal window, type
+> ## Local and Remote Repositories
+> We are using the word "repository" here to refer to both the local copy of the code on your machine, and to the
+> copy on GitHub. A "repository" simply refers to a directory with code which is being tracked by git. Sometimes, people will shorten "repository" to "repo".
+>
+> Since we initialized git in our project using `git init`, it is now a repository. We will enter commands into
+> the terminal to get our local copy onto GitHub (our online repository). That is what is meant by "push an existing repository from the command line."
+{: .callout}
+
+Before we follow these directions, let’s look at a few things. When you want to be able to put the code that is on your computer (your local repo) into an online in a repository, you have to add what git calls remotes to your local repository. Currently, our repository has no remotes.
+
+You can see this by typing
+~~~
+$ git remote -v
+~~~
+{: .language-bash}
+
+You should see no output from this command.
+
+Now, we will follow the directions given by GitHub to add remotes. In the Terminal window, type
 
 ```
 $ git remote add origin https://github.com/YOUR-USERNAME/REPOSITORY-NAME.git
-$ git push -u origin master
 ```
-Note that the URL in your first command will be different because it will contain your own GitHub username and repository name.  Just copy the line that GitHub gives you.  Note that you will need to enter the first command, press enter, and then enter the second command. The first command adds a remote named origin and sets the URL to our repository. The second command pushes our repo to where we have set as origin. The word master means we are pushing the master branch.
+{: .language-bash}
+
+Note that the URL in your first command will be different because it will contain your own GitHub username and repository name.  Just copy the line that GitHub gives you.  
+
+~~~
+$ git push -u origin master
+~~~
+{: .language-bash}
+
+Note that you will need to enter the first command, press enter, and then enter the second command. The first command adds a remote named origin and sets the URL to our repository. The second command pushes our repo to where we have set as origin. The word master means we are pushing the master branch.
 
 Now if you refresh the GitHub webpage you should be able to see all of the new files you added to the repository.
 
 ## Adding a README.md file
 
-If your repository contains a file named `README.md` then GitHub renders it into a nice description so that anyone who comes across your repo knows what the project is about.  
+If your repository contains a file named `README.md` then GitHub renders it into a nice description so that anyone who comes across your repo knows what the project is about. The `md` extension on this file refers to "markdown". Markdown is a simple language which can be used for text formatting.
+
+Here is an example
+
+~~~
+# Markdown Example
+
+This is an example of markdown formatting.
+
+## Text Formatting
+It's very easy to make some words **bold** and other in *italic*.
+
+### Ordered Lists
+I can also easily make an ordered list.
+1. List item 1
+1. List item 2
+1. List item 3
+
+### Unordered Lists
+Unordered list
+* List item
+* List item
+* List item
+
+~~~
+{: .language-markdown}
+
+This will make something that looks like this:
+
+> # Markdown Example
+>
+> This is an example of markdown formatting.
+>
+> ## Text Formatting
+> It's very easy to make some words **bold** and other in *italic*.
+>
+> ### Ordered Lists
+> I can also easily make an ordered list.
+> 1. List item 1
+> 1. List item 2
+>
+> ### Unordered Lists
+> Unordered list
+> * List item
+> * List item
+
 
 > ## Exercise
 >
-> In your favorite text editor, create a new file called `README.md` and write a description of your geometry analysis code and how it works.  If you want to have section headings in your file, use ## to indicate a section heading.  Otherwise, just type in your description.
+> In your favorite text editor, create a new file called `README.md` and write a description of your geometry analysis code and how it works.  If you want to have section headings in your file, use # to indicate a section heading.  Otherwise, just type in your description.
 >
 > Make sure you save your file in the folder with the rest of your project.   Using the git commands learned above, add the file to your repository, commit it with an appropriate commit message, and push it to the master branch of your GitHub repository.
 >
 >> ## Solution
 >> In a text editor, create a new file called `README.md`.  An example:
 >> ~~~
->> ## Geometry analysis project with testing
+>> # Geometry analysis project with testing
 >>
 >> This repository contains a code that measures distances between atoms, determines if these atoms qualify as a bond, and outputs the list of bond lengths.  This project also features testing for all of the functions in the code.
 >> ~~~
@@ -181,7 +260,7 @@ As discussed above, a collection of files for a certain project is called a *rep
 <img src="../fig/episode09_fig1.png" title="Information flow on GitHub" style="display: block; margin: auto;" />
 
 ### Forking a repository
-To make your copy of the repository on GitHub, you *fork* the main repository.  Navigate to the GitHub page of the project.  In the upper right hand button, click the button that says **Fork**.  This will make a copy of the repository on *your GitHub account*.  
+To make your copy of someone else's repository on GitHub, you *fork* their repository.  Navigate to the GitHub page of the project.  In the upper right hand button, click the button that says **Fork**.  This will make a copy of the repository on *your GitHub account*.  
 
 ### Cloning a repository
 Now you need copy the repository on *your GitHub* to your local computer.  This is called a *clone*.  Navigate to the GitHub page of *your copy* of the repository on GitHub. Click the green button that says Clone or Download.  Copy the link in the box.
@@ -194,7 +273,9 @@ $ git clone https://github.com/YOUR-USERNAME/REPOSITORY-NAME.git
 where the username will be your GitHub username and the repository name will be the name of the repository.  This command will create a folder with the same name as the repository that will be under git control.  
 
 ### Setting git remotes
-Now that you have all the copies of the repository in place, you need to make connections between the copies so you can transfer information.  These connections between the copies are called *remotes*.  When you clone a repository, it automatically sets up one remote for you called *origin*.  To see the remotes for a repository, go to the command line and type
+Now that you have all the copies of the repository in place, you need to make connections between the copies so you can transfer information.  These connections between the copies are called *remotes*. We already discussed remotes a bit above, when we pushed our code to GitHub.
+
+ When you clone a repository, it automatically sets up one remote for you called *origin*.  To see the remotes for a repository, go to the command line and type
 ```
 $ git remote -v
 ```
