@@ -22,18 +22,19 @@ One of the most common tasks in research is analyzing data.  Many computational 
 ### Working with file paths - the `os.path` module
 For this section, we will be working with the file `ethanol.out` in the `outfiles` directory.
 
-To see this, go to a new cell and type `ls`. `ls` stands for 'list', and will list all of the contents of the current directory. **This command is not a Python command, but will work in the Jupyter notebook**. To see everything in the `outfiles` directory, type
+To see this, go to a new cell and type `ls`. `ls` stands for 'list', and will list all of the contents of the current directory. **This command is not a Python command, but will work in the Jupyter notebook**. To see everything in the `data` directory, type
 
 ~~~
-ls outfiles
+ls data
 ~~~
 
-You should see
+You should see something like
 ~~~
-butanol.out   ethanol.out   hexanol.out   nonanol.out   pentanol.out
-decanol.out   heptanol.out  methanol.out  octanol.out   propanol.out
+distance_data_headers.csv   outfiles                  sapt.out                  water.xyz
 ~~~
 {: .output}
+
+Here, `distance_data_headers.csv`, `sapt.out`, and `water.xyz` are all files, while `outfiles` is another directory.
 
 In order to parse a file, you must tell Python the location of the file, or the "file path". For example, you can see what folder your Jupyter notebook is in by typing `pwd` into a cell in your notebook and evaluating it. `pwd` stands for 'print working directory', and can also be used in your terminal to see what directory you're in.
 
@@ -62,9 +63,9 @@ print(ethanol_file)
 ~~~
 {: .python}
 
-You should see the following
+You should see something similar to the following
 ~~~
-data/ethanol.out
+data/outfiles/ethanol.out
 ~~~
 {:. .output}
 
@@ -97,7 +98,7 @@ In the next line, we use the `readlines` function to get our file as a list of s
 `readlines()` function works.
 
 > ## `readlines` function behavior
-> Note that the `readlines` function can only be used on a file object one time. When you open the file for reading, a 'file pointer' points to the first line. Every time the `readlines` function finds a new line, this pointer is moved. When it finishes, the file pointer is at the end of the file. Thus, if you called readlines again, the pointer for the file object is already at the end of the file. If you forget to set `outfile.readlines()` equal to a variable, you must `open` the file again in order to get the contents of the file.
+> Note that the `readlines` function can only be used on a file object one time. If you forget to set `outfile.readlines()` equal to a variable, you must `open` the file again in order to get the contents of the file.
 {: .callout}
 
 After you open and read information from a file object, you should always close the file.
@@ -122,7 +123,7 @@ outfile.close()
 {: .challenge}
 
 ## Searching for a pattern in your file
-The file we opened is an output file which calculates the energy (and a lot of other stuff!) for an ethanol molecule.  As stated previously, the `readlines()` function put the file contents into a list where each element is a line of the file. You may remember from lesson 1 that a `for` loops can be used to execute the same code repeatedly. As we learned in the previous lesson, we can use a foor loop to iterate through elements in a list.
+The file we opened is an output file which calculates the energy (and a lot of other stuff!) for an ethanol molecule.  As stated previously, the `readlines()` function put the file contents into a list where each element is a line of the file. You may remember from lesson 1 that a `for` loops can be used to execute the same code repeatedly. As we learned in the previous lesson, we can use a for loop to iterate through elements in a list.
 
 Let's take a look at what's in the file.
 
@@ -134,33 +135,7 @@ for line in data:
 
 This will print exactly what is in the file.
 
-If you through the output, you will see that the critical line says "Final Energy".  We want to search through this file and find that line, and print only that line. We can do this using an `if` statement.
-
-With Python, we can use `in` to see if a string or list contains a particular value.
-
-For example, we can check if a word contains a letter using the following sytnax
-
-~~~
-'p' in 'python'
-~~~
-{: .language-python}
-
-~~~
-True
-~~~
-{: .output}
-
-~~~
-'P' in 'python'
-~~~
-{: .language}
-
-~~~
-False
-~~~
-{: .output}
-
-Note from the example above, that the result is case sensitive.
+If you look through the output, you will see that the critical line says "Final Energy".  We want to search through this file and find that line, and print only that line. We can do this using an `if` statement.
 
 Returning to our file example,
 
@@ -178,7 +153,6 @@ for line in data:
 {: .output}
 
 Remember that `readlines()` saves each line of the file as a string, so `energy_line` is a string that contains the whole line.  For our analysis, if we are most interested in the energy, we need to split up the line so we can save just the number as a different variable name. To do this, we use a new function called `split`.  The `split` function takes a string and divides it into its components using a *delimiter*.
-
 
 The *delimiter* is specified as an argument to the function (put in the parenthesis `()`). If you do not specify a delimiter, a space is used by default. Let's try this out.
 
