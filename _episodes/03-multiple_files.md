@@ -21,24 +21,42 @@ In our previous lesson, we parsed values from output files.  While you might hav
 
 One of the real powers of writing a program to analyze your data is that you can just as easily analyze 100 files as 1 file.  In this example, we are going to parse the output files for a whole series of aliphatic alcohol compounds and parse the energy value for each one.  The output files are all saved in a folder called outfiles that you should have downloaded in the setup for this lesson.  Make sure the folder is in the same directory as the directory where you are writing and executing your code.
 
-To analyze multiple files, we will need to import a python **library**.  A **library** is a set of functions that have some purpose.  We will be using the `glob` library, which will help us read in multiple files from our computer.  Within a library there are **functions** which do a specific computational task.  Usually a function has some type of input and gives a particular output.  To use a function that is in a library, you often use the dot notation introduced in the previous lesson.  In general
+To analyze multiple files, we will need to import a python **library**.  A **library** is a set of modules which contain functions. The functions within a library or module are usually related to one another. Using libraries and in Python reduces the amount of code you have to write. In the last lesson, we imported `os.path`, which was a module that handled filepaths for us.
+
+In this lesson, we will be using the `glob` library, which will help us read in multiple files from our computer.  Within a library there are  modules and functions which do a specific computational task.  Usually a function has some type of input and gives a particular output.  To use a function that is in a library, you often use the dot notation introduced in the previous lesson.  In general
 ```
 import library_name
 output = library_name.funtion_name(input)
 ```
 {: .language-python}
 
-We are going to import two libraries.  One is the `os` library which controls functions related to the operating system of your computer.  The other is the `glob` library which contains functions to help us analyze multiple files.  If we are going to analyze multiple files, we first need to specify where those files are located.
+We are going to import two libraries.  One is the `os` library which controls functions related to the operating system of your computer. We used this library in the last lesson to handle filepaths.  The other is the `glob` library which contains functions to help us analyze multiple files.  If we are going to analyze multiple files, we first need to specify where those files are located.
+
+>## Exercise
+>
+> How would you use the `os.path` module to point to the directory where your outfiles are?
+>
+>> ## Solution
+>> ~~~
+>> outfile_directory = os.path.join('data', 'outfiles')
+>> ~~~
+>> {: .language-python}
+> {: .solution}
+{: .challenge}
+
+In order to get all of the files which match a specific pattern, we will use the wildcard character `*`.
+
 ```
-file_location = os.path.join('outfiles', '*.out')
+file_location = os.path.join('data', 'outfiles', '*.out')
 print(file_location)
 ```
 {: .language-python}
 ```
-outfiles/*.out
+data/outfiles/*.out
 ```
 {: .output}
-This specifies that we want to look for all the files in a directory called `outfiles` that end in ".out".  The * is the wildcard character which matches any character.  
+
+This specifies that we want to look for all the files in a directory called `data/outfiles` that end in ".out".  The * is the wildcard character which matches any character.  
 
 Next we are going to use a function called `glob` in the library called `glob`.  It is a little confusing since the function and the library have the same name, but we will see other examples where this is not the case later.  The output of the function `glob` is a list of all the filenames that fit the pattern specified in the input.   The input is the file location.
 ```
@@ -48,17 +66,15 @@ print(filenames)
 ```
 {: .language-python}
 ```
-['outfiles/butanol.out', 'outfiles/decanol.out', 'outfiles/ethanol.out', 'outfiles/heptanol.out', 'outfiles/hexanol.out', 'outfiles/methanol.out', 'outfiles/nonanol.out', 'outfiles/octanol.out', 'outfiles/pentanol.out', 'outfiles/propanol.out']
+['data/outfiles/butanol.out', 'data/outfiles/decanol.out', 'data/outfiles/ethanol.out', 'data/outfiles/heptanol.out', 'data/outfiles/hexanol.out', 'data/outfiles/methanol.out', 'data/outfiles/nonanol.out', 'data/outfiles/octanol.out', 'data/outfiles/pentanol.out', 'data/outfiles/propanol.out']
 ```
 {: .output}
-
-You may wonder why using the `os` library was necessary considering that all it did was specifcy the filepath.  The problem with typing in the filepath is that different operating systems use different notations and we want our code to work on any computer.  
 
 Now if we want to parse every file we just read in, we will use a `for` loop to go through each file.
 ```
 for f in filenames:
     outfile = open(f,'r')
-    data=outfile.readlines()
+    data = outfile.readlines()
     for line in data:
         if 'Final Energy' in line:
             energy_line = line
@@ -85,9 +101,45 @@ Notice that in this code we actually used two `for` loops, one nested inside the
 
 The output our code currently generates is not that useful.  It doesn't show us which file each energy value came from.  
 
->## Exercise
+We want to print the name of the molecule with the energy. We can use `os.path.basename`, which is another function in `os.path` to get just the name of the file.
+
+~~~
+first_file = filenames[0]
+print(first_file)
+
+first_molecule = os.path.basename(first_file)
+print(first_molecule)
+~~~
+{: .language-python}
+
+~~~
+data/outfiles/propanol.out
+propanol.out
+~~~
+{: .output}
+
+> ## Exercise
 >
->Modify the code such that it prints the file name along with each energy value.  Each filename will be of the form "outfile/filename".  See if you can remove "outfile/" when you print your results.
+> How would you extract the molecule name from the example above?
+> ~~~
+> test_file = filenames[0]
+> print(test_file)
+> ~~~
+> {: .language-python}
+>
+>> ## Solution
+>> You can use the `str.split` function introduced in the last lesson, and split at the '.' character.
+>> ~~~
+>> split_filename = first_molecule.split('.')
+>> molecule_name = split_filename[0]
+>> print(molecule_name)
+>> ~~~
+>> {: .language-python}
+> {: .solution}
+{: .challenge}
+
+
+Modify the code such that it prints the file name along with each energy value.  Each filename will be of the form "outfile/filename".  See if you can remove "outfile/" when you print your results.
 >
 >> ## Solution
 >> ~~~
