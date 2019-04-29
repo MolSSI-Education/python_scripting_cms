@@ -53,8 +53,15 @@ The help menu shows us all the options we can use with this function.  The first
 {: .callout}
 
 Now we have have our plan, we are ready to import our data with `genfromtxt()`.  
+
+First, we have to get the path to our file. Remember from previous lessons that we use the `os.path` module to do this.
+
 ```
-distances = numpy.genfromtxt(fname='distance_data_headers.csv', delimiter=',', dtype='unicode')
+import os
+
+distance_file = os.path.join('data', 'distance_data_headers.csv')
+
+distances = numpy.genfromtxt(fname=distance_file, delimiter=',', dtype='unicode')
 print(distances)
 ```
 {: .language-python}
