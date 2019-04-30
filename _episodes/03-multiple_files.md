@@ -70,11 +70,12 @@ print(filenames)
 ```
 {: .output}
 
-Now if we want to parse every file we just read in, we will use a `for` loop to go through each file.
+This will give us a list of all the files which end in `*.out` in the `outfiles` directory. Now if we want to parse every file we just read in, we will use a `for` loop to go through each file.
 ```
 for f in filenames:
     outfile = open(f,'r')
     data = outfile.readlines()
+    outfile.close()
     for line in data:
         if 'Final Energy' in line:
             energy_line = line
@@ -83,6 +84,7 @@ for f in filenames:
             print(energy)
 ```
 {: .language-python}
+
 ```
 -232.1655798347283
 -466.3836241400086
@@ -107,8 +109,8 @@ We want to print the name of the molecule with the energy. We can use `os.path.b
 first_file = filenames[0]
 print(first_file)
 
-first_molecule = os.path.basename(first_file)
-print(first_molecule)
+file_name = os.path.basename(first_file)
+print(file_name)
 ~~~
 {: .language-python}
 
@@ -121,16 +123,11 @@ propanol.out
 > ## Exercise
 >
 > How would you extract the molecule name from the example above?
-> ~~~
-> test_file = filenames[0]
-> print(test_file)
-> ~~~
-> {: .language-python}
 >
 >> ## Solution
 >> You can use the `str.split` function introduced in the last lesson, and split at the '.' character.
 >> ~~~
->> split_filename = first_molecule.split('.')
+>> split_filename = file_name.split('.')
 >> molecule_name = split_filename[0]
 >> print(molecule_name)
 >> ~~~
@@ -138,37 +135,44 @@ propanol.out
 > {: .solution}
 {: .challenge}
 
+Using the solution above, we can modify our loop so that it prints the file name along with each energy value.
 
-Modify the code such that it prints the file name along with each energy value.  Each filename will be of the form "outfile/filename".  See if you can remove "outfile/" when you print your results.
->
->> ## Solution
->> ~~~
->> for f in filenames:
->>    outfile = open(f,'r')
->>    data=outfile.readlines()
->>    for line in data:
->>        if 'Final Energy' in line:
->>            energy_line = line
->>            words = energy_line.split()
->>            energy = float(words[3])
->>            print(f[9:], energy)
->> ~~~
->> {: .language-python}
->> ~~~
->> butanol.out -232.1655798347283
->> decanol.out -466.3836241400086
->> ethanol.out -154.09130176573018
->> heptanol.out -349.27397687072676
->> hexanol.out -310.2385332251633
->> methanol.out -115.04800861868374
->> nonanol.out -427.3465180082815
->> octanol.out -388.3110864554743
->> pentanol.out -271.20138119895074
->> propanol.out -193.12836249728798
->> ~~~
->> {: .output}
-> {: .solution}
-{: .challenge}
+~~~
+for f in filenames:
+    # Get the molecule name
+    file_name = os.path.basename(f)
+    split_filname = file_name.split('.')
+    molecule_name = split_filename[0]
+
+    # Read the data
+    outfile = open(f,'r')
+    data = outfile.readlines()
+    outfile.close()
+
+    # Loop through the data
+    for line in data:
+        if 'Final Energy' in line:
+            energy_line = line
+            words = energy_line.split()
+            energy = float(words[3])
+            print(molecule_name, energy)
+~~~
+{: .language-python}
+
+~~~
+propanol -193.12836249728798
+pentanol -271.20138119895074
+decanol -466.3836241400086
+methanol -115.04800861868374
+octanol -388.3110864554743
+ethanol -154.09130176573018
+hexanol -310.2385332251633
+heptanol -349.27397687072676
+butanol -232.1655798347283
+nonanol -427.3465180082815
+~~~
+{: .output}
+
 
 ## Printing to a File
 Finally, it might be useful to print our results in a new file, such that we could share our results with colleagues or or e-mail them to our advisor.  Much like when we read in a file, the first step to writing output to a file is opening that file for writing.  In general to open a file for writing you use the syntax
@@ -181,17 +185,28 @@ The `w` means open the file for writing.  If you use `w+` that means open the fi
 
 Python can only write strings to files.  Our current print statement is not a string; it prints two python variables.  To convert what we have now to a string, you place a capital **F** in front of the line you want to print and enclose it in single quotes.  Each python variable is placed in braces. Then you can either print the line (as we have done before) or you can use the `filehandle.write()` command to print it to a file.
 
+To make the printing neater, we will separate the file name from the energy using a tab. To insert a tab, we use the special character `\t`.
+
 ```
 datafile = open('energies.txt','w+')  #This opens the file for writing
 for f in filenames:
+    # Get the molecule name
+    file_name = os.path.basename(f)
+    split_filename = file_name.split('.')
+    molecule_name = split_filename[0]
+
+    # Read the data
     outfile = open(f,'r')
-    data=outfile.readlines()
+    data = outfile.readlines()
+    outfile.close()
+
+    # Loop through the data
     for line in data:
         if 'Final Energy' in line:
             energy_line = line
             words = energy_line.split()
             energy = float(words[3])
-            datafile.write(F'{f[9:]} {energy}\n')  #Prints to file
+            datafile.write(F'{molecule_name} \t {energy} \n')
 datafile.close()
 ```
 {: .language-python}
@@ -203,7 +218,7 @@ In the file writing line, notice the `\n` at the end of the line.  This is the n
 ## A final note about string formatting
 The F'string' notation that you can use with the print or the write command lets you format strings in many ways.  You could include other words or whole sentences.  For example, we could change the file writing line to
 ```
-datafile.write(F'For the file {f[9:]} the energy is {energy} in kcal/mole.')
+datafile.write(F'For the file {molecule_name} the energy is {energy} in kcal/mole.')
 ```
 {: .language-python}
 where anything in the braces is a python variable and it will print the value of that variable.  
