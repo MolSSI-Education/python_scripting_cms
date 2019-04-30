@@ -21,24 +21,42 @@ In our previous lesson, we parsed values from output files.  While you might hav
 
 One of the real powers of writing a program to analyze your data is that you can just as easily analyze 100 files as 1 file.  In this example, we are going to parse the output files for a whole series of aliphatic alcohol compounds and parse the energy value for each one.  The output files are all saved in a folder called outfiles that you should have downloaded in the setup for this lesson.  Make sure the folder is in the same directory as the directory where you are writing and executing your code.
 
-To analyze multiple files, we will need to import a python **library**.  A **library** is a set of functions that have some purpose.  We will be using the `glob` library, which will help us read in multiple files from our computer.  Within a library there are **functions** which do a specific computational task.  Usually a function has some type of input and gives a particular output.  To use a function that is in a library, you often use the dot notation introduced in the previous lesson.  In general
+To analyze multiple files, we will need to import a python **library**.  A **library** is a set of modules which contain functions. The functions within a library or module are usually related to one another. Using libraries and in Python reduces the amount of code you have to write. In the last lesson, we imported `os.path`, which was a module that handled filepaths for us.
+
+In this lesson, we will be using the `glob` library, which will help us read in multiple files from our computer.  Within a library there are  modules and functions which do a specific computational task.  Usually a function has some type of input and gives a particular output.  To use a function that is in a library, you often use the dot notation introduced in the previous lesson.  In general
 ```
 import library_name
 output = library_name.funtion_name(input)
 ```
 {: .language-python}
 
-We are going to import two libraries.  One is the `os` library which controls functions related to the operating system of your computer.  The other is the `glob` library which contains functions to help us analyze multiple files.  If we are going to analyze multiple files, we first need to specify where those files are located.
+We are going to import two libraries.  One is the `os` library which controls functions related to the operating system of your computer. We used this library in the last lesson to handle filepaths.  The other is the `glob` library which contains functions to help us analyze multiple files.  If we are going to analyze multiple files, we first need to specify where those files are located.
+
+>## Exercise
+>
+> How would you use the `os.path` module to point to the directory where your outfiles are?
+>
+>> ## Solution
+>> ~~~
+>> outfile_directory = os.path.join('data', 'outfiles')
+>> ~~~
+>> {: .language-python}
+> {: .solution}
+{: .challenge}
+
+In order to get all of the files which match a specific pattern, we will use the wildcard character `*`.
+
 ```
-file_location = os.path.join('outfiles', '*.out')
+file_location = os.path.join('data', 'outfiles', '*.out')
 print(file_location)
 ```
 {: .language-python}
 ```
-outfiles/*.out
+data/outfiles/*.out
 ```
 {: .output}
-This specifies that we want to look for all the files in a directory called `outfiles` that end in ".out".  The * is the wildcard character which matches any character.  
+
+This specifies that we want to look for all the files in a directory called `data/outfiles` that end in ".out".  The * is the wildcard character which matches any character.  
 
 Next we are going to use a function called `glob` in the library called `glob`.  It is a little confusing since the function and the library have the same name, but we will see other examples where this is not the case later.  The output of the function `glob` is a list of all the filenames that fit the pattern specified in the input.   The input is the file location.
 ```
@@ -48,17 +66,16 @@ print(filenames)
 ```
 {: .language-python}
 ```
-['outfiles/butanol.out', 'outfiles/decanol.out', 'outfiles/ethanol.out', 'outfiles/heptanol.out', 'outfiles/hexanol.out', 'outfiles/methanol.out', 'outfiles/nonanol.out', 'outfiles/octanol.out', 'outfiles/pentanol.out', 'outfiles/propanol.out']
+['data/outfiles/butanol.out', 'data/outfiles/decanol.out', 'data/outfiles/ethanol.out', 'data/outfiles/heptanol.out', 'data/outfiles/hexanol.out', 'data/outfiles/methanol.out', 'data/outfiles/nonanol.out', 'data/outfiles/octanol.out', 'data/outfiles/pentanol.out', 'data/outfiles/propanol.out']
 ```
 {: .output}
 
-You may wonder why using the `os` library was necessary considering that all it did was specifcy the filepath.  The problem with typing in the filepath is that different operating systems use different notations and we want our code to work on any computer.  
-
-Now if we want to parse every file we just read in, we will use a `for` loop to go through each file.
+This will give us a list of all the files which end in `*.out` in the `outfiles` directory. Now if we want to parse every file we just read in, we will use a `for` loop to go through each file.
 ```
 for f in filenames:
     outfile = open(f,'r')
-    data=outfile.readlines()
+    data = outfile.readlines()
+    outfile.close()
     for line in data:
         if 'Final Energy' in line:
             energy_line = line
@@ -67,6 +84,7 @@ for f in filenames:
             print(energy)
 ```
 {: .language-python}
+
 ```
 -232.1655798347283
 -466.3836241400086
@@ -85,38 +103,76 @@ Notice that in this code we actually used two `for` loops, one nested inside the
 
 The output our code currently generates is not that useful.  It doesn't show us which file each energy value came from.  
 
->## Exercise
+We want to print the name of the molecule with the energy. We can use `os.path.basename`, which is another function in `os.path` to get just the name of the file.
+
+~~~
+first_file = filenames[0]
+print(first_file)
+
+file_name = os.path.basename(first_file)
+print(file_name)
+~~~
+{: .language-python}
+
+~~~
+data/outfiles/propanol.out
+propanol.out
+~~~
+{: .output}
+
+> ## Exercise
 >
->Modify the code such that it prints the file name along with each energy value.  Each filename will be of the form "outfile/filename".  See if you can remove "outfile/" when you print your results.
+> How would you extract the molecule name from the example above?
 >
 >> ## Solution
+>> You can use the `str.split` function introduced in the last lesson, and split at the '.' character.
 >> ~~~
->> for f in filenames:
->>    outfile = open(f,'r')
->>    data=outfile.readlines()
->>    for line in data:
->>        if 'Final Energy' in line:
->>            energy_line = line
->>            words = energy_line.split()
->>            energy = float(words[3])
->>            print(f[9:], energy)
+>> split_filename = file_name.split('.')
+>> molecule_name = split_filename[0]
+>> print(molecule_name)
 >> ~~~
 >> {: .language-python}
->> ~~~
->> butanol.out -232.1655798347283
->> decanol.out -466.3836241400086
->> ethanol.out -154.09130176573018
->> heptanol.out -349.27397687072676
->> hexanol.out -310.2385332251633
->> methanol.out -115.04800861868374
->> nonanol.out -427.3465180082815
->> octanol.out -388.3110864554743
->> pentanol.out -271.20138119895074
->> propanol.out -193.12836249728798
->> ~~~
->> {: .output}
 > {: .solution}
 {: .challenge}
+
+Using the solution above, we can modify our loop so that it prints the file name along with each energy value.
+
+~~~
+for f in filenames:
+    # Get the molecule name
+    file_name = os.path.basename(f)
+    split_filname = file_name.split('.')
+    molecule_name = split_filename[0]
+
+    # Read the data
+    outfile = open(f,'r')
+    data = outfile.readlines()
+    outfile.close()
+
+    # Loop through the data
+    for line in data:
+        if 'Final Energy' in line:
+            energy_line = line
+            words = energy_line.split()
+            energy = float(words[3])
+            print(molecule_name, energy)
+~~~
+{: .language-python}
+
+~~~
+propanol -193.12836249728798
+pentanol -271.20138119895074
+decanol -466.3836241400086
+methanol -115.04800861868374
+octanol -388.3110864554743
+ethanol -154.09130176573018
+hexanol -310.2385332251633
+heptanol -349.27397687072676
+butanol -232.1655798347283
+nonanol -427.3465180082815
+~~~
+{: .output}
+
 
 ## Printing to a File
 Finally, it might be useful to print our results in a new file, such that we could share our results with colleagues or or e-mail them to our advisor.  Much like when we read in a file, the first step to writing output to a file is opening that file for writing.  In general to open a file for writing you use the syntax
@@ -129,17 +185,28 @@ The `w` means open the file for writing.  If you use `w+` that means open the fi
 
 Python can only write strings to files.  Our current print statement is not a string; it prints two python variables.  To convert what we have now to a string, you place a capital **F** in front of the line you want to print and enclose it in single quotes.  Each python variable is placed in braces. Then you can either print the line (as we have done before) or you can use the `filehandle.write()` command to print it to a file.
 
+To make the printing neater, we will separate the file name from the energy using a tab. To insert a tab, we use the special character `\t`.
+
 ```
 datafile = open('energies.txt','w+')  #This opens the file for writing
 for f in filenames:
+    # Get the molecule name
+    file_name = os.path.basename(f)
+    split_filename = file_name.split('.')
+    molecule_name = split_filename[0]
+
+    # Read the data
     outfile = open(f,'r')
-    data=outfile.readlines()
+    data = outfile.readlines()
+    outfile.close()
+
+    # Loop through the data
     for line in data:
         if 'Final Energy' in line:
             energy_line = line
             words = energy_line.split()
             energy = float(words[3])
-            datafile.write(F'{f[9:]} {energy}\n')  #Prints to file
+            datafile.write(F'{molecule_name} \t {energy} \n')
 datafile.close()
 ```
 {: .language-python}
@@ -151,7 +218,7 @@ In the file writing line, notice the `\n` at the end of the line.  This is the n
 ## A final note about string formatting
 The F'string' notation that you can use with the print or the write command lets you format strings in many ways.  You could include other words or whole sentences.  For example, we could change the file writing line to
 ```
-datafile.write(F'For the file {f[9:]} the energy is {energy} in kcal/mole.')
+datafile.write(F'For the file {molecule_name} the energy is {energy} in kcal/mole.')
 ```
 {: .language-python}
 where anything in the braces is a python variable and it will print the value of that variable.  
