@@ -1,7 +1,7 @@
 ---
 title: "Version Control and Sharing Code"
-teaching: 50
-exercises: 15
+teaching: 75
+exercises: 25
 questions:
 - "How do I share my code with others using git and GitHub?"
 objectives:
@@ -41,12 +41,34 @@ The software package `git` is one of the most popular software packages for vers
 > You will need to open a new terminal window to start using git.
 {: .callout}
 
+### Configuring Git
+
+The first time you use Git on a particular computer, you need to configure some things.
+
+First, you should set your identity.
+One of the most important things that version control like Git does is to keep track of who changes what.
+This helps repository maintainers coordinate the efforts of all the people who contribute to the project.
+Most importantly, it makes it easier to figure out who to blame when something goes wrong.
+To set you identity, open a Terminal window and type the following commands:
+
+~~~
+$ git config --global user.name "<Firstname> <Lastname>"
+$ git config --global user.email "<email address>"
+~~~
+{: .bash}
+
+Next configure the credential helper so you don't have to type your password as often when performing `git` operations.
+~~~
+$ git config --global credential.helper cache
+~~~
+{: .bash}
+
 ## Initializing git on your project
 In git, a collection of files related to a specific project is called a *respository*.  In the Terminal window, navigate to the folder where you wrote your geometry analysis program.  Once you are in the correct folder, type
 ```
 $ git init
 ```
-{: .langugae-bash}
+{: .bash}
 
 After you type this command, git will initialize an empty repository. Now we need to **add** files to be tracked by `git`, and commit the files.
 
@@ -54,11 +76,11 @@ In the Terminal window, type
 ```
 $ git add .
 ```
-{: .language-bash}
+{: .bash}
 
 The `.` in the git add statement says to add everything in the current folder to the repository.  If you don't want to add everything, don't put the `.` and instead just list the specific files you do want to include.  
 
-`git add` does not add the files to your repository.  It really just tells git which files you want it to track, and are ready to commit.  This is called *staging*. To finish adding the files to the repository, you have to *make a commit*.
+`git add` does not add the files to your repository.  It really just tells git which files you want it to track that are ready to commit.  This is called *staging*. To finish adding the files to the repository, you have to *make a commit*.
 
 ## Making commits
 Once you have staged a file to add to your repository, you commit it to the repository. To make a commit, you use the `git commit` command, and have to write a commit message which explains what has changed in that commit.  We will do this in one command with the `-m` option. In the Terminal window, type
@@ -102,9 +124,9 @@ On the next page, GitHub now very helpfully gives us directions for how to get o
 > the terminal to get our local copy onto GitHub (our online repository). That is what is meant by "push an existing repository from the command line."
 {: .callout}
 
-Before we follow these directions, let’s look at a few things. When you want to be able to put the code that is on your computer (your local repo) into an online in a repository, you have to add what git calls remotes to your local repository. Currently, our repository has no remotes.
+Before we follow these directions, let’s look at a few things. When you want to be able to put the code that is on your computer (your local repo) into an online in a repository, you have to add what git calls remotes to your local repository.  Think of remotes like roads; if there is a road between two places you can travel between them.  If there is a remote between two repos, information can travel between them.  
 
-You can see this by typing
+Currently, our repository has no remotes.  You can see this by typing
 ~~~
 $ git remote -v
 ~~~
@@ -181,7 +203,7 @@ This will make something that looks like this:
 
 > ## Exercise
 >
-> In your favorite text editor, create a new file called `README.md` and write a description of your geometry analysis code and how it works.  If you want to have section headings in your file, use # to indicate a section heading.  Otherwise, just type in your description.
+> In your favorite text editor, create a new file called `README.md` and write a description of your geometry analysis code and how it works.  If you want to have section headings in your file, use ## to indicate a section heading.  Otherwise, just type in your description.
 >
 > Make sure you save your file in the folder with the rest of your project.   Using the git commands learned above, add the file to your repository, commit it with an appropriate commit message, and push it to the master branch of your GitHub repository.
 >
@@ -260,7 +282,9 @@ As discussed above, a collection of files for a certain project is called a *rep
 <img src="../fig/episode09_fig1.png" title="Information flow on GitHub" style="display: block; margin: auto;" />
 
 ### Forking a repository
-To make your copy of someone else's repository on GitHub, you *fork* their repository.  Navigate to the GitHub page of the project.  In the upper right hand button, click the button that says **Fork**.  This will make a copy of the repository on *your GitHub account*.  
+To make your copy of someone else's repository on GitHub, you *fork* their repository.  
+
+Find someone else in your class and navigate to the GitHub page of their project.  If you are working these lessons on your own, use [MolSSI's geometry analysis repository](https://github.com/MolSSI-Education/geometry-analysis-example). In the upper right hand button, click the button that says **Fork**.  This will make a copy of the repository on *your GitHub account*.  
 
 ### Cloning a repository
 Now you need copy the repository on *your GitHub* to your local computer.  This is called a *clone*.  Navigate to the GitHub page of *your copy* of the repository on GitHub. Click the green button that says Clone or Download.  Copy the link in the box.
@@ -270,6 +294,7 @@ Type `git clone` and then paste the link you copied.
 ```
 $ git clone https://github.com/YOUR-USERNAME/REPOSITORY-NAME.git
 ```
+{: .bash}
 where the username will be your GitHub username and the repository name will be the name of the repository.  This command will create a folder with the same name as the repository that will be under git control.  
 
 ### Setting git remotes
@@ -279,10 +304,13 @@ Now that you have all the copies of the repository in place, you need to make co
 ```
 $ git remote -v
 ```
+{: .bash}
 ```
 origin	https://github.com/YOUR-USERNAME/REPOSITORY-NAME.git (fetch)
 origin	https://github.com/YOUR-USERNAME/REPOSITORY-NAME.git (push)
 ```
+{: .output}
+
 Since we cloned the repository from our copy on GitHub, the *origin* remote is between our copy on GitHub and the local copy on our computer.
 
 We probably also want to connect the repository on our local computer to the main repository on GitHub so that we can get updates that are made to that repository.  We need to create a new remote called *upstream* that connects the repository on our local computer to the main repository on GitHub.  You can actually name any remote anything you want, but *upstream* is the accepted name for the remote to the original main repository.
@@ -293,6 +321,8 @@ Go to the terminal and type `git remote add upstream` and then paste the link yo
 ```
 $ git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
 ```
+{: .bash}
+
 Now if you use `git remote -v` again to list your remotes, you should see two remotes, origin (to your copy on GitHub) and upstream (to the main repository on GitHub).
 ```
 $ git remote -v
@@ -301,6 +331,7 @@ $ git remote -v
 > upstream  https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git (fetch)
 > upstream  https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git (push)
 ```
+{: .output}
 
 ### Information flow using GitHub
 
@@ -309,7 +340,7 @@ The normal workflow when you are working on a collaborative project with git is:
 2.  Work on the project on your local copy of the repository.
 3.  Commit your changes to your local copy.
 4.  Push your changes to your copy of the repository on GitHub.
-5.  Submit your changes to the main developers so they can consider including them in the main repository.  
+5.  Submit your changes to the main developers through a *pull request* so they can consider including them in the main repository.  
 
 #### Getting changes from the main repository
 
@@ -317,6 +348,7 @@ To get changes from the main repository into your local repository, you use the 
 ```
 $ git pull upstream master
 ```
+{: .bash}
 When you enter this command, several things can happen, depending on what changes have been added to the main repository.  If the new changes don't conflict with what you have already, then you might see something that says `Fast Forward`.  If there are conflicts, you will have a merge conflict that you need to resolve, where you select which version of the file you want.
 
 > ## Pull vs. fetch and merge
@@ -324,13 +356,88 @@ When you enter this command, several things can happen, depending on what change
 > The `pull` command is actually a combination of two other git commands `fetch` and then `merge`.  The `pull` command is easier because it is just one step, but in complex situations you might want to do a `fetch` so you can see what changes have been made and then decide to `merge` or not.
 {: .callout}
 
+#### Using branches to make changes
+
+Within a repository, you can actually create different copies of your code.  These are called *branches*.  This is particularly useful if you want to work on a new feature, but you want to keep another copy of the code that is working in case you mess something up.  In all of the examples above, we have been using the main or *master* branch.  
+
+Let's make a branch and make some changes to the classmate's code you forked and cloned.  First, make sure you are on your master branch.
+~~~
+$ git status
+~~~
+{: .bash}
+~~~
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+~~~
+{: .output}
+
+Now, make a new branch for your edits.  You can name your branch anything you want, but we will call it edits in this example.  Usually you would choose a more informative name, but this is just an example.
+~~~
+$ git branch edits
+~~~
+{: .bash}
+
+Now we will switch from our master branch to the new edits branch.
+~~~
+$ git checkout edits
+~~~
+{: .bash}
+~~~
+Switched to branch 'edits'
+~~~
+{: .output}
+
+Now that we have crated a branch to work on, we can make changes to the files without worrying about messing up anyone else's work.
+
+> ## Exercise
+> Open the README.md file and make a change to the file.
+>
+>> ## Solution
+>> Add a line to the README.md file.
+> {: .solution}
+{: .challenge}
+
 #### Pushing changes to your repository on GitHub
 
-Suppose you have made changes to your project and you are now ready to put them on GitHub.   First you need to use `git add` and `git commit` as discussed above to save all your changes to git.  Then you need to push your changes through the origin remote to your repository on GitHub.
+> ## Exercise
+> Use `git status` to check which files have been modified on this branch.  Then use `git add` and `git commit` to commit the changes to the branch.
+>> ## Solution
+>> ~~~
+>> $ git status
+>> ~~~
+>> {: .bash}
+>> ~~~
+>> On branch edits
+>> Changes not staged for commit:
+>>   (use "git add <file>..." to update what will be committed)
+>>   (use "git checkout -- <file>..." to discard changes in working directory)
+>>
+>> 	modified:   README.md
+>>
+>>
+>> no changes added to commit (use "git add" and/or "git commit -a")
+>> ~~~
+>> {: .output}
+>> ~~~
+>> $ git add .
+>> $ git commit -m "Changes to README.md"
+>> ~~~
+>> {: .bash}
+>> ~~~
+>> [edits cf7d455] Changes to README.md
+>>  1 file changed, 2 insertions(+)
+>> ~~~
+>> {: .output}
+> {: .solution}
+{: .challenge}
+
+Now you can push your changes through the origin remote to your repository on GitHub.
 ```
-git push origin master
+git push origin edits
 ```
-Generally, you can not push your changes upstream into the main repository on GitHub.  This is why you need your own fork on GitHub; you can always push to something that belongs to you, but not something that belongs to someone else.  
+This will create a new branch on your GitHub repository called edits and push your changes to that branch.  Generally, you can not push your changes upstream into the main repository on GitHub.  This is why you need your own fork on GitHub; you can always push to something that belongs to you, but not something that belongs to someone else.  
 
 > ## Being a Collaborator
 >
@@ -341,14 +448,17 @@ Notice that in this flow of information, if you want to pull new changes from th
 
 #### Submitting your changes to the main developers
 
-Once you have pushed changes to your repository on GitHub, you may want to tell the main developers about your changes and ask them to consider merging them into the main repository.  This is called making a *pull request*.  Essentially, you are suggesting to the developers that they pull changes from your repository into their repository.   To make a pull request, navigate to the GitHub page of the main repository and click on Pull Request in the navigation bar across the top.  On the next page, click the green button that says New Pull Request.
+Once you have pushed changes to your repository on GitHub, you may want to tell the main developers about your changes and ask them to consider merging them into the main repository.  This is called making a *pull request*.  Essentially, you are suggesting to the developers that they pull changes from your repository into their repository.   To make a pull request, navigate to the GitHub page of the main repository (your classmate's repository or the MolSSI geometry analysis example repository, whichever you are using) and click on Pull Request in the navigation bar across the top.  On the next page, click the green button that says New Pull Request.
 
-On the next page, in the left box that says *base*, the main repository should be listed.  If it is not, use the dropdown menu to select it.  In the right box that says *compare*, use the dropdown menu to select your repository.  If you don't see it in the list, then you need to click the blue link above the boxes that says *compare across forks*.  Click *Create Pull Request*.  
+On the next page, in the left box that says *base*, the main repository should be listed.  If it is not, use the dropdown menu to select it.  In the right box that says *compare*, use the dropdown menu to select the edits branch of your repository.  If you don't see it in the list, then you need to click the blue link above the boxes that says *compare across forks*.  Click *Create Pull Request*.  
 
-On the next page, you will type a message to the developers telling them what changes you have made.  You can also suggest reviewers for your lesson.  When you are finished, click *Create Pull Request*.
+On the next page, you will type a message to the developers telling them what changes you have made.  You can also suggest reviewers who you want to check out your changes.  When you are finished, click *Create Pull Request*.
 
 The developers will receive a notification of your pull request and then they can review your changes and decide if they are going to merge them into the main repository.  You will receive a notification letting you know if/when the pull request has been merged.  
 
-### Using branches
-
-Within a repository, you can actually create different copies of your code.  These are called *branches*.  This is particularly useful if you want to work on a new feature, but you want to keep another copy of the code that is working in case you mess something up.  In all of the examples above, we have been using the main or *master* branch.  If you are pushing changes to a different different branch, you would replace *master* with the name of that branch.  
+> ## Exercise
+> Go to the GitHub page of *your* geometry analysis project.  See if a classmate has submitted any changes through a pull request, review their changes, and merge the changes into your master branch.
+>> ## Solution
+>> Navigate to the GitHub page of your geometry analysis project.  Click on Pull Requests in the top menu bar.  Click on the pull request submitted by your classmate.  Click on Files Changed tab to see what changes were made.  If you hover over any line of the file, a blue plus sign will show up on the left side.  You can click on that to add a comment.  Click on the Conversations tab again.  If you want to accept the changes, scroll down and click on the green Merge Pull Request button.  If you do not want to accept the changes, write a comment to the author explaining why you are not accepting the changes and click the Close and Comment button.
+> {: .solution}
+{: .challenge}
