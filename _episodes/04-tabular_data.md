@@ -279,7 +279,7 @@ TYR6_ASP : 10.9934435
 {: .output}
 
 > ## Geometry Analysis Project
->In the lesson materials, you downloaded a file called "water.xyz".  This is a very simple, standard file format that is often used to distribute molecular coordinates.  The first line of the file is the number of atoms in the molecule, the second line is a title line (or may be blank), and the coordinates begin on the third line.  The format of the coordinates is
+> In the lesson materials, there is a file in the `data` folder called "water.xyz".  This is a very simple, standard file format that is often used to distribute molecular coordinates.  The first line of the file is the number of atoms in the molecule, the second line is a title line (or may be blank), and the coordinates begin on the third line.  The format of the coordinates is
 > ~~~
 > Atom_Label  XCoor   YCoor   ZCoor
 > ~~~
@@ -321,6 +321,7 @@ TYR6_ASP : 10.9934435
 >>         z_distance = atomA[2]-atomB[2]
 >>         bond_length_AB = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
 >>         print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
+>> ~~~
 >> {: .language-python}
 >>
 >> This is a solution that uses `readlines()`.
@@ -349,6 +350,7 @@ TYR6_ASP : 10.9934435
 >>         z_distance = atomA[2]-atomB[2]
 >>         bond_length_AB = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
 >>         print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
+>> ~~~
 >> {: .language-python}
 > {: .solution}
 {: .challenge}
