@@ -153,7 +153,7 @@ Let's try plotting every 100th frame. To do this we will use a new slicing synta
 For example, to get every other row to the 10th row, we would use a start of `0`, and end of `10`, and an increment of `2`. We then use the `:` to get every column.
 
 ~~~
-data[0:10:2, :]
+print(data[0:10:2, :])
 ~~~
 {: .language-python}
 
@@ -172,7 +172,7 @@ If you want to go to the end, leave out the `end` variable, and just use two col
 > How would you get every 100th point in the first column?
 >> ## Answer
 >> ~~~
->> data[0::100, 0]
+>> incr_100 = data[0::100, 0]
 >> ~~~
 >> {: .language-python}
 >>
@@ -201,7 +201,7 @@ plt.plot(data[0::100,0], data[0::100,1], '--')
 
 <img src="../fig/plotting_every100dashed.png" title="Dashed line" style="display: block; margin: auto;" />
 
-Change the line color to a marker
+Change the line to a marker
 
 ~~~
 plt.figure()
