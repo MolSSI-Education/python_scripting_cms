@@ -279,13 +279,13 @@ TYR6_ASP : 10.9934435
 {: .output}
 
 > ## Geometry Analysis Project
->In the lesson materials, you downloaded a file called "water.xyz".  This is a very simple, standard file format that is often used to distribute molecular coordinates.  The first line of the file is the number of atoms in the molecule, the second line is a title line (or may be blank), and the coordinates begin on the third line.  The format of the coordinates is
+> In the lesson materials, there is a file in the `data` folder called "water.xyz".  This is a very simple, standard file format that is often used to distribute molecular coordinates.  The first line of the file is the number of atoms in the molecule, the second line is a title line (or may be blank), and the coordinates begin on the third line.  The format of the coordinates is
 > ~~~
 > Atom_Label  XCoor   YCoor   ZCoor
 > ~~~
 > and the default units (which are used in this example) are angstroms.  
 >
-> Write a code to read in the information from the xyz file and determine the bond lengths between all the atoms.  Hint: there is a numpy function to take the square root, `numpy.sqrt()`. Your code output should look something like this.
+> Write a code to read in the information from the xyz file and determine the bond lengths between all the atoms.  There is a numpy function to take the square root, `numpy.sqrt()`.  To raise a number to a power, use `**`, as in `3**2 = 9`. Your code output should look something like this.
 > ~~~
 > O to O : 0.0
 > O to H1 : 0.969
@@ -299,29 +299,37 @@ TYR6_ASP : 10.9934435
 > ~~~
 > {: .output}
 >
+> Hint: You will need a double `for` loop to measure the distance between all the atoms.  If you aren't sure how to get started, print the variables inside your for loop.
+>
 >> ## Solution
 >> This is a solution that uses the `numpy.genfromtxt()` function to read in the data.  There are many other solutions possible.
 >>
 >> ~~~
 >> import numpy
+>> import os
 >>
->> xyz_file = numpy.genfromtxt(fname='water.xyz', skip_header=2, dtype='unicode')
+>> file_location = os.path.join('data', 'water.xyz')
+>> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2, dtype='unicode')
 >> symbols = xyz_file[:,0]
 >> coord = (xyz_file[:,1:])
 >> coord = coord.astype(numpy.float)
 >>
 >> for numA, atomA in enumerate(coord):
 >>     for numB, atomB in enumerate(coord):
->>        bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
->>        print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
+>>         x_distance = atomA[0]-atomB[0]
+>>         y_distance = atomA[1]-atomB[1]
+>>         z_distance = atomA[2]-atomB[2]
+>>         bond_length_AB = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+>>         print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 >> ~~~
 >> {: .language-python}
 >>
 >> This is a solution that uses `readlines()`.
 >> ~~~
 >> import numpy
->>
->> xyzfile = open("water.xyz","r")
+>> import os
+>> file_location = os.path.join('data', 'water.xyz')
+>> xyzfile = open(file_location,"r")
 >> data=xyzfile.readlines()
 >> data = data[2:]
 >>
@@ -337,7 +345,10 @@ TYR6_ASP : 10.9934435
 >>
 >> for numA, atomA in enumerate(coordinates):
 >>     for numB, atomB in enumerate(coordinates):
->>         bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]-atomB[1])**2+(atomA[2]-atomB[2])**2)
+>>         x_distance = atomA[0]-atomB[0]
+>>         y_distance = atomA[1]-atomB[1]
+>>         z_distance = atomA[2]-atomB[2]
+>>         bond_length_AB = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
 >>         print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 >> ~~~
 >> {: .language-python}
@@ -382,20 +393,23 @@ TYR6_ASP : 10.9934435
 >>
 >>
 >> ~~~
->>import numpy
+>> import numpy
+>> import os
 >>
->>xyz_file = numpy.genfromtxt(fname='water.xyz', skip_header=2, dtype='unicode')
->>symbols = xyz_file[:,0]
->>coord = (xyz_file[:,1:])
->>coord = coord.astype(numpy.float)
->>
->>for numA, atomA in enumerate(coord):
->>    for numB, atomB in enumerate(coord):
->>        if numB > numA:
->>            bond_length_AB = numpy.sqrt((atomA[0]-atomB[0])**2+(atomA[1]- atomB[1])**2+(atomA[2]-atomB[2])**2)
->>            
->>            if bond_length_AB > 0 and bond_length_AB <= 1.5:
->>                print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')     
+>> file_location = os.path.join('data', 'water.xyz')
+>> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2, dtype='unicode')
+>> symbols = xyz_file[:,0]
+>> coord = (xyz_file[:,1:])
+>> coord = coord.astype(numpy.float)
+>> for numA, atomA in enumerate(coord):
+>>     for numB, atomB in enumerate(coord):
+>>         if numB > numA:
+>>             x_distance = atomA[0]-atomB[0]
+>>             y_distance = atomA[1]-atomB[1]
+>>             z_distance = atomA[2]-atomB[2]
+>>             bond_length_AB = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+>>             if bond_length_AB > 0 and bond_length_AB <= 1.5:
+>>                 print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')     
 >> ~~~
 >> {: .language-python}
 >>
