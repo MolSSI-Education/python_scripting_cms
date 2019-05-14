@@ -285,7 +285,7 @@ TYR6_ASP : 10.9934435
 > ~~~
 > and the default units (which are used in this example) are angstroms.  
 >
-> Write a code to read in the information from the xyz file and determine the bond lengths between all the atoms.  Hint: there is a numpy function to take the square root, `numpy.sqrt()`. Your code output should look something like this.
+> Write a code to read in the information from the xyz file and determine the bond lengths between all the atoms.  There is a numpy function to take the square root, `numpy.sqrt()`.  To raise a number to a power, use `**`, as in `3**2 = 9`. Your code output should look something like this.
 > ~~~
 > O to O : 0.0
 > O to H1 : 0.969
