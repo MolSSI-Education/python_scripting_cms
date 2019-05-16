@@ -57,6 +57,12 @@ $ git config --global user.email "<email address>"
 ~~~
 {: .bash}
 
+You will also need to configure a text editor. Here is how to configure your text editor to be Atom.
+~~~
+$ git config --global core.editor "atom --wait"
+~~~
+{: .bash}
+
 Next configure the credential helper so you don't have to type your password as often when performing `git` operations.
 ~~~
 $ git config --global credential.helper cache
