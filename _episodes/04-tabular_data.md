@@ -309,18 +309,20 @@ TYR6_ASP : 10.9934435
 >> import os
 >>
 >> file_location = os.path.join('data', 'water.xyz')
->> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2, dtype='unicode')
+>> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2, >> dtype='unicode')
 >> symbols = xyz_file[:,0]
->> coord = (xyz_file[:,1:])
->> coord = coord.astype(numpy.float)
+>> coordinates = (xyz_file[:,1:])
+>> coordinates = coordinates.astype(numpy.float)
+>> num_atoms = len(symbols)
+>> BLfile = open('bond_lengths.txt','w+')   #Open a file for writing
+>> for num1 in range(0,num_atoms):
+>>     for num2 in range(0,num_atoms):
+>>         x_distance = coordinates[num1,0] - coordinates[num2,0]
+>>         y_distance = coordinates[num1,1] - coordinates[num2,1]
+>>         z_distance = coordinates[num1,2] - coordinates[num2,2]
+>>         bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+>>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  
 >>
->> for numA, atomA in enumerate(coord):
->>     for numB, atomB in enumerate(coord):
->>         x_distance = atomA[0]-atomB[0]
->>         y_distance = atomA[1]-atomB[1]
->>         z_distance = atomA[2]-atomB[2]
->>         bond_length_AB = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>         print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
 >> ~~~
 >> {: .language-python}
 >>
@@ -343,18 +345,17 @@ TYR6_ASP : 10.9934435
 >>     x, y, z = atom_data[1], atom_data[2], atom_data[3]
 >>     coordinates.append([float(x), float(y), float(z)])
 >>
->> for numA, atomA in enumerate(coordinates):
->>     for numB, atomB in enumerate(coordinates):
->>         x_distance = atomA[0]-atomB[0]
->>         y_distance = atomA[1]-atomB[1]
->>         z_distance = atomA[2]-atomB[2]
->>         bond_length_AB = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>         print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
+>> for num1 in range(0,num_atoms):
+>>     for num2 in range(0,num_atoms):
+>>         x_distance = coordinates[num1,0] - coordinates[num2,0]
+>>         y_distance = coordinates[num1,1] - coordinates[num2,1]
+>>         z_distance = coordinates[num1,2] - coordinates[num2,2]
+>>         bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+>>         print(F'{symbols[num1]} to {symbols[num2]} :
 >> ~~~
 >> {: .language-python}
 > {: .solution}
 {: .challenge}
-
 
 
 > ## Variable Names
@@ -370,8 +371,8 @@ TYR6_ASP : 10.9934435
 >>
 >> Add an `if` statement before your print statement.
 >> ~~~
->> if bond_length_AB > 0 and bond_length_AB <= 1.5:
->>       print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
+>> if bond_length_12 > 0 and bond_length_12 <= 1.5:
+>>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  
 >> ~~~
 >> {: .language-python}
 >>
@@ -399,17 +400,18 @@ TYR6_ASP : 10.9934435
 >> file_location = os.path.join('data', 'water.xyz')
 >> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2, dtype='unicode')
 >> symbols = xyz_file[:,0]
->> coord = (xyz_file[:,1:])
->> coord = coord.astype(numpy.float)
->> for numA, atomA in enumerate(coord):
->>     for numB, atomB in enumerate(coord):
->>         if numB > numA:
->>             x_distance = atomA[0]-atomB[0]
->>             y_distance = atomA[1]-atomB[1]
->>             z_distance = atomA[2]-atomB[2]
->>             bond_length_AB = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>             if bond_length_AB > 0 and bond_length_AB <= 1.5:
->>                 print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')     
+>> coordinates = (xyz_file[:,1:])
+>> coordinates = coordinates.astype(numpy.float)
+>> num_atoms = len(symbols)
+>> for num1 in range(0,num_atoms):
+>>     for num2 in range(0,num_atoms):
+>>         if num1<num2:
+>>             x_distance = coordinates[num1,0] - coordinates[num2,0]
+>>             y_distance = coordinates[num1,1] - coordinates[num2,1]
+>>             z_distance = coordinates[num1,2] - coordinates[num2,2]
+>>             bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+>>         if bond_length_12 > 0 and bond_length_12 <= 1.5:
+>>             print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  
 >> ~~~
 >> {: .language-python}
 >>
@@ -435,7 +437,7 @@ TYR6_ASP : 10.9934435
 >>
 >> Then inside your loop change your `print` statement to a `BLfile.write()` statement.
 >> ~~~
->> BLfile.write(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
+>> BLfile.write(F'{symbols[num1]} to {symbols[num2]} : {bond_length_AB:.3f}')
 >> ~~~
 >> {: .language-python}
 >>
