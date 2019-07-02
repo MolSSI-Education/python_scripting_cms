@@ -309,7 +309,7 @@ TYR6_ASP : 10.9934435
 >> import os
 >>
 >> file_location = os.path.join('data', 'water.xyz')
->> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2, >> dtype='unicode')
+>> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2,  dtype='unicode')
 >> symbols = xyz_file[:,0]
 >> coordinates = (xyz_file[:,1:])
 >> coordinates = coordinates.astype(numpy.float)
@@ -333,6 +333,7 @@ TYR6_ASP : 10.9934435
 >> file_location = os.path.join('data', 'water.xyz')
 >> xyzfile = open(file_location,"r")
 >> data=xyzfile.readlines()
+>> num_atoms = int(data[0])
 >> data = data[2:]
 >>
 >> symbols = []
@@ -347,11 +348,13 @@ TYR6_ASP : 10.9934435
 >>
 >> for num1 in range(0,num_atoms):
 >>     for num2 in range(0,num_atoms):
->>         x_distance = coordinates[num1,0] - coordinates[num2,0]
->>         y_distance = coordinates[num1,1] - coordinates[num2,1]
->>         z_distance = coordinates[num1,2] - coordinates[num2,2]
+>>         atom1 = coordinates[num1]
+>>         atom2 = coordinates[num2]
+>>         x_distance = atom1[0] - atom2[0]
+>>         y_distance = atom1[1] - atom2[1]
+>>         z_distance = atom1[2] - atom2[2]
 >>         bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>         print(F'{symbols[num1]} to {symbols[num2]} :
+>>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 >> ~~~
 >> {: .language-python}
 > {: .solution}
@@ -410,8 +413,8 @@ TYR6_ASP : 10.9934435
 >>             y_distance = coordinates[num1,1] - coordinates[num2,1]
 >>             z_distance = coordinates[num1,2] - coordinates[num2,2]
 >>             bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>         if bond_length_12 > 0 and bond_length_12 <= 1.5:
->>             print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  
+>>             if bond_length_12 > 0 and bond_length_12 <= 1.5:
+>>                 print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 >> ~~~
 >> {: .language-python}
 >>
@@ -437,7 +440,7 @@ TYR6_ASP : 10.9934435
 >>
 >> Then inside your loop change your `print` statement to a `BLfile.write()` statement.
 >> ~~~
->> BLfile.write(F'{symbols[num1]} to {symbols[num2]} : {bond_length_AB:.3f}')
+>> BLfile.write(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 >> ~~~
 >> {: .language-python}
 >>
