@@ -23,7 +23,7 @@ One of the most common ways to present scientific data is through graphs or plot
 > import os
 >
 > distance_file = os.path.join('data', 'distance_data_headers.csv')
-> distances = numpy.genfromtxt(fname=distance_file, > delimiter=',', dtype='unicode')
+> distances = numpy.genfromtxt(fname=distance_file, delimiter=',', dtype='unicode')
 > headers = distances[0]
 > data = distances[1:]
 > data = data.astype(numpy.float)
