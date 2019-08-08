@@ -91,11 +91,11 @@ plt.ylabel('Distance (angstrom)')
 fig_1 = plt.plot(data[:,1], label=sample)
 plt.legend()
 
-plt.savefig(F'{sample}.png')
+plt.savefig(F'{sample}.png', dpi=300)
 ~~~
 {: .language-python}
 
-Now, when you check your image, it should be much higher quality.
+Now, when you check your image, it should be much higher quality. One downside of increasing image resolution is that your figures will take longer to save. If you are making a lot of plots to quickly look at data, you will probably not want a high image resolution. You will probably only want to increase the image resolution when you know you want to use the plot.
 
 ## Plotting more than one set of data
 
