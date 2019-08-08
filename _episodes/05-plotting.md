@@ -93,6 +93,7 @@ plt.legend()
 
 plt.savefig(F'{sample}.png')
 ~~~
+{: .language-python}
 
 Now, when you check your image, it should be much higher quality.
 
