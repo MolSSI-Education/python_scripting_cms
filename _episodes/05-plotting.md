@@ -34,7 +34,6 @@ One of the most common ways to present scientific data is through graphs or plot
 ## Plotting Data
 Another common way to analyze tabular data is to graph it.  To graph our data, we will need a new python library that contains functions to plot data. To plot our data, we will use a Python library called <a href='https://matplotlib.org/index.html'>`matplotlib`</a>.
 
-
 ```
 import matplotlib.pyplot
 ```
@@ -78,6 +77,27 @@ plt.savefig(F'{sample}.png')
 <img src="../fig/plotting_labeled.png" title="labeled distance plot example" style="display: block; margin: auto;" />
 
 After executing this code, check the directory you are working in. You should have an image called `THR4_ATP.png` that looks like the one displayed above and in your notebook.
+
+## Increasing image resolution
+
+Often, when you preparing images for your research, you will want to increase the image quality or resolution. This is easy to do with the `savefig` command we have been using. To increase the resolution your image is saved as, add the command 'dpi=NUMBER' to the `savefig` command. dpi stands for "dots per inch", and 300 is a resolution that is commonly used for publications.
+
+~~~
+sample = headers[1]
+
+plt.figure()
+plt.xlabel('Simulation Frame')
+plt.ylabel('Distance (angstrom)')
+fig_1 = plt.plot(data[:,1], label=sample)
+plt.legend()
+
+plt.savefig(F'{sample}.png', dpi=300)
+~~~
+{: .language-python}
+
+Now, when you check your image, it should be much higher quality. One downside of increasing image resolution is that your figures will take longer to save. If you are making a lot of plots to quickly look at data, you will probably not want a high image resolution. You will probably only want to increase the image resolution when you know you want to use the plot.
+
+## Plotting more than one set of data
 
 To plot more than one data set on the same graph, we just add another plot command.
 ```
