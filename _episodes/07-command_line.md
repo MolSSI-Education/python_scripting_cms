@@ -18,11 +18,14 @@ We are now going to move our geometry analysis code out of the Jupyter notebook 
 The best practice is to put all your functions at the top of the file, right after your import statements.  Your file will look something like this.
 ```
 import numpy
+import os
 
-def calculate_distance(atom1, atom2):
-    bond_length = numpy.sqrt((atom1[0]-atom2[0])**2+(atom1[1]-atom2[1])**2+(atom1[2]-atom2[2])**2)
-
-    return bond_length
+def calculate_distance(atom1_coord, atom2_coord):
+    x_distance = atom1_coord[0] - atom2_coord[0]
+    y_distance = atom1_coord[1] - atom2_coord[1]
+    z_distance = atom1_coord[2] - atom2_coord[2]
+    bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+    return bond_length_12
 
 def bond_check(atom_distance, minimum_length=0, maximum_length=1.5):
     if atom_distance > minimum_length and atom_distance <= maximum_length:
@@ -37,16 +40,15 @@ def open_xyz(filename):
      coord = coord.astype(numpy.float)
      return symbols, coord
 
-
-symbols, coord = open_xyz('water.xyz')
-
-for numA, atomA in enumerate(coord):
-   for numB, atomB in enumerate(coord):
-       if numB > numA:
-           bond_length_AB = calculate_distance(atomA, atomB)
-
-           if bond_check(bond_length_AB):
-               print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
+file_location = os.path.join('data', 'water.xyz')
+symbols, coord = open_xyz(file_location)
+num_atoms = len(symbols)
+for num1 in range(0,num_atoms):
+     for num2 in range(0,num_atoms):
+         if num1<num2:
+             bond_length_12 = calculate_distance(coord[num1], coord[num2])
+             if bond_check(bond_length_12) is True:
+                 print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 ```
 {: .language-python}
 
@@ -110,12 +112,14 @@ Save your code and run it again.  It should work exactly as before.  If you now 
 
 ```
 import numpy
-import sys
+import os
 
-def calculate_distance(atom1, atom2):
-    bond_length = numpy.sqrt((atom1[0]-atom2[0])**2+(atom1[1]-atom2[1])**2+(atom1[2]-atom2[2])**2)
-
-    return bond_length
+def calculate_distance(atom1_coord, atom2_coord):
+    x_distance = atom1_coord[0] - atom2_coord[0]
+    y_distance = atom1_coord[1] - atom2_coord[1]
+    z_distance = atom1_coord[2] - atom2_coord[2]
+    bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+    return bond_length_12
 
 def bond_check(atom_distance, minimum_length=0, maximum_length=1.5):
     if atom_distance > minimum_length and atom_distance <= maximum_length:
@@ -124,11 +128,11 @@ def bond_check(atom_distance, minimum_length=0, maximum_length=1.5):
         return False
 
 def open_xyz(filename):
-    xyz_file = numpy.genfromtxt(fname=filename, skip_header=2, dtype='unicode')
-    symbols = xyz_file[:,0]
-    coord = (xyz_file[:,1:])
-    coord = coord.astype(numpy.float)
-    return symbols, coord
+     xyz_file = numpy.genfromtxt(fname=filename, skip_header=2, dtype='unicode')
+     symbols = xyz_file[:,0]
+     coord = (xyz_file[:,1:])
+     coord = coord.astype(numpy.float)
+     return symbols, coord
 
 if __name__ == "__main__":
 
@@ -138,12 +142,13 @@ if __name__ == "__main__":
 
 	xyzfilename = sys.argv[1]
 	symbols, coord = open_xyz(xyzfilename)
-	for numA, atomA in enumerate(coord):
-		for numB, atomB in enumerate(coord):
-			if numB > numA:
-				bond_length_AB = calculate_distance(atomA, atomB)
-				if bond_check(bond_length_AB):
-					print(F'{symbols[numA]} to {symbols[numB]} : {bond_length_AB:.3f}')
+  num_atoms = len(symbols)
+  for num1 in range(0,num_atoms):
+       for num2 in range(0,num_atoms):
+           if num1<num2:
+               bond_length_12 = calculate_distance(coord[num1], coord[num2])
+               if bond_check(bond_length_12) is True:
+                   print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 ```
 {: .language-python}
 
