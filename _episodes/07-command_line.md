@@ -80,25 +80,10 @@ symbols, coord = open_xyz(xyzfilename)
 
 Save your code and go back to the Terminal window.  Make sure you are in the directory where your code is saved and type
 ```
-$ python geom_analysis.py water.xyz
+$ python geom_analysis.py data/water.xyz
 ```
 Check that the output of your code is what you expected.
 
-What would happen if the user forgot to specify the name of the xyz file?  The way the code is written now, it would give an error message.
-```
-Traceback (most recent call last):
-  File "geom_analysis.py", line 22, in <module>
-    xyzfilename = sys.argv[1]
-IndexError: list index out of range
-```
-{: .error}
-The reason it says the list index is out of range is because `sys.argv[1]` does not exist.  Since the user forgot to specify the name of the xyz file, the `sys.argv` list only has one element, `sys.argv[0]`.  It would be better to print an error message and let the user know that they didn't enter the input correctly.  Our code is expecting exactly two inputs: the script name and the xyz file name. The easiest way to add an error message is to check the length of the sys.argv list and print an error message and exit if it does not equal the expected length.  
-```
-if len(sys.argv) != 2:
-    print('Incorrect input! Please try again.')
-    exit()
-```
-{: .language-python}
 
 We need to add one more thing to our code.  When you write a code that includes function definitions and a main script, you need to tell python which part is the main script. (This becomes very important later when we are talking about testing.) *After* your import statements and function definitions and  *before* you check the length of the `sys.argv` list add this line to your code.
 ```
@@ -113,6 +98,7 @@ Save your code and run it again.  It should work exactly as before.  If you now 
 ```
 import numpy
 import os
+import sys
 
 def calculate_distance(atom1_coord, atom2_coord):
     x_distance = atom1_coord[0] - atom2_coord[0]
@@ -136,19 +122,15 @@ def open_xyz(filename):
 
 if __name__ == "__main__":
 
-	if len(sys.argv) != 2:
-		print('Incorrect input! Please try again.')
-		exit()
-
-	xyzfilename = sys.argv[1]
-	symbols, coord = open_xyz(xyzfilename)
-  num_atoms = len(symbols)
-  for num1 in range(0,num_atoms):
-       for num2 in range(0,num_atoms):
-           if num1<num2:
-               bond_length_12 = calculate_distance(coord[num1], coord[num2])
-               if bond_check(bond_length_12) is True:
-                   print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+    xyzfilename = sys.argv[1]
+    symbols, coord = open_xyz(xyzfilename)
+    num_atoms = len(symbols)
+    for num1 in range(0,num_atoms):
+        for num2 in range(0,num_atoms):
+            if num1<num2:
+                bond_length_12 = calculate_distance(coord[num1], coord[num2])
+                if bond_check(bond_length_12) is True:
+                    print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 ```
 {: .language-python}
 
