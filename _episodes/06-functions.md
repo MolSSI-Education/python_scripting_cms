@@ -100,7 +100,7 @@ This is great! Our function will currently return `True` if our bond distance is
 >> ## Answer
 >> ~~~
 >> def bond_check(atom_distance, minimum_length, maximum_length):
->>    if atom_distance > minimum_length and bond_distance <= maximum_length:
+>>    if atom_distance > minimum_length and atom_distance <= maximum_length:
 >>        return True
 >>    else:
 >>        return False
@@ -174,6 +174,7 @@ O to H2 : 0.969
 >>      coord = (xyz_file[:,1:])
 >>      coord = coord.astype(numpy.float)
 >>      return symbols, coord
+>> ~~~
 >> {: .language-python}
 > {: .solution}
 {: .challenge}
@@ -185,7 +186,7 @@ We've now written three functions. Using these functions, our script to print bo
 import numpy
 import os
 
-file_location = os.path.join('data', 'benzene.xyz')
+file_location = os.path.join('data', 'water.xyz')
 symbols, coord = open_xyz(file_location)
 num_atoms = len(symbols)
 for num1 in range(0,num_atoms):
@@ -301,18 +302,18 @@ C to H : 1.088
 >
 >> ## Solution
 >> ~~~
->>import glob
+>> import glob
 >>
->>xyz_files = glob.glob("data/*.xyz")
+>> xyz_files = glob.glob("data/*.xyz")
 >>
->>for xyz_file in xyz_files:
->>    atom_symbols, atom_coords = open_xyz(xyz_file)
->>    print("Printing bonds for ", xyz_file)
->>    print_bonds(atom_symbols, atom_coords)
+>> for xyz_file in xyz_files:
+>>     atom_symbols, atom_coords = open_xyz(xyz_file)
+>>     print("Printing bonds for ", xyz_file)
+>>     print_bonds(atom_symbols, atom_coords)
 >> ~~~
->> {: .language-python}
+>> {: .output}
 > {: .solution}
-{: .challenge}
+{: challenge}
 
 
 {% include links.md %}
