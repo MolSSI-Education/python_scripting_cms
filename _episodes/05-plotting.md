@@ -21,7 +21,8 @@ One of the most common ways to present scientific data is through graphs or plot
 > From the previous lesson, remember that you should hav a variable called `data` defined which contains the tabular data in `distance_data_headers.csv`. If you do not have this stored in your `data` variable, here is how to load it.
 > ~~~
 > import os
->
+> import numpy
+> 
 > distance_file = os.path.join('data', 'distance_data_headers.csv')
 > distances = numpy.genfromtxt(fname=distance_file, delimiter=',', dtype='unicode')
 > headers = distances[0]
