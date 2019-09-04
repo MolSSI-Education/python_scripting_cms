@@ -84,9 +84,10 @@ symbols, coord = open_xyz(xyzfilename)
 
 Save your code and go back to the Terminal window.  Make sure you are in the directory where your code is saved and type
 ```
-$ python geom_analysis.py water.xyz
+$ python geom_analysis.py data/water.xyz
 ```
 Check that the output of your code is what you expected.
+
 
 What would happen if the user forgot to specify the name of the xyz file?  The way the code is written now, it would give an error message.
 ```
