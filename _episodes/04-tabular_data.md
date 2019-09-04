@@ -10,8 +10,6 @@ objectives:
 - "Use 2D slices to work with particular rows or columns of data."
 - "Use the `range()` function in `for` loops."
 - "Use `numpy` functions to analyze data."
-- "Install a new python library using conda."
-- "Plot data to visualize results."
 keypoints:
 - "If you are reading in a file that is mostly numerical data, there are better ways to read in the data than using `readlines()`."
 - "The notation to refer to a particular element of an array is `array_name[row,column]`."

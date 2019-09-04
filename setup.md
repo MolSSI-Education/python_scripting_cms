@@ -24,16 +24,8 @@ Regardless of how you choose to install it, *please make sure you install Python
 3. Move the downloaded materials to the new folder.
 4. Unzip the file.  
 
-## Open the Terminal Window
-- Windows:  Click Windows Key + R, type cmd, press Enter.
-- MacOS: The Terminal application can be found in Applications -> Utilities -> Terminal.
-
 ## Start a Jupyter notebook
-In the Terminal window, type
-```
-$ jupyter notebook
-```
-It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to the `cms-workshop` folder, if you did not start the jupyter notebook from this folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list (shown below)
+From Finder or Spotlight (Mac OS) or the Start Menu (Windows) find the Anaconda Navigator.  The icon looks like a green circle.  Click Launch under Jupyter Notebook.  It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to `Desktop` and then to the `cms-workshop` folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list (shown below)
 
 <img src="fig/setup_fig1.png" width="70%">
 
