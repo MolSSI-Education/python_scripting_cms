@@ -256,14 +256,14 @@ If you do not include a start index, the slice automatically starts at `list_nam
 > {: .solution}
 {: .challenge}
 
-Again, the list is immutable so if you don't specify a new variable name nothing happens. Looking at our example above if we only type
+If you don't specify a new variable name nothing happens. Looking at our example above if we only type
 ```
 print(energy_kcal)
 energy_kcal[0:2]
 print(energy_kcal)
 ```
 {: .language-python}
-nothing happens.
+nothing happens to `energy_kcal.
 ```
 [-13.4, -2.7, 5.4, 42.1]
 [-13.4, -2.7, 5.4, 42.1]
