@@ -34,7 +34,7 @@ After these basics, the workshop introduces the concept of functions and writing
 This workshop was developed by the Molecular Sciences Software Institute (MolSSI), as part of its mission to enhance software, education, and training in the computational molecular sciences.  MolSSI works to improve software practices in CMS, and this workshop gives a light introduction to several topics we advocate as best practices (version control, testing, and documentation). MolSSI's educational mission builds on and uses strategies from the work of Software Carpentry and Data Carpentry.  
 
 ## Statement of Need
-Within chemistry, and many other fields related to CMS, the amount of structured programming training students receive as part of their undergraduate education varies widely. Students may have a stand-alone programming course or no instruction at all.  Further, most chemists, even computational chemists who use programming regularly in their research, are rarely trained on teaching programming and often lack resources to provide students this type of training.  Thus, most programming training for chemists is ad-hoc, through interactions with mentors and research advisors, or self-taught by learning what they need to know to solve problems in research.  The Molecular Sciences Software Institute aims to address this problem by providing resources, training, and workshops to teach students best practices in software development.  This will enhance the entire discipline of computational molecular science by making code more stable, reproducible, and maintainable.  
+Within chemistry, and many other fields related to CMS, the amount of structured programming training students receive as part of their undergraduate education varies widely. Students may have a stand-alone programming course or no instruction at all.  Further, most chemists, even computational chemists who use programming regularly in their research, are rarely trained on teaching programming and often lack resources to provide students this type of training.  Thus, most programming training for chemists is ad-hoc, through interactions with mentors and research advisors, or self-taught by learning what they need to know to solve problems in research.  The Molecular Sciences Software Institute aims to address this problem by providing resources, training, and workshops to teach students best practices in software development.  This workshops introduces basics concepts related to Python program to provide a foundation for software best practices advocated by MolSSI for larger software projects.
 
 ## Learning Objectives and Contents
 
@@ -50,13 +50,41 @@ Within chemistry, and many other fields related to CMS, the amount of structured
 
 - **Writing Functions** - This lesson introduces functions, and why they are useful in programming. Students practice by reformatting their geometry analysis project to contain functions.
 
-- **Running code from the Linux Command Line** - This lessons covers moving from the Jupyter notebook to a text editor and running a python script from the command line. Students are taught how to take user input from the command line using the `argparse` module.
+- **Running code from the Command Line** - This lessons covers moving from the Jupyter notebook to a text editor and running a python script from the command line. Students are taught how to take user input from the command line using the `argparse` module.
 
 - **Testing Code with pytest** - This lesson gives a very light introduction and unit testing using the `pytest` framework.
 
 - **Version Control and Sharing Code** - This lesson gives an overview of version control using git and hosting code on GitHub.
 
-## Sample Teaching Schedules
+## Sample Teaching Schedule
+
+### 1.5 Day Workshop
+
+#### Day 1 
+
+| Time              |  Topic                                |
+|-------------------|---------------------------------------|
+11:00 am - 12:00 pm | Help with computer set-up (optional)
+1:00 pm - 2:00 pm	| Introduction					
+2:00 pm - 2:45 pm   | File parsing					
+2:45 pm - 3:00 pm 	| Break
+3:00 pm - 3:45 pm   | Multiple File Parsing				
+3:45 pm - 4:45 pm 	| Working with Tabular Data	
+4:45 pm - 5:00 pm   | Introduce homework assignment	
+
+#### Day 2
+| Time              |  Topic                                |
+|-------------------|---------------------------------------|
+9:00 am - 9:45 am 	| Homework Solution				
+9:45 am - 10:45 am	| Plotting and Data Visualization		
+10:45 am - 11:00 am	| Break	
+11:00 am - 12:00 pm	| Writing Functions				
+12:00 pm - 1:00 pm	| Lunch
+1:00 pm - 2:00 pm	| Moving to the command line			
+2:00 pm - 3:00 pm	| Testing with pytest		
+3:00 pm - 3:15 pm 	| Coffee Break					
+3:15 pm - 4:30 pm 	| Version control and sharing code		
+4:30 pm - 5:00 pm	| Questions and Feedback
 
 ## Future Work
 
