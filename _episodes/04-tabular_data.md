@@ -319,7 +319,7 @@ TYR6_ASP : 10.9934435
 >>         y_distance = coordinates[num1,1] - coordinates[num2,1]
 >>         z_distance = coordinates[num1,2] - coordinates[num2,2]
 >>         bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  
+>>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f} \n')  
 >>
 >> ~~~
 >> {: .language-python}
@@ -352,7 +352,7 @@ TYR6_ASP : 10.9934435
 >>         y_distance = atom1[1] - atom2[1]
 >>         z_distance = atom1[2] - atom2[2]
 >>         bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+>>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f} \n')
 >> ~~~
 >> {: .language-python}
 > {: .solution}
