@@ -252,11 +252,11 @@ energy = float(words[3])
 >## Exercise on File Parsing (should we move this to the end?)
 Use the provided sapt.out file.  In this output file, the program calculates the interaction energy for an ethene-ethyne complex.  The output reports four interaction energy components: electrostatics, induction, exchange, and dispersion.  Parse each of these energies, in kcal/mole, from the output file.  (Hint: study the file in a text editor to help you decide what to search for.) Calculate the total interaction energy by adding the four components together.  Your code's output should look something like this:
 > ~~~
-> Electrostatics : -2.25850118 kcal/mole
-> Exchange : 2.27730198 kcal/mole
-> Induction : -0.5216933 kcal/mole
-> Dispersion : -0.9446677 kcal/mole
-> Total Energy : 1.4475602000000003 kcal/mole
+> Electrostatics : -2.25850118 kcal/mol
+> Exchange : 2.27730198 kcal/mol
+> Induction : -0.5216933 kcal/mol
+> Dispersion : -0.9446677 kcal/mol
+> Total Energy : 1.4475602000000003 kcal/mol
 > ~~~
 > {: language.python}
 >
@@ -264,36 +264,36 @@ Use the provided sapt.out file.  In this output file, the program calculates the
 >>
 >> This is one possible solution for the SAPT parsing exercise
 >> ~~~
->> saptout = open('SAPT.out','r')
->> saptlines = saptout.readlines()
 >> important_lines = []
 >> energies = []
->> for line in saptlines:
->>     if 'Electrostatics    ' in line:
->>         electro_line = line
->>         important_lines.append(electro_line)
->>     if 'Exchange       ' in line:
->>         exchange_line = line
->>         important_lines.append(exchange_line)
->>     if 'Induction      ' in line:
->>         induction_line = line
->>         important_lines.append(induction_line)
->>     if 'Dispersion     ' in line:
->>         dispersion_line = line
->>         important_lines.append(dispersion_line)
->>
->> #print(important_lines)
->>
+>> 
+>> with open('SAPT.out','r') as saptout:
+>>     for line in saptout:
+>>         if 'Electrostatics    ' in line:
+>>             electro_line = line
+>>             important_lines.append(electro_line)
+>>         elif 'Exchange       ' in line:
+>>             exchange_line = line
+>>             important_lines.append(exchange_line)
+>>         elif 'Induction      ' in line:
+>>             induction_line = line
+>>             important_lines.append(induction_line)
+>>         elif 'Dispersion     ' in line:
+>>             dispersion_line = line
+>>             important_lines.append(dispersion_line)
+>> 
+>> # print(important_lines)
+>> 
 >> for line in important_lines:
 >>     words = line.split()
->>     #print(words)
+>>     # print(words)
 >>     energy_type = words[0]
 >>     energy_kcal = float(words[3])
 >>     energies.append(energy_kcal)
->>     print(energy_type, ':', energy_kcal, 'kcal/mole')
->>
->> total_energy=energies[0]+energies[1]+energies[2]+energies[3]
->> print('Total Energy', ':', total_energy, 'kcal/mole')
+>>     print('{} : {} kcal/mol'.format(energy_type, energy_kcal))
+>> 
+>> total_energy = sum(energies)
+>> print('Total Energy : {} kcal/mol'.format(total_energy))
 >> ~~~
 >> {: .language-python}
 > {: .solution}
