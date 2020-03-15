@@ -137,7 +137,7 @@ Let's take a look at what's in the file.
 
 ~~~
 for line in data:
-  print(line)
+    print(line)
 ~~~
 {: .language-python}
 
@@ -204,10 +204,17 @@ print(words)
 
 From this `print` statement, we now see that we have a list called words, where we have split `energy_line`.  The energy is actually the fourth element of this list, so we can now save it as a new variable.
 
-```
+```python
 energy = words[3]
 print(energy)
 ```
+
+We also recogize that "energy" is the last element of the list. Therefore, an alternative way to assign `energy` is:
+```python
+energy = words[-1]
+print(energy)
+```
+
 {: .language-python}
 
 ```
