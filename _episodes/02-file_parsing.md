@@ -315,35 +315,37 @@ for linenum, line in enumerate(list_name):
 
 In this notation, there are now *two* variables you can use in your loop commands, `linenum` (which can be named something else) will keep up with what iteration you are on in the loop, in this case what line you are on in the file. The variable `line` (which could be named something else) functions exactly as it did before, holding the actual information from the list.  Finally, instead of just giving the list name you use `enumerate(list_name)`.  
 
+**Important note**: `enumerate(list_name)` will start with 0-index so the first line will be label as '0', to change this behavior, use `start` variable in enumerate.
+
 This block of code searches our file for the line that contains "Center" and reports the line number.
 ```
-for linenum, line in enumerate(data):
+for linenum, line in enumerate(data, start=1):
     if 'Center' in line:
         print(linenum)
         print(line)
 ```
 {: .language-python}
 ```
-77
+78
        Center              X                  Y                   Z               Mass       
 ```
 {: .output}
-Now we know that this is line 77 in our file (remember that you start counting at zero!).  
+Now we know that this is line 78 in our file.  
 
 >## Check Your Understanding
 >What would be printed if you entered the following:
 >~~~
-> print(data[77])
 > print(data[78])
 > print(data[79])
 > print(data[80])
 > print(data[81])
+> print(data[82])
 > ~~~
 >{: .language.python}
 >
 >> ## Answer
 >>
->> It prints line 77-81 of the list `data` which is the line that contains "Center" and then the first few coordinates of the molecule.
+>> It prints line 78-82 of the list `data` which is the line that contains "Center" and then the first few coordinates of the molecule.
 >> ~~~
 >>            Center              X                  Y                   Z               Mass       
 >>
@@ -360,6 +362,6 @@ Now we know that this is line 77 in our file (remember that you start counting a
 {: .challenge}
 
 ## A final note about regular expressions
-Sometimes you will need to match something more complex than just a particular word or phrase in your output file.  Sometimes you will need to match a particular word, but only if it is found at the beginning of a line.  Or perhaps you will need to match a particular pattern of data, like a capital letter followed by a number, but you won't know the exact letter and number you are looking for.  These types of matching situations are handled with something called *regular expressions* which is accessed through the python module `re`.  While using regular expressions is outside the scope of this tutorial, they are very useful and you might want to learn more about them in the future.  A tutorial can be found at _______.  
+Sometimes you will need to match something more complex than just a particular word or phrase in your output file.  Sometimes you will need to match a particular word, but only if it is found at the beginning of a line.  Or perhaps you will need to match a particular pattern of data, like a capital letter followed by a number, but you won't know the exact letter and number you are looking for.  These types of matching situations are handled with something called *regular expressions* which is accessed through the python module `re`.  While using regular expressions (regex) is outside the scope of this tutorial, they are very useful and you might want to learn more about them in the future.  A tutorial can be found at [Automate the Boring Stuff with Python](https://automatetheboringstuff.com/2e/chapter7/) book.  A great test site for regex is [here](https://regex101.com/)
 
 {% include links.md %}
