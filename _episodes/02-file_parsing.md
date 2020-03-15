@@ -50,7 +50,7 @@ or similar to this if you are on Windows
 ~~~
 {: .output}
 
-Notice that the file paths are different for these two systems. The Windows system uses a forward slash ('\\'), while Mac and Linux use a backslash ('/') for filepaths.
+Notice that the file paths are different for these two systems. The Windows system uses a backslash ('\\'), while Mac and Linux use a forward slash ('/') for filepaths.
 
 When we write a script, we want it to be usable on any operating system, thus we will use a python module called `os.path` that will allow us to define file paths in a general way.
 
@@ -69,7 +69,7 @@ data/outfiles/ethanol.out
 ~~~
 {:. .output}
 
-Here, we have specified that our filepath contains the 'data' and 'outfiles' directory, and the `os.path` module has made this into a filepath that is usable by our system. If you are on Windows, you will instead see that a forward slash is used.
+Here, we have specified that our filepath contains the 'data' and 'outfiles' directory, and the `os.path` module has made this into a filepath that is usable by our system. If you are on Windows, you will instead see that a backslash is used.
 
 > ## Absolute and relative paths
 > File paths can be *absolute*, or *relative*.
@@ -107,6 +107,14 @@ After you open and read information from a file object, you should always close 
 outfile.close()
 ~~~
 {: .language-python}
+
+## Alternative way to open a file:
+Alternatively, you can open a file using `context-manager`. In this case, python will automatically handle closing of the file:
+```python
+with open(ethanol_file,"r") as outfile:
+    data = outfile.readlines()
+```
+
 
 > ## Check Your Understanding
 > Check that your file was read in correctly by determining how many lines are in the file.
@@ -251,31 +259,31 @@ Use the provided sapt.out file.  In this output file, the program calculates the
 >> ~~~
 >> saptout = open('SAPT.out','r')
 >> saptlines = saptout.readlines()
->> important_lines=[]
->> energies=[]
+>> important_lines = []
+>> energies = []
 >> for line in saptlines:
 >>     if 'Electrostatics    ' in line:
->>        electro_line = line
->>        important_lines.append(electro_line)
->>    if 'Exchange       ' in line:
->>        exchange_line = line
->>        important_lines.append(exchange_line)
->>    if 'Induction      ' in line:
->>        induction_line = line
->>        important_lines.append(induction_line)
->>    if 'Dispersion     ' in line:
->>        dispersion_line = line
->>        important_lines.append(dispersion_line)
+>>         electro_line = line
+>>         important_lines.append(electro_line)
+>>     if 'Exchange       ' in line:
+>>         exchange_line = line
+>>         important_lines.append(exchange_line)
+>>     if 'Induction      ' in line:
+>>         induction_line = line
+>>         important_lines.append(induction_line)
+>>     if 'Dispersion     ' in line:
+>>         dispersion_line = line
+>>         important_lines.append(dispersion_line)
 >>
 >> #print(important_lines)
 >>
 >> for line in important_lines:
->>    words = line.split()
->>    #print(words)
->>    energy_type = words[0]
->>    energy_kcal = float(words[3])
->>    energies.append(energy_kcal)
->>    print(energy_type, ':', energy_kcal, 'kcal/mole')
+>>     words = line.split()
+>>     #print(words)
+>>     energy_type = words[0]
+>>     energy_kcal = float(words[3])
+>>     energies.append(energy_kcal)
+>>     print(energy_type, ':', energy_kcal, 'kcal/mole')
 >>
 >> total_energy=energies[0]+energies[1]+energies[2]+energies[3]
 >> print('Total Energy', ':', total_energy, 'kcal/mole')
