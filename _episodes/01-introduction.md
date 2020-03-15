@@ -48,7 +48,7 @@ Now that our notebook is set-up, we're ready to start learning some Python!
 Any python interpreter can work just like a calculator.  This is not very useful. Type the following into the next cell of your Jupyter notebook.
 
 ```
-3+7
+3 + 7
 ```
 {: .language-python}
 
@@ -68,7 +68,7 @@ Let's see this in action with a calculation. Type the following into the next ce
 deltaH = -541.5   #kJ/mole
 deltaS =  10.4     #kJ/(mole K)
 temp = 298      #Kelvin
-deltaG = deltaH - temp*deltaS
+deltaG = deltaH - temp * deltaS
 ```
 {: .language-python}
 
@@ -106,7 +106,7 @@ print(deltaG)
 Nothing happened to the value of `deltaG`.  If we wanted to change the value of `deltaG` we would have to re-save the variable using the same name to overwrite the existing value.
 ```
 print(deltaG)
-deltaG = deltaG*1000
+deltaG = deltaG * 1000
 print(deltaG)
 ```
 {: .language-python}
@@ -137,7 +137,7 @@ Python can do what is called multiple assignment where you assign several variab
 ```
 #I can assign all these variables at once
 deltaH, deltaS, temp = -541.5, 10.4, 298
-deltaG = deltaH - temp*deltaS
+deltaG = deltaH - temp * deltaS
 print(deltaG)
 ```
 {: .language-python}
@@ -176,7 +176,7 @@ energy_kcal = [-13.4, -2.7, 5.4, 42.1]
 energy_length = len(energy_kcal)
 
 # print the list length
-print('The length of this list is', energy_length)
+print('The length of this list is {}'.format(energy_length))
 ```
 {: .language-python}
 
@@ -201,7 +201,7 @@ print(energy_kcal[0])
 You can use an element of a list as a variable in a calculation.  
 ```
 # Convert the second list element to kilojoules.
-energy_kilojoules = energy_kcal[1]*4.184
+energy_kilojoules = energy_kcal[1] * 4.184
 print(energy_kilojoules)
 ```
 {: .language-python}
@@ -241,8 +241,8 @@ If you do not include a start index, the slice automatically starts at `list_nam
 > ~~~
 > slice1 = energy_kcal[1:]
 > slice2 = energy_kcal[:3]
-> print('slice1 is', slice1)
-> print('slice2 is', slice2)
+> print('slice1 is {}'.format(slice1))
+> print('slice2 is {}'.format(slice2))
 > ~~~
 > {: .language-python}
 >
@@ -263,7 +263,7 @@ energy_kcal[0:2]
 print(energy_kcal)
 ```
 {: .language-python}
-nothing happens to `energy_kcal.
+nothing happens to `energy_kcal`.
 ```
 [-13.4, -2.7, 5.4, 42.1]
 [-13.4, -2.7, 5.4, 42.1]
@@ -279,10 +279,10 @@ for variable in list:
 ```
 {: .language-python}
 
-Indentation is very important in python.  There is nothing like an `end` or `exit` statement that tells you that you are finished with the loop.  The indentation shows you what statements are in the loop.  Let's use a loop to change all of our energies in kcal to kJ.
+Indentation is very important in python.  There is nothing like an `end` or `exit` statement that tells you that you are finished with the loop.  The indentation shows you what statements are in the loop. Each indentation is 4 spaces by convention in Python 3. Let's use a loop to change all of our energies in kcal to kJ.
 ```
 for number in energy_kcal:
-    kJ = number*4.184
+    kJ = number * 4.184
     print(kJ)
 ```
 {: .language-python}
@@ -304,7 +304,7 @@ list_name.append(new_thing)
 Try running this block of code.  See if you can figure out why it doesn't work.
 ```
 for number in energy_kcal:
-    kJ = number*4.184
+    kJ = number * 4.184
     energy_kJ.append(kJ)
 
 print(energy_kJ)
@@ -329,7 +329,7 @@ This code doesn't work because on the first iteration of our loop, the list `ene
 ```
 energy_kJ = []
 for number in energy_kcal:
-    kJ = number*4.184
+    kJ = number * 4.184
     energy_kJ.append(kJ)
 
 print(energy_kJ)
@@ -347,7 +347,7 @@ Within your code, you may need to evaluate a variable and then do something if t
 negative_energy_kJ = []
 
 for number in energy_kJ:
-    if number<0:
+    if number < 0:
         negative_energy_kJ.append(number)
 
 print(negative_energy_kJ)
@@ -369,7 +369,7 @@ You can also use `and`, `or`, and `not` to check more than one condition.
 ```
 negative_numbers = []
 for number in energy_kJ:
-    if number<0 or number==0:
+    if number < 0 or number == 0:
         negative_numbers.append(number)
 
 print(negative_numbers)
