@@ -253,6 +253,13 @@ In our example, the "end" value needs to be the number of columns of data.
 >> ~~~
 >> {: .language-python}
 >>
+>> Alternatively:
+>> ~~~
+>> num_rows, num_columns = data.shape  # data.shape returns (10000, 5) which is the numbers of rows and columns, respectively
+>> print(num_columns)
+>> ~~~
+>> {: .language-python}
+>> 
 >> ~~~
 >> 5
 >> ~~~
@@ -263,9 +270,9 @@ In our example, the "end" value needs to be the number of columns of data.
 Now that we know the number of columns, we can use the `range()` function to set up our `for` loop.
 ```
 for i in range(1,num_columns):
-    column = data[:,i]
+    column = data[:, i]
     avg_col = numpy.mean(column)
-    print(F'{headers[i]} : {avg_col}')
+    print(f'{headers[i]} : {avg_col}')
 ```
 {: .language-python}
 ```
@@ -308,18 +315,17 @@ TYR6_ASP : 10.9934435
 >>
 >> file_location = os.path.join('data', 'water.xyz')
 >> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2,  dtype='unicode')
->> symbols = xyz_file[:,0]
->> coordinates = (xyz_file[:,1:])
+>> symbols = xyz_file[:, 0]
+>> coordinates = xyz_file[:, 1:]
 >> coordinates = coordinates.astype(numpy.float)
 >> num_atoms = len(symbols)
->> BLfile = open('bond_lengths.txt','w+')   #Open a file for writing
->> for num1 in range(0,num_atoms):
->>     for num2 in range(0,num_atoms):
->>         x_distance = coordinates[num1,0] - coordinates[num2,0]
->>         y_distance = coordinates[num1,1] - coordinates[num2,1]
->>         z_distance = coordinates[num1,2] - coordinates[num2,2]
->>         bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  
+>> for num1 in range(0, num_atoms):
+>>     for num2 in range(0, num_atoms):
+>>         x_distance = coordinates[num1, 0] - coordinates[num2, 0]
+>>         y_distance = coordinates[num1, 1] - coordinates[num2, 1]
+>>         z_distance = coordinates[num1, 2] - coordinates[num2, 2]
+>>         bond_length_12 = numpy.sqrt(x_distance ** 2 + y_distance ** 2 + z_distance ** 2)
+>>         print(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  # print result to screen
 >>
 >> ~~~
 >> {: .language-python}
@@ -328,9 +334,11 @@ TYR6_ASP : 10.9934435
 >> ~~~
 >> import numpy
 >> import os
+>>
 >> file_location = os.path.join('data', 'water.xyz')
 >> xyzfile = open(file_location,"r")
->> data=xyzfile.readlines()
+>> data = xyzfile.readlines()
+>> xyzfile.close()
 >> num_atoms = int(data[0])
 >> data = data[2:]
 >>
@@ -341,18 +349,18 @@ TYR6_ASP : 10.9934435
 >>     atom_data = atom.split()
 >>     symbol = atom_data[0]
 >>     symbols.append(symbol)
->>     x, y, z = atom_data[1], atom_data[2], atom_data[3]
+>>     x, y, z = atom_data[1:]    # or `x, y, z = atom_data[1], atom_data[2], atom_data[3]`
 >>     coordinates.append([float(x), float(y), float(z)])
 >>
->> for num1 in range(0,num_atoms):
->>     for num2 in range(0,num_atoms):
+>> for num1 in range(0, num_atoms):
+>>     for num2 in range(0, num_atoms):
 >>         atom1 = coordinates[num1]
 >>         atom2 = coordinates[num2]
 >>         x_distance = atom1[0] - atom2[0]
 >>         y_distance = atom1[1] - atom2[1]
 >>         z_distance = atom1[2] - atom2[2]
->>         bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
->>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+>>         bond_length_12 = numpy.sqrt(x_distance ** 2 + y_distance ** 2 + z_distance ** 2)
+>>         print(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 >> ~~~
 >> {: .language-python}
 > {: .solution}
@@ -361,7 +369,7 @@ TYR6_ASP : 10.9934435
 
 > ## Variable Names
 >
-> In our solution above, we called our bond length variable `bond_length_AB`. We could have called this variable anything we wanted. Consider the following two potential variable names for bond length - `BL_AB` and `bond_length_AB`. Which is more clear to you? While you might know what `BL` means, and it is possible for others to figure it out through context, it's easier on others if you give your variables clear names.
+> In our solution above, we called our bond length variable `bond_length_12`. We could have called this variable anything we wanted. Consider the following two potential variable names for bond length - `BL_12` and `bond_length_12`. Which is more clear to you? While you might know what `BL` means, and it is possible for others to figure it out through context, it's easier on others if you give your variables clear names.
 {: .callout}
 
 > ## Project Extension 1
@@ -373,7 +381,7 @@ TYR6_ASP : 10.9934435
 >> Add an `if` statement before your print statement.
 >> ~~~
 >> if bond_length_12 > 0 and bond_length_12 <= 1.5:
->>         print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  
+>>     print(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  
 >> ~~~
 >> {: .language-python}
 >>
@@ -400,19 +408,19 @@ TYR6_ASP : 10.9934435
 >>
 >> file_location = os.path.join('data', 'water.xyz')
 >> xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2, dtype='unicode')
->> symbols = xyz_file[:,0]
->> coordinates = (xyz_file[:,1:])
+>> symbols = xyz_file[:, 0]
+>> coordinates = xyz_file[:, 1:]
 >> coordinates = coordinates.astype(numpy.float)
 >> num_atoms = len(symbols)
->> for num1 in range(0,num_atoms):
->>     for num2 in range(0,num_atoms):
->>         if num1<num2:
->>             x_distance = coordinates[num1,0] - coordinates[num2,0]
->>             y_distance = coordinates[num1,1] - coordinates[num2,1]
->>             z_distance = coordinates[num1,2] - coordinates[num2,2]
->>             bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+>> for num1 in range(0, num_atoms):
+>>     for num2 in range(0, num_atoms):
+>>         if num1 < num2:
+>>             x_distance = coordinates[num1, 0] - coordinates[num2, 0]
+>>             y_distance = coordinates[num1, 1] - coordinates[num2, 1]
+>>             z_distance = coordinates[num1, 2] - coordinates[num2, 2]
+>>             bond_length_12 = numpy.sqrt(x_distance ** 2 + y_distance ** 2 + z_distance ** 2)
 >>             if bond_length_12 > 0 and bond_length_12 <= 1.5:
->>                 print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+>>                 print(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 >> ~~~
 >> {: .language-python}
 >>
@@ -438,9 +446,11 @@ TYR6_ASP : 10.9934435
 >>
 >> Then inside your loop change your `print` statement to a `BLfile.write()` statement.
 >> ~~~
->> BLfile.write(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+>> BLfile.write(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}\n')
 >> ~~~
 >> {: .language-python}
+>>
+>> Note: `write()` does not add a new line at the end of each line so `\n` is required!
 >>
 >> Don't forget to close the file at the end of your code.
 >> ~~~
