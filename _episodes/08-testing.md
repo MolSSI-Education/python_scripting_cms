@@ -146,5 +146,21 @@ Let's think some more about our testing of the `bond_check` function.  We are us
 >> {: .language-python}
 >>
 >> All of these tests should pass.  If they do not, it is probably due to a mistake in how your `bond_check` function is defined.  Check your function and adjust accordingly.  A common mistake is that your bond_check function only returns True and does not have an else statement to return False if the bond length doesn't check out.  
+>>
+>> Alternatively, you can use [pytest.mark.parametrize](https://docs.pytest.org/en/latest/parametrize.html) to write a more concise test:
+>> ~~~
+>> @pytest.mark.parametrize(
+>>     "bond_distance, expected", [
+>>         (1.2, True),
+>>         (2.0, False),
+>>         (0, False),
+>>         (1.5, True),
+>>     ]
+>> )
+>> def test_bond_check(bond_distance, expected):
+>>     observed = ga.bond_check(bond_distance)
+>>     assert observed == expected
+>> ~~~
+>> {: .language-python}
 > {: .solution}
 {: .challenge}
