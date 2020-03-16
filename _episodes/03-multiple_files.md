@@ -73,15 +73,14 @@ print(filenames)
 This will give us a list of all the files which end in `*.out` in the `outfiles` directory. Now if we want to parse every file we just read in, we will use a `for` loop to go through each file.
 ```
 for f in filenames:
-    outfile = open(f,'r')
-    data = outfile.readlines()
-    outfile.close()
-    for line in data:
-        if 'Final Energy' in line:
-            energy_line = line
-            words = energy_line.split()
-            energy = float(words[3])
-            print(energy)
+    with open(f,'r') as data:
+        for line in data:
+            if 'Final Energy' in line:
+                energy_line = line
+                words = energy_line.split()
+                energy = float(words[3])
+                print(energy)
+                break
 ```
 {: .language-python}
 
@@ -100,6 +99,8 @@ for f in filenames:
 {: .output}
 
 Notice that in this code we actually used two `for` loops, one nested inside the other.  The outer `for` loop counts over the filenames we read in earlier.  The inner `for` loop counts over the line in each file, just as we did in our previous file parsing lesson.  
+
+`break` was used after `print(energy)` to break out of the `for` loop for reading the current file. This will stop python from reading the rest of the file content after finding the line with 'Final Energy'.
 
 The output our code currently generates is not that useful.  It doesn't show us which file each energy value came from.  
 
@@ -144,18 +145,15 @@ for f in filenames:
     split_filname = file_name.split('.')
     molecule_name = split_filename[0]
 
-    # Read the data
-    outfile = open(f,'r')
-    data = outfile.readlines()
-    outfile.close()
-
-    # Loop through the data
-    for line in data:
-        if 'Final Energy' in line:
-            energy_line = line
-            words = energy_line.split()
-            energy = float(words[3])
-            print(molecule_name, energy)
+    # Read the data and loop through the data:
+    with open(f,'r') as data:
+        for line in data:
+            if 'Final Energy' in line:
+                energy_line = line
+                words = energy_line.split()
+                energy = float(words[3])
+                print(molecule_name, energy)
+                break
 ~~~
 {: .language-python}
 
@@ -188,37 +186,35 @@ Python can only write strings to files.  Our current print statement is not a st
 To make the printing neater, we will separate the file name from the energy using a tab. To insert a tab, we use the special character `\t`.
 
 ```
-datafile = open('energies.txt','w+')  #This opens the file for writing
-for f in filenames:
-    # Get the molecule name
-    file_name = os.path.basename(f)
-    split_filename = file_name.split('.')
-    molecule_name = split_filename[0]
+with open('energies.txt','w+') as datafile:     #This opens the file for writing
+    for f in filenames:
+        # Get the molecule name
+        file_name = os.path.basename(f)
+        split_filename = file_name.split('.')
+        molecule_name = split_filename[0]
 
-    # Read the data
-    outfile = open(f,'r')
-    data = outfile.readlines()
-    outfile.close()
-
-    # Loop through the data
-    for line in data:
-        if 'Final Energy' in line:
-            energy_line = line
-            words = energy_line.split()
-            energy = float(words[3])
-            datafile.write(F'{molecule_name} \t {energy} \n')
-datafile.close()
+        # Read the data and loop through the data
+        with open(f,'r') as data:
+            for line in data:
+                if 'Final Energy' in line:
+                    energy_line = line
+                    words = energy_line.split()
+                    energy = float(words[3])
+                    datafile.write(f'{molecule_name} \t {energy} \n')
+                    break
 ```
 {: .language-python}
 
 After you run this command, look in the directory where you ran your code and find the "energies.txt" file.  Open it in a text editor and look at the file.
 
-In the file writing line, notice the `\n` at the end of the line.  This is the newline character.  Without it, the text in our file would just be all smushed together on one line.  Also, the `filehandle.close()` command is very important.  Think about a computer as someone who has a very good memory, but is very slow at writing.  Therefore, when you tell the computer to write a line, it remembers what you want it to write, but it doesn't actually write the new file until you tell it you are finished.   The `datafile.close()` command tells the computer you are finished giving it lines to write and that it should go ahead and write the file now.  If you are trying to write a file and the file keeps coming up empty, it is probably because you forgot to close the file.  
+In the file writing line, notice the `\n` at the end of the line.  This is the newline character.  Without it, the text in our file would just be all smushed together on one line.  ~Also, the `filehandle.close()` command is very important.  Think about a computer as someone who has a very good memory, but is very slow at writing.  Therefore, when you tell the computer to write a line, it remembers what you want it to write, but it doesn't actually write the new file until you tell it you are finished.   The `datafile.close()` command tells the computer you are finished giving it lines to write and that it should go ahead and write the file now.  If you are trying to write a file and the file keeps coming up empty, it is probably because you forgot to close the file.~ All of this now will not be neccessary with 'context-manager' (the use of `with open('energies.txt','w+') as datafile:`).  Context-manager will automatically take care of closing the file with or without any error during the process.
 
 ## A final note about string formatting
-The F'string' notation that you can use with the print or the write command lets you format strings in many ways.  You could include other words or whole sentences.  For example, we could change the file writing line to
+Also, notice that `f'{molecule_name} \t {energy} \n'` was use as a new string format. This is call f-string and was introduced for python 3.5+. An excellent tutorial is [here](https://realpython.com/python-f-strings/).
+
+The f-string notation that you can use with the print or the write command lets you format strings in many ways.  You could include other words or whole sentences.  For example, we could change the file writing line to
 ```
-datafile.write(F'For the file {molecule_name} the energy is {energy} in kcal/mole.')
+datafile.write(f'For the file {molecule_name} the energy is {energy} in kcal/mol.')
 ```
 {: .language-python}
 where anything in the braces is a python variable and it will print the value of that variable.  
