@@ -241,8 +241,8 @@ If you do not include a start index, the slice automatically starts at `list_nam
 > ~~~
 > slice1 = energy_kcal[1:]
 > slice2 = energy_kcal[:3]
-> print('slice1 is {}'.format(slice1))
-> print('slice2 is {}'.format(slice2))
+> print('slice1 is', slice1)
+> print('slice2 is', slice2)
 > ~~~
 > {: .language-python}
 >
