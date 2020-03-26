@@ -320,37 +320,42 @@ for linenum, line in enumerate(list_name):
 
 In this notation, there are now *two* variables you can use in your loop commands, `linenum` (which can be named something else) will keep up with what iteration you are on in the loop, in this case what line you are on in the file. The variable `line` (which could be named something else) functions exactly as it did before, holding the actual information from the list.  Finally, instead of just giving the list name you use `enumerate(list_name)`.  
 
-**Important note**: `enumerate(list_name)` will start with 0-index so the first line will be label as '0', to change this behavior, use `start` variable in enumerate.
+> ## `Enumerate` with index other than 0:
+> `enumerate(list_name)` will start with 0-index so the first line will be label as '0', to change this behavior, use `start` variable in enumerate. For example, to start with index of "1" you can do:
+> ```python
+> for linenum, line in enumerate(data, start=1):
+>   # do something with 'linenum' and 'line'
+{: .callout}
 
 This block of code searches our file for the line that contains "Center" and reports the line number.
 ```
-for linenum, line in enumerate(data, start=1):
+for linenum, line in enumerate(data):
     if 'Center' in line:
         print(linenum)
         print(line)
 ```
 {: .language-python}
 ```
-78
+77
        Center              X                  Y                   Z               Mass       
 ```
 {: .output}
-Now we know that this is line 78 in our file.  
+Now we know that this is line 77 in our file. (remember that you start counting at zero!). 
 
 >## Check Your Understanding
 >What would be printed if you entered the following:
 >~~~
+> print(data[77])
 > print(data[78])
 > print(data[79])
 > print(data[80])
 > print(data[81])
-> print(data[82])
 > ~~~
 >{: .language.python}
 >
 >> ## Answer
 >>
->> It prints line 78-82 of the list `data` which is the line that contains "Center" and then the first few coordinates of the molecule.
+>> It prints line 77-81 of the list `data` which is the line that contains "Center" and then the first few coordinates of the molecule.
 >> ~~~
 >>            Center              X                  Y                   Z               Mass       
 >>
