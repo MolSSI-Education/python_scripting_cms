@@ -277,13 +277,13 @@ Use the provided sapt.out file.  In this output file, the program calculates the
 >>         if 'Electrostatics    ' in line:
 >>             electro_line = line
 >>             important_lines.append(electro_line)
->>         elif 'Exchange       ' in line:
+>>         if 'Exchange       ' in line:
 >>             exchange_line = line
 >>             important_lines.append(exchange_line)
->>         elif 'Induction      ' in line:
+>>         if 'Induction      ' in line:
 >>             induction_line = line
 >>             important_lines.append(induction_line)
->>         elif 'Dispersion     ' in line:
+>>         if 'Dispersion     ' in line:
 >>             dispersion_line = line
 >>             important_lines.append(dispersion_line)
 >> 
