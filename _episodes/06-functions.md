@@ -25,7 +25,7 @@ In Python, the following syntax is used to declare a function:
 
 ~~~
 def function_name(parameters):
-  ** function body code **
+    ** function body code **
     return value_to_return
 ~~~
 {: .language-python}
@@ -41,17 +41,17 @@ import os
 
 file_location = os.path.join('data', 'water.xyz')
 xyz_file = numpy.genfromtxt(fname=file_location, skip_header=2, dtype='unicode')
-symbols = xyz_file[:,0]
-coordinates = (xyz_file[:,1:])
+symbols = xyz_file[:, 0]
+coordinates = xyz_file[:, 1:]
 coordinates = coordinates.astype(numpy.float)
 num_atoms = len(symbols)
-for num1 in range(0,num_atoms):
-    for num2 in range(0,num_atoms):
-        if num1<num2:
-            x_distance = coordinates[num1,0] - coordinates[num2,0]
-            y_distance = coordinates[num1,1] - coordinates[num2,1]
-            z_distance = coordinates[num1,2] - coordinates[num2,2]
-            bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+for num1 in range(0, num_atoms):
+    for num2 in range(0, num_atoms):
+        if num1 < num2:
+            x_distance = coordinates[num1, 0] - coordinates[num2, 0]
+            y_distance = coordinates[num1, 1] - coordinates[num2, 1]
+            z_distance = coordinates[num1, 2] - coordinates[num2, 2]
+            bond_length_12 = numpy.sqrt(x_distance ** 2 + y_distance ** 2 + z_distance ** 2)
             if bond_length_12 > 0 and bond_length_12 <= 1.5:
                 print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 ```
@@ -65,16 +65,16 @@ def calculate_distance(atom1_coord, atom2_coord):
     x_distance = atom1_coord[0] - atom2_coord[0]
     y_distance = atom1_coord[1] - atom2_coord[1]
     z_distance = atom1_coord[2] - atom2_coord[2]
-    bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+    bond_length_12 = numpy.sqrt(x_distance ** 2 + y_distance ** 2 + z_distance ** 2)
     return bond_length_12
 ```
 {: .language-python}
 
 Now we can change our `for` loop to just call the distance function we wrote above.
 ```
-for num1 in range(0,num_atoms):
-    for num2 in range(0,num_atoms):
-        if num1<num2:
+for num1 in range(0, num_atoms):
+    for num2 in range(0, num_atoms):
+        if num1 < num2:
             bond_length_12 = calculate_distance(coordinates[num1], coordinates[num2])
             if bond_length_12 > 0 and bond_length_12 <= 1.5:
                 print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
@@ -147,9 +147,9 @@ Now that we have our `bond_check` function, we can use it in our `for` loop to o
 
 ```
 num_atoms = len(symbols)
-for num1 in range(0,num_atoms):
-    for num2 in range(0,num_atoms):
-        if num1<num2:
+for num1 in range(0, num_atoms):
+    for num2 in range(0, num_atoms):
+        if num1 < num2:
             bond_length_12 = calculate_distance(coordinates[num1], coordinates[num2])
             if bond_check(bond_length_12) is True:
                 print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
@@ -170,8 +170,8 @@ O to H2 : 0.969
 >> ~~~
 >> def open_xyz(filename):
 >>      xyz_file = numpy.genfromtxt(fname=filename, skip_header=2, dtype='unicode')
->>      symbols = xyz_file[:,0]
->>      coord = (xyz_file[:,1:])
+>>      symbols = xyz_file[:, 0]
+>>      coord = (xyz_file[:, 1:])
 >>      coord = coord.astype(numpy.float)
 >>      return symbols, coord
 >> ~~~
@@ -189,9 +189,9 @@ import os
 file_location = os.path.join('data', 'water.xyz')
 symbols, coord = open_xyz(file_location)
 num_atoms = len(symbols)
-for num1 in range(0,num_atoms):
-    for num2 in range(0,num_atoms):
-        if num1<num2:
+for num1 in range(0, num_atoms):
+    for num2 in range(0, num_atoms):
+        if num1 < num2:
             bond_length_12 = calculate_distance(coord[num1], coord[num2])
             if bond_check(bond_length_12) is True:
                 print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
@@ -213,7 +213,7 @@ First, we will define a new function `print_bonds`, which takes bond symbols and
 ~~~
 def print_bonds(atom_symbols, atom_coordinates):
     num_atoms = len(atom_symbols)
-    for num1 in range(0,num_atoms):
+    for num1 in range(0, num_atoms):
         for num2 in range(0, num_atoms):
             if num1 < num2:
                 bond_length_12 = calculate_distance(atom_coordinates[num1], atom_coordinates[num2])
@@ -232,7 +232,7 @@ def calculate_distance(atom1_coord, atom2_coord):
     x_distance = atom1_coord[0] - atom2_coord[0]
     y_distance = atom1_coord[1] - atom2_coord[1]
     z_distance = atom1_coord[2] - atom2_coord[2]
-    bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+    bond_length_12 = numpy.sqrt(x_distance ** 2 + y_distance ** 2 + z_distance ** 2)
     return bond_length_12
 
 def bond_check(atom_distance, minimum_length=0, maximum_length=1.5):
@@ -250,7 +250,7 @@ def open_xyz(filename):
 
 def print_bonds(atom_symbols, atom_coordinates):
     num_atoms = len(atom_symbols)
-    for num1 in range(0,num_atoms):
+    for num1 in range(0, num_atoms):
         for num2 in range(0, num_atoms):
             if num1 < num2:
                 bond_length_12 = calculate_distance(atom_coordinates[num1], atom_coordinates[num2])
