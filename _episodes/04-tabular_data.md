@@ -312,7 +312,6 @@ TYR6_ASP : 10.9934435
 >> coordinates = (xyz_file[:,1:])
 >> coordinates = coordinates.astype(numpy.float)
 >> num_atoms = len(symbols)
->> BLfile = open('bond_lengths.txt','w+')   #Open a file for writing
 >> for num1 in range(0,num_atoms):
 >>     for num2 in range(0,num_atoms):
 >>         x_distance = coordinates[num1,0] - coordinates[num2,0]
