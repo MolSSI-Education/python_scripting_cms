@@ -93,7 +93,7 @@ In the previous code block, we introduced the `print()` function.  Often, we wil
 Note that if you do not specify a new name for a variable, then it doesn't automatically change the value of the variable; this is called being *immutable*.  For example if we typed
 ```
 print(deltaG)
-deltaG*1000
+deltaG * 1000
 print(deltaG)
 ```
 {: .language-python}
@@ -119,7 +119,7 @@ print(deltaG)
 There are situations where it is reasonable to overwrite a variable with a new value, but you should always think carefully about this.  Usually it is a better practice to give the variable a new name and leave the existing variable as is.  
 ```
 print(deltaG)
-deltaG_joules = deltaG*1000
+deltaG_joules = deltaG * 1000
 print(deltaG)
 print(deltaG_joules)
 ```
@@ -176,7 +176,7 @@ energy_kcal = [-13.4, -2.7, 5.4, 42.1]
 energy_length = len(energy_kcal)
 
 # print the list length
-print('The length of this list is {}'.format(energy_length))
+print('The length of this list is', energy_length)
 ```
 {: .language-python}
 
