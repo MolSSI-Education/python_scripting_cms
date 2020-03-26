@@ -321,9 +321,9 @@ TYR6_ASP : 10.9934435
 >> num_atoms = len(symbols)
 >> for num1 in range(0, num_atoms):
 >>     for num2 in range(0, num_atoms):
->>         x_distance = coordinates[num1, 0] - coordinates[num2, 0]
->>         y_distance = coordinates[num1, 1] - coordinates[num2, 1]
->>         z_distance = coordinates[num1, 2] - coordinates[num2, 2]
+>>         x_distance = coordinates[num1,0] - coordinates[num2,0]
+>>         y_distance = coordinates[num1,1] - coordinates[num2,1]
+>>         z_distance = coordinates[num1,2] - coordinates[num2,2]
 >>         bond_length_12 = numpy.sqrt(x_distance ** 2 + y_distance ** 2 + z_distance ** 2)
 >>         print(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')  # print result to screen
 >>
