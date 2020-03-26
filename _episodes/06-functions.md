@@ -77,7 +77,7 @@ for num1 in range(0, num_atoms):
         if num1 < num2:
             bond_length_12 = calculate_distance(coordinates[num1], coordinates[num2])
             if bond_length_12 > 0 and bond_length_12 <= 1.5:
-                print(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+                print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 ```
 {: .language-python}
 
@@ -152,7 +152,7 @@ for num1 in range(0, num_atoms):
         if num1 < num2:
             bond_length_12 = calculate_distance(coordinates[num1], coordinates[num2])
             if bond_check(bond_length_12) is True:
-                print(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+                print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 ```
 {: .language-python}
 ```
@@ -194,7 +194,7 @@ for num1 in range(0, num_atoms):
         if num1 < num2:
             bond_length_12 = calculate_distance(coord[num1], coord[num2])
             if bond_check(bond_length_12) is True:
-                print(f'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+                print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 ~~~
 {: .language-python}
 
@@ -218,7 +218,7 @@ def print_bonds(atom_symbols, atom_coordinates):
             if num1 < num2:
                 bond_length_12 = calculate_distance(atom_coordinates[num1], atom_coordinates[num2])
                 if bond_check(bond_length_12) is True:
-                    print(f'{atom_symbols[num1]} to {atom_symbols[num2]} : {bond_length_12:.3f}')
+                    print(F'{atom_symbols[num1]} to {atom_symbols[num2]} : {bond_length_12:.3f}')
 ~~~
 {: .language-python}
 
@@ -255,7 +255,7 @@ def print_bonds(atom_symbols, atom_coordinates):
             if num1 < num2:
                 bond_length_12 = calculate_distance(atom_coordinates[num1], atom_coordinates[num2])
                 if bond_check(bond_length_12) is True:
-                    print(f'{atom_symbols[num1]} to {atom_symbols[num2]} : {bond_length_12:.3f}')
+                    print(F'{atom_symbols[num1]} to {atom_symbols[num2]} : {bond_length_12:.3f}')
 ~~~
 {: .language-python}
 
@@ -268,10 +268,10 @@ water_symbols, water_coords = open_xyz(water_file_location)
 benzene_file_location = os.path.join('data', 'benzene.xyz')
 benzene_symbols, benzene_coords = open_xyz(benzene_file_location)
 
-print(f'Printing bonds for water.')
+print(F'Printing bonds for water.')
 print_bonds(water_symbols, water_coords)
 
-print(f'Printing bonds for benzene.')
+print(F'Printing bonds for benzene.')
 print_bonds(benzene_symbols, benzene_coords)
 ~~~
 {: .language-python}
