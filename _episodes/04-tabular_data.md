@@ -269,7 +269,7 @@ In our example, the "end" value needs to be the number of columns of data.
 
 Now that we know the number of columns, we can use the `range()` function to set up our `for` loop.
 ```
-for i in range(1,num_columns):
+for i in range(1, num_columns):
     column = data[:, i]
     avg_col = numpy.mean(column)
     print(f'{headers[i]} : {avg_col}')
@@ -349,7 +349,7 @@ TYR6_ASP : 10.9934435
 >>     atom_data = atom.split()
 >>     symbol = atom_data[0]
 >>     symbols.append(symbol)
->>     x, y, z = atom_data[1:]    # or `x, y, z = atom_data[1], atom_data[2], atom_data[3]`
+>>     x, y, z = atom_data[1], atom_data[2], atom_data[3]
 >>     coordinates.append([float(x), float(y), float(z)])
 >>
 >> for num1 in range(0, num_atoms):
