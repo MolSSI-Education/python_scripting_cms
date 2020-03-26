@@ -80,7 +80,6 @@ for f in filenames:
                 words = energy_line.split()
                 energy = float(words[3])
                 print(energy)
-                break
 ```
 {: .language-python}
 
@@ -99,8 +98,6 @@ for f in filenames:
 {: .output}
 
 Notice that in this code we actually used two `for` loops, one nested inside the other.  The outer `for` loop counts over the filenames we read in earlier.  The inner `for` loop counts over the line in each file, just as we did in our previous file parsing lesson.  
-
-`break` was used after `print(energy)` to break out of the `for` loop for reading the current file. This will stop python from reading the rest of the file content after finding the line with 'Final Energy'.
 
 The output our code currently generates is not that useful.  It doesn't show us which file each energy value came from.  
 
@@ -153,7 +150,6 @@ for f in filenames:
                 words = energy_line.split()
                 energy = float(words[3])
                 print(molecule_name, energy)
-                break
 ~~~
 {: .language-python}
 
@@ -201,7 +197,6 @@ with open('energies.txt','w+') as datafile:     #This opens the file for writing
                     words = energy_line.split()
                     energy = float(words[3])
                     datafile.write(f'{molecule_name} \t {energy} \n')
-                    break
 ```
 {: .language-python}
 
