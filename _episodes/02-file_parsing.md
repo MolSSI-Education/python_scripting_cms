@@ -340,7 +340,7 @@ for linenum, line in enumerate(data):
        Center              X                  Y                   Z               Mass       
 ```
 {: .output}
-Now we know that this is line 77 in our file. (remember that you start counting at zero!). 
+Now we know that this is line 77 in our file (remember that you start counting at zero!). 
 
 >## Check Your Understanding
 >What would be printed if you entered the following:
