@@ -279,7 +279,11 @@ for variable in list:
 ```
 {: .language-python}
 
-Indentation is very important in python.  There is nothing like an `end` or `exit` statement that tells you that you are finished with the loop.  The indentation shows you what statements are in the loop. Each indentation is 4 spaces by convention in Python 3. Let's use a loop to change all of our energies in kcal to kJ.
+There are two very important pieces of syntax for the `for` loop. Notice the colon `:` after the word list. You will always have a colon at the end of a `for` statement. If you forget the colon, you will get an error when you try to run your code.
+
+The second thing to notice is that the lines of code under the `for` loop (the things you want to do several times) are indented. Indentation is very important in python.  There is nothing like an `end` or `exit` statement that tells you that you are finished with the loop. The indentation shows you what statements are in the loop. Each indentation is 4 spaces by convention in Python 3. However, if you are using an editor which understands Python, it will do the correct indentation for you when you press the tab key on your keyboard. In fact, the Jupyter notebook will notice that you used a colon (`:`) in the previous line, and will indent for you (so you will not need to press tab).
+
+Let's use a loop to change all of our energies in kcal to kJ.
 ```
 for number in energy_kcal:
     kJ = number * 4.184
