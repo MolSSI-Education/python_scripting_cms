@@ -108,12 +108,16 @@ outfile.close()
 ~~~
 {: .language-python}
 
-## Alternative way to open a file:
-Alternatively, you can open a file using `context-manager`. In this case, python will automatically handle closing of the file:
-```python
-with open(ethanol_file,"r") as outfile:
-    data = outfile.readlines()
-```
+> ## An alternative way to open a file.
+> Alternatively, you can open a file using `context-manager`. In this case, the context manager will automatically handle closing of the file. To use a context manager to open and close the file, you use the word `with`, and put everything you want to be done while the file is open in an indented block.
+> ~~~
+> with open(ethanol_file,"r") as outfile:
+>     data = outfile.readlines()
+> ~~~
+> {: .language-python}
+>
+> This is often the preferred way to deal with files because you do not have to remember to close the file.
+{: .callout}
 
 
 > ## Check Your Understanding
