@@ -8,8 +8,7 @@ objectives:
 - "Make code executable from the Linux command line."
 - "Use argparse to accept user inputs."
 keypoints:
-- "You must `import sys` in your code to accept user arguments."
-- "The name of the script itself is always `sys.argv[0]` so the first user input is normally `sys.argv[1]`."
+- "You must `import argpaarse` in your code to accept user arguments."
 ---
 ## Creating and running a python input file
 
