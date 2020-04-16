@@ -50,7 +50,7 @@ or similar to this if you are on Windows
 ~~~
 {: .output}
 
-Notice that the file paths are different for these two systems. The Windows system uses a forward slash ('\\'), while Mac and Linux use a backslash ('/') for filepaths.
+Notice that the file paths are different for these two systems. The Windows system uses a backslash ('\\'), while Mac and Linux use a forward slash ('/') for filepaths.
 
 When we write a script, we want it to be usable on any operating system, thus we will use a python module called `os.path` that will allow us to define file paths in a general way.
 
@@ -69,7 +69,7 @@ data/outfiles/ethanol.out
 ~~~
 {:. .output}
 
-Here, we have specified that our filepath contains the 'data' and 'outfiles' directory, and the `os.path` module has made this into a filepath that is usable by our system. If you are on Windows, you will instead see that a forward slash is used.
+Here, we have specified that our filepath contains the 'data' and 'outfiles' directory, and the `os.path` module has made this into a filepath that is usable by our system. If you are on Windows, you will instead see that a backslash is used.
 
 > ## Absolute and relative paths
 > File paths can be *absolute*, or *relative*.
@@ -108,6 +108,18 @@ outfile.close()
 ~~~
 {: .language-python}
 
+> ## An alternative way to open a file.
+> Alternatively, you can open a file using `context-manager`. In this case, the context manager will automatically handle closing of the file. To use a context manager to open and close the file, you use the word `with`, and put everything you want to be done while the file is open in an indented block.
+> ~~~
+> with open(ethanol_file,"r") as outfile:
+>     data = outfile.readlines()
+> ~~~
+> {: .language-python}
+>
+> This is often the preferred way to deal with files because you do not have to remember to close the file.
+{: .callout}
+
+
 > ## Check Your Understanding
 > Check that your file was read in correctly by determining how many lines are in the file.
 >> ## Answer
@@ -129,7 +141,7 @@ Let's take a look at what's in the file.
 
 ~~~
 for line in data:
-  print(line)
+    print(line)
 ~~~
 {: .language-python}
 
@@ -196,11 +208,23 @@ print(words)
 
 From this `print` statement, we now see that we have a list called words, where we have split `energy_line`.  The energy is actually the fourth element of this list, so we can now save it as a new variable.
 
-```
+```python
 energy = words[3]
 print(energy)
 ```
 {: .language-python}
+
+> ## Python negative indexing
+> We also recogize that "energy" is the last element of the list. Therefore, an alternative way to assign `energy` is:
+> ```python
+> energy = words[-1]
+> print(energy)
+> ```
+>
+> In the example above,  the index value of `-1` gives the last element, and `-2` would give the second last element of a list, and so on. An excelent tutorial on Python list accessed by index can be found [here](https://realpython.com/python-lists-tuples/#list-elements-can-be-accessed-by-index)
+{: .callout}
+
+
 
 ```
 -154.09130176573018
@@ -237,11 +261,11 @@ energy = float(words[3])
 >## Exercise on File Parsing (should we move this to the end?)
 Use the provided sapt.out file.  In this output file, the program calculates the interaction energy for an ethene-ethyne complex.  The output reports four interaction energy components: electrostatics, induction, exchange, and dispersion.  Parse each of these energies, in kcal/mole, from the output file.  (Hint: study the file in a text editor to help you decide what to search for.) Calculate the total interaction energy by adding the four components together.  Your code's output should look something like this:
 > ~~~
-> Electrostatics : -2.25850118 kcal/mole
-> Exchange : 2.27730198 kcal/mole
-> Induction : -0.5216933 kcal/mole
-> Dispersion : -0.9446677 kcal/mole
-> Total Energy : 1.4475602000000003 kcal/mole
+> Electrostatics : -2.25850118 kcal/mol
+> Exchange : 2.27730198 kcal/mol
+> Induction : -0.5216933 kcal/mol
+> Dispersion : -0.9446677 kcal/mol
+> Total Energy : 1.4475602000000003 kcal/mol
 > ~~~
 > {: language.python}
 >
@@ -249,36 +273,36 @@ Use the provided sapt.out file.  In this output file, the program calculates the
 >>
 >> This is one possible solution for the SAPT parsing exercise
 >> ~~~
->> saptout = open('SAPT.out','r')
->> saptlines = saptout.readlines()
->> important_lines=[]
->> energies=[]
->> for line in saptlines:
->>     if 'Electrostatics    ' in line:
->>        electro_line = line
->>        important_lines.append(electro_line)
->>    if 'Exchange       ' in line:
->>        exchange_line = line
->>        important_lines.append(exchange_line)
->>    if 'Induction      ' in line:
->>        induction_line = line
->>        important_lines.append(induction_line)
->>    if 'Dispersion     ' in line:
->>        dispersion_line = line
->>        important_lines.append(dispersion_line)
->>
->> #print(important_lines)
->>
+>> important_lines = []
+>> energies = []
+>> 
+>> with open('SAPT.out','r') as saptout:
+>>     for line in saptout:
+>>         if 'Electrostatics    ' in line:
+>>             electro_line = line
+>>             important_lines.append(electro_line)
+>>         if 'Exchange       ' in line:
+>>             exchange_line = line
+>>             important_lines.append(exchange_line)
+>>         if 'Induction      ' in line:
+>>             induction_line = line
+>>             important_lines.append(induction_line)
+>>         if 'Dispersion     ' in line:
+>>             dispersion_line = line
+>>             important_lines.append(dispersion_line)
+>> 
+>> # print(important_lines)
+>> 
 >> for line in important_lines:
->>    words = line.split()
->>    #print(words)
->>    energy_type = words[0]
->>    energy_kcal = float(words[3])
->>    energies.append(energy_kcal)
->>    print(energy_type, ':', energy_kcal, 'kcal/mole')
->>
->> total_energy=energies[0]+energies[1]+energies[2]+energies[3]
->> print('Total Energy', ':', total_energy, 'kcal/mole')
+>>     words = line.split()
+>>     # print(words)
+>>     energy_type = words[0]
+>>     energy_kcal = float(words[3])
+>>     energies.append(energy_kcal)
+>>     print('{} : {} kcal/mol'.format(energy_type, energy_kcal))
+>> 
+>> total_energy = sum(energies)
+>> print('Total Energy : {} kcal/mol'.format(total_energy))
 >> ~~~
 >> {: .language-python}
 > {: .solution}
@@ -300,6 +324,13 @@ for linenum, line in enumerate(list_name):
 
 In this notation, there are now *two* variables you can use in your loop commands, `linenum` (which can be named something else) will keep up with what iteration you are on in the loop, in this case what line you are on in the file. The variable `line` (which could be named something else) functions exactly as it did before, holding the actual information from the list.  Finally, instead of just giving the list name you use `enumerate(list_name)`.  
 
+> ## `Enumerate` with index other than 0:
+> `enumerate(list_name)` will start with 0-index so the first line will be label as '0', to change this behavior, use `start` variable in enumerate. For example, to start with index of "1" you can do:
+> ```python
+> for linenum, line in enumerate(data, start=1):
+>   # do something with 'linenum' and 'line'
+{: .callout}
+
 This block of code searches our file for the line that contains "Center" and reports the line number.
 ```
 for linenum, line in enumerate(data):
@@ -313,7 +344,7 @@ for linenum, line in enumerate(data):
        Center              X                  Y                   Z               Mass       
 ```
 {: .output}
-Now we know that this is line 77 in our file (remember that you start counting at zero!).  
+Now we know that this is line 77 in our file (remember that you start counting at zero!). 
 
 >## Check Your Understanding
 >What would be printed if you entered the following:
@@ -345,6 +376,6 @@ Now we know that this is line 77 in our file (remember that you start counting a
 {: .challenge}
 
 ## A final note about regular expressions
-Sometimes you will need to match something more complex than just a particular word or phrase in your output file.  Sometimes you will need to match a particular word, but only if it is found at the beginning of a line.  Or perhaps you will need to match a particular pattern of data, like a capital letter followed by a number, but you won't know the exact letter and number you are looking for.  These types of matching situations are handled with something called *regular expressions* which is accessed through the python module `re`.  While using regular expressions is outside the scope of this tutorial, they are very useful and you might want to learn more about them in the future.  A tutorial can be found at _______.  
+Sometimes you will need to match something more complex than just a particular word or phrase in your output file.  Sometimes you will need to match a particular word, but only if it is found at the beginning of a line.  Or perhaps you will need to match a particular pattern of data, like a capital letter followed by a number, but you won't know the exact letter and number you are looking for.  These types of matching situations are handled with something called *regular expressions* which is accessed through the python module `re`.  While using regular expressions (regex) is outside the scope of this tutorial, they are very useful and you might want to learn more about them in the future.  A tutorial can be found at [Automate the Boring Stuff with Python](https://automatetheboringstuff.com/2e/chapter7/) book.  A great test site for regex is [here](https://regex101.com/)
 
 {% include links.md %}

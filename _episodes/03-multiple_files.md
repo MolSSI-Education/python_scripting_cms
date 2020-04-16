@@ -223,4 +223,221 @@ datafile.write(F'For the file {molecule_name} the energy is {energy} in kcal/mol
 {: .language-python}
 where anything in the braces is a python variable and it will print the value of that variable.  
 
+## Project Assignment
+
+This is a project assignment which you can complete to test your skills.
+
+> ## File parsing homework
+> In the lesson materials, there is a file called `03_Prod.mdout`. This is a file output by the Amber molecular dynamics simulation program.
+>
+> If you open the file and look at it, you will see sections which look like this:
+>
+> ~~~
+>  NSTEP =      100   TIME(PS) =      20.200  TEMP(K) =   296.43  PRESS =  -300.8
+>  Etot   =     -4585.1049  EKtot   =      1129.2368  EPtot      =     -5714.3417
+>  BOND   =         1.5160  ANGLE   =         6.9846  DIHED      =        11.7108
+>  1-4 NB =         4.3175  1-4 EEL =        49.9911  VDWAALS    =       882.6741
+>  EELEC  =     -6671.5358  EHBOND  =         0.0000  RESTRAINT  =         0.0000
+>  EKCMT  =       583.7810  VIRIAL  =       786.8823  VOLUME     =     31270.0410
+>                                                     Density    =         0.6104
+>  Ewald error estimate:   0.3214E-03
+>  ------------------------------------------------------------------------------
+> ~~~
+>
+> Your assignment is to parse this file, and write a new file containing a list of the > total energies. Name your file `Etot.txt`. When you open it, it should look like this:
+>
+> ~~~
+> -4585.1049
+> -4573.5326
+> -4548.1223
+> -4525.341
+> -4542.8995
+> -4550.9376
+> -4543.8652
+> -4570.4109
+> -4550.4225
+> -4585.2078
+> ...
+> ~~~
+>
+> `...` indicates that you will have many more rows. We've only shown the first 10 here.
+>
+> If you are unsure of where to start with this assignment, check the hint section!
+>
+>> ## Hints
+>> It helps when you are writing code to break up what you have to do into steps. Overall, we want to get information from the file. How do we do that?
+>>
+>> If you think about the steps you will need to do this assignment you might come up with a list that is like this, you might have a list like
+>>
+>> 1. Open the file for reading
+>> 2. Read the data in the file
+>> 3. Loop through the lines in the file.
+>> 4. Get the information from the line we are interested in.
+>> 5. Write the information to a file.
+>>
+>> It can be helpful when you code to write out these steps and work on it in pieces. Try to write the code using these steps. Note that as you write the code, you may come up with other steps! First, thing about what you have to do for step 1, and write the code for that. Next, think about how you would do step 2 and write the code for that. You can troubleshoot each step using print statments. The steps build on each other, so you can work on getting each piece written before moving on to the next step.
+> {: .solution}
+>
+>> ## Solution
+>> The following is one potential solution, though you may have come up with another. Just make sure that your text file looks like the solution given in the problem statememt.
+>>
+>> This solution will walk through writing the code step-by-step. If you do not wish to walk through step-by-step, simply skip to the end of the solution.
+>>
+>> Let's start with the steps we thought of in the hint to write this code in pieces.
+>>
+>> ~~~
+>> # Open the file for reading
+>>
+>> # Read the data in the file.
+>>
+>> # Loop through the lines in the file.
+>>
+>> # Get information from the line.
+>> ~~~
+>> {: .language-python}
+>>
+>> For part one, you will realize that you need to build a file path before opening. We also know that if we open a file, we will need to close it. After we build a file path, and open the file, our code will look like this.
+>>
+>> ~~~
+>> import os
+>>
+>> # Open the file for reading.
+>>
+>> ## Build the file filepath
+>> filename = os.path.join('data', '03_Prod.mdout')
+>>
+>> # Open the file
+>> f = open(filename,'r')
+>>
+>> # Close the file.
+>> f.close()
+>>
+>> # Read the data in the file.
+>>
+>> # Loop through the lines in the file.
+>>
+>> # Get information from the line.
+>>
+>> # Write to a file
+>> ~~~
+>> {: .language-python}
+>>
+>> This code will not appear to do anything, but it building a filepath, opening a file, then closing the file. Running it will allow us to see if we've correctly built our filepath and to see that we were able to open and close the file.
+>>
+>> Our second step was reading the data in the file. Recall that we did this earlier with a function called `readlines`. Recall from `readlines` that the file will need to be open to do this, so we will add this before we use the `f.close()` command.
+>>
+>> ~~~
+>> import os
+>>
+>> # Open the file for reading.
+>>
+>> ## Build the file filepath
+>> filename = os.path.join('data', '03_Prod.mdout')
+>>
+>> # Open the file
+>> f = open(filename,'r')
+>>
+>> # Read the data in the file.
+>> data = f.readlines()
+>>
+>> # Close the file.
+>> f.close()
+>>
+>> # Loop through the lines in the file.
+>>
+>> # Get information from the line.
+>>
+>> # Write to a file.
+>> ~~~
+>> {: .language-python}
+>>
+>> We know that readlines gives us a list where every line is an element of a list. We need to loop through the lines in the file, and we will do this using a `for` loop.
+>>
+>> We will need to extract information from lines, so let's go ahead and split the lines. Let's just print this first.
+>>
+>> ~~~
+>> import os
+>>
+>> # Open the file for reading.
+>>
+>> ## Build the file filepath
+>> filename = os.path.join('data', '03_Prod.mdout')
+>>
+>> # Open the file
+>> f = open(filename,'r')
+>>
+>> # Read the data in the file.
+>> data = f.readlines()
+>>
+>> # Close the file.
+>> f.close()
+>>
+>> # Loop through the lines
+>> for line in data:
+>>     split_line = line.split()
+>>     print(split_line)
+>> ~~~
+>> {: .language-python}
+>>
+>> When you examine this output, you will discover that **if** the line contains our keyword (`Etot`), then the value associated will be element `2` in `split_line` (remember that counting starts at 0). Let's print that.
+>> ~~~
+>> import os
+>>
+>> # Open the file for reading.
+>>
+>> ## Build the file filepath
+>> filename = os.path.join('data', '03_Prod.mdout')
+>>
+>> # Open the file
+>> f = open(filename,'r')
+>>
+>> # Read the data in the file.
+>> data = f.readlines()
+>>
+>> # Close the file.
+>> f.close()
+>>
+>> # Loop through the lines
+>> for line in data:
+>>     split_line = line.split()
+>>     if 'Etot' in line:
+>>         print(split_line[2])
+>> ~~~
+>> {: .language-python}
+>>
+>> Now all that is left to do is to write this information to a file. We will need to open the file before the loop, write to it inside the loop, and finally close it outside of the loop. Our final solution is
+>>
+>> ~~~
+>> import os
+>>
+>> # Open the file for reading.
+>>
+>> ## Build the file filepath
+>> filename = os.path.join('data', '03_Prod.mdout')
+>>
+>> # Open the file
+>> f = open(filename,'r')
+>>
+>> # Read the data in the file.
+>> data = f.readlines()
+>>
+>> # Close the file.
+>> f.close()
+>>
+>> # Open a file for writing
+>> f_write = open('Etot.txt', 'w+')
+>>
+>> # Loop through the lines
+>> for line in data:
+>>     split_line = line.split()
+>>     if 'Etot' in line:
+>>         print(split_line[2])
+>>         f_write.write(f'{split_line[2]}\n')
+>>
+>> f_write.close()
+>> ~~~
+>> {: .language-python}
+> {: .solution}
+{: .challenge}
+
 {% include links.md %}

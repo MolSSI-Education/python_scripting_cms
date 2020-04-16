@@ -4,7 +4,7 @@ title: Setup
 ## Installing Python through Anaconda
 [Python](https://python.org/) is a popular language for scientific computing, and great for general-purpose programming as well. Installing all of its scientific packages individually can be a bit difficult, however, so we recommend the all-in-one installer Anaconda.
 
-Regardless of how you choose to install it, *please make sure you install Python version 3.x (e.g., 3.4 is fine, 2.7 is not)*.  Also, please set up your python environment at least a day in advance of the workshop. If you encounter problems with the installation procedure, the instructors will be available 30 minutes before the workshop begins to help you.
+Regardless of how you choose to install it, *please make sure you install Python version 3.6+ (e.g., 3.7 is fine, 2.7 is not)*.  Also, please set up your python environment at least a day in advance of the workshop. If you encounter problems with the installation procedure, the instructors will be available 30 minutes before the workshop begins to help you.
 
 ## Windows - [Video Tutorial](https://www.youtube.com/watch?v=xxQ0mzZ8UvA)
 
