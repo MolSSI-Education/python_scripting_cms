@@ -309,6 +309,110 @@ if __name__ == "__main__":
 ~~~
 {: .language-python}
 
-
+> ## Project Assignment
+>
+> For this homework assignment, you will return to your Project from Lesson 3.
+>
+> Create a command line script using `argparse` which can take in an `mdout` file from Amber,  pull out total energy for each time step, and write a new file containing these values. The script should take a file name (`03_Prod.mdout`) OR pattern (`*.mdout`) and output files with the names `filename_Etot.txt` **in the same directory as the files**. Modify your week 1 homework to do this. In contrast to week 1, truncate the last two values from your script (these are an average value and a fluctuation value) from the file you write.
+>
+> You can download a directory containing more mdout files [here](../data/mdout.zip) 
+>
+> Call your script `analyze_mdout.py`. You should be able to call the script in the following > ways:
+>
+> ~~~
+> $ python analyze_mdout.py 03_Prod.mdout
+> ~~~
+> {: .language-bash}
+>
+> or
+>
+> ~~~
+> $ python analyze_mdout.py '*.out'
+> ~~~
+> {: .language-bash}
+>
+> When you call help, you should get the following output:
+> ~~~
+> $ python analyze_mdout.py --help
+> ~~~
+> {: .language-bash}
+>
+> ~~~
+> usage: This script parses amber mdout files to extract the total energy. You can also use it to create plots.
+>       [-h] [--make_plots] path
+>
+> positional arguments:
+>  path          The filepath to the file(s) to be analyzed. To analyze
+>                multiple files, you can use the `*` pattern.
+>
+> optional arguments:
+>  -h, --help    show this help message and exit
+> ~~~
+> {: .output}
+> **Extension**
+> Add an optional argument to your script to create plots of the data with matplotlib.
+>
+>> ## Solution
+>> ~~~
+>> import os
+>> import glob
+>> import argparse
+>> import matplotlib.pyplot as plt
+>>
+>>
+>> if __name__ == "__main__":
+>>
+>>     parser = argparse.ArgumentParser("This script parses amber mdout files to extract the total energy. You can also use it to create plots.")
+>>     parser.add_argument("path", help="The filepath to the file(s) to be analyzed. To analyze multiple files, you can use the `*` pattern.", type=str)
+>>     parser.add_argument("--make_plots", help="Create a line plot of the values.", action='store_true')
+>>
+>>     args = parser.parse_args()
+>>
+>>     filenames = args.path
+>>     dir_name = os.path.dirname(filenames)
+>>
+>>     files = glob.glob(filenames)
+>>
+>>     for file in files:
+>>         base_name = os.path.basename(file).split('.')[0]
+>>
+>>         # Open the file
+>>         f = open(file,'r')
+>>
+>>         # Read the data in the file.
+>>         data = f.readlines()
+>>
+>>         # Close the file.
+>>         f.close()
+>>
+>>         etot = []
+>>         # Loop through the lines
+>>         for line in data:
+>>             split_line = line.split()
+>>             if 'Etot' in line:
+>>                 etot.append(float(split_line[2]))
+>>
+>>         # Get rid of values we don't need.
+>>         values = etot[:-2]
+>>         # Open a file for writing
+>>         outfile_location = os.path.join(dir_name, F'{base_name}_Etot.txt')
+>>         outfile = open(outfile_location, 'w+')
+>>
+>>         for value in values:
+>>             outfile.write(f'{value}\n')
+>>
+>>         outfile.close()
+>>
+>>         if args.make_plots:
+>>             plt.figure()
+>>             plot_name = os.path.join(dir_name, F'{base_name}_Etot.png')
+>>             plt.plot(values, label=base_name)
+>>             plt.legend()
+>>             plt.savefig(plot_name, dpi=300)
+>> ~~~
+>> {: .language-python}
+>>
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
