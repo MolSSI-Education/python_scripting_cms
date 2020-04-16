@@ -8,8 +8,9 @@ objectives:
 - "Make code executable from the Linux command line."
 - "Use argparse to accept user inputs."
 keypoints:
-- "You must `import sys` in your code to accept user arguments."
-- "The name of the script itself is always `sys.argv[0]` so the first user input is normally `sys.argv[1]`."
+- "You must `import argparse` in your code to accept user arguments."
+- "You add must first create an argument parser using `parser = argparse.ArgumentParser`"
+- "You add arguments using `parser.add_argument`"
 ---
 ## Creating and running a python input file
 
@@ -80,19 +81,19 @@ import argparse
 
 We are importing a library called [https://docs.python.org/3/library/argparse.html](argparse) which can be used to easily make scripts with command line arguments. `Argparse` has the ability to allow us to easily write documentation for our scripts as well.
 
-First, we have to tell `argparse` what are arguments are. We tell argparse that we want to add some arguments using the following command:
+We tell argparse that we want to add a command line interface. The syntax for this is
 
 ~~~
 parser = argparse.ArgumentParser(description="This script analyzes a user given xyz file and outputs the length of the bonds.")
 ~~~
 {: .language-python}
 
-We've included a description of the script for our users using `description=`.
+We've included a description of the script for our users using `description=`. This description does not need to explain what the arguments are, that will be done automatically for us in the next steps.
 
 Next, we have to tell `argparse` what arguments it should expect. In general, the syntax for this is
 
 ~~~
-parser.add_argument("argument name", help="Your help message for this argument.")
+parser.add_argument("argument_name", help="Your help message for this argument.")
 ~~~
 {: .language-python}
 
@@ -109,8 +110,7 @@ args = parser.parse_args()
 ~~~
 {: .language-python}
 
-Our arguments are in the `args` variable. We can get the value of an argument by using `args.ARGUMENT_NAME`, so to get the xyz file the user puts in, we use `args.xyz_file`. Notice that what follows after the dot is the same thing we but in quotation marks when using `add_argument.`
-
+Our arguments are in the `args` variable. We can get the value of an argument by using `args.argument_name`, so to get the xyz file the user puts in, we use `args.xyz_file`. Notice that what follows after the dot is the same thing we but in quotation marks when using `add_argument.`
 
 ~~~
 xyzfilename = args.xyz_file
@@ -150,18 +150,76 @@ $ python analyze.py data/water.xyz
 
 Check that the output of your code is what you expected.
 
-
 What would happen if the user forgot to specify the name of the xyz file?  
 
 ~~~
 usage: analyze.py [-h] xyz_file
 analyze.py: error: the following arguments are required: xyz_file
 ~~~
-{: .output}
+{: .error}
 
 Argparse handles this for us and prints an error message. It tells us that we must specifiy an xyz file.
 
-## Optional Arguments
+Try out your program with other XYZ files in your `data` folder.
+
+## The "main" part of our script
+We need to add one more thing to our code.  When you write a code that includes function definitions and a main script, you need to tell python which part is the main script. (This becomes very important later when we are talking about testing.) *After* your import statements and function definitions and  *before* use `argparse`
+```
+if __name__ == "__main__":
+```
+{: .language-python}
+
+Since this is an `if` statement, you now need to indent each line of your main script below this if statement.  Be very careful with your indentation! Don't use a mixture of tabs and spaces! A good way to indent multiple lines in many text editors is to highlight the lines you would like to indent, then press `tab`.  
+
+Save your code and run it again.  It should work exactly as before.  If you now get an error message, it is probably due to inconsistent indentation.  
+
+~~~
+import os
+import numpy
+import argparse
+
+def calculate_distance(atom1_coord, atom2_coord):
+    x_distance = atom1_coord[0] - atom2_coord[0]
+    y_distance = atom1_coord[1] - atom2_coord[1]
+    z_distance = atom1_coord[2] - atom2_coord[2]
+    bond_length_12 = numpy.sqrt(x_distance**2+y_distance**2+z_distance**2)
+    return bond_length_12
+
+def bond_check(atom_distance, minimum_length=0, maximum_length=1.5):
+    if atom_distance > minimum_length and atom_distance <= maximum_length:
+        return True
+    else:
+        return False
+
+def open_xyz(filename):
+     xyz_file = numpy.genfromtxt(fname=filename, skip_header=2, dtype='unicode')
+     symbols = xyz_file[:,0]
+     coord = (xyz_file[:,1:])
+     coord = coord.astype(numpy.float)
+     return symbols, coord
+
+
+if __name__ == "__main__":
+
+    ## Get the arguments.
+    parser = argparse.ArgumentParser(description="This script analyzes a user given xyz file and outputs the length of the bonds.")
+    parser.add_argument("xyz_file", help="The filepath for the xyz file to analyze.")
+
+    args = parser.parse_args()
+
+    symbols, coord = open_xyz(args.xyz_file)
+    num_atoms = len(symbols)
+
+    for num1 in range(0,num_atoms):
+         for num2 in range(0,num_atoms):
+             if num1<num2:
+                 bond_length_12 = calculate_distance(coord[num1], coord[num2])
+                 if bond_check(bond_length_12, minimum_length=args.minimum_length, maximum_length=args.maximum_length) is True:
+                     print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
+~~~
+{: .language-python}
+
+## Extension - Optional Arguments
 What's another argument we might want to include? We also might want to let the user specify a minimum and maximum bond length on the command line. We would want these to be optional, just like they are in our function.
 
 We can add optional arguments by putting a dash (`-`) or two dashes (`--`) in front of the argument name when we add an argument. Add this line below where you added the fist argument. Note that all `add_argument` lines should be above the line with `parse_args`.
@@ -200,16 +258,7 @@ if bond_check(bond_length_12, minimum_length=args.minimum_length, maximum_length
 ~~~
 {: .language-python}
 
-## The "main" part of our script
-We need to add one more thing to our code.  When you write a code that includes function definitions and a main script, you need to tell python which part is the main script. (This becomes very important later when we are talking about testing.) *After* your import statements and function definitions and  *before* use `argparse`
-```
-if __name__ == "__main__":
-```
-{: .language-python}
-
-Since this is an `if` statement, you now need to indent each line of your main script below this if statement.  Be very careful with your indentation! Don't use a mixture of tabs and spaces! A good way to indent multiple lines in many text editors is to highlight the lines you would like to indent, then press `tab`.  
-
-Save your code and run it again.  It should work exactly as before.  If you now get an error message, it is probably due to inconsistent indentation.  
+Our final program looks like this:
 
 ~~~
 import os
@@ -259,5 +308,7 @@ if __name__ == "__main__":
                      print(F'{symbols[num1]} to {symbols[num2]} : {bond_length_12:.3f}')
 ~~~
 {: .language-python}
+
+
 
 {% include links.md %}
