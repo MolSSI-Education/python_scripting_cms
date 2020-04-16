@@ -225,7 +225,7 @@ where anything in the braces is a python variable and it will print the value of
 
 ## Project Assignment
 
-This is a project assignment which you can complete to test your skills.
+This is a project assignment which you can complete to test your skills. This project should be used when this material is used in a long workshop, or if you are working through this material independently.
 
 > ## File parsing homework
 > In the lesson materials, there is a file called `03_Prod.mdout`. This is a file output by the Amber molecular dynamics simulation program.
