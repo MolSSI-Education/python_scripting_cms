@@ -9,6 +9,7 @@ objectives:
 - "Add and commit files to a git repository."
 - "Create a new repository on GitHub from a local repository."
 - "Create a README.md file for a project."
+- "Learn the commands git push and git pull"
 keypoints:
 - "Putting your code on GitHub is the best way to easily share your code, collaborate, and track changes."
 ---
@@ -20,6 +21,9 @@ Let's get your project put on GitHub so you can share it with others.  In your b
 > To create a GitHub account, all you need is a valid e-mail address and to choose a GitHub username, which will be public.  It is now *very* common in many technical disciplines for potential research advisors or employers to look at your GitHub page to see what kind of projects you have contributed to and what kind of work you have done.  Consequently, you want to choose a recognizable, professional username and always keep your GitHub profile up-to-date and professional.
 {: .callout}
 
+## Creating an online repository
+GitHub is a website which provides us with a place to host our code. We are using the software `git` to version control our code. GitHub is providing us a place on the internet to put copies of those repositories. In general, you should have a different repository for each of your projects.
+
 Once you are signed in to GitHub, on the left side of the page, click the green button that says New to create a new repository.  On the next page, choose a name for your repository and write a short description of your project.  You can choose whether your repository will be public or private.  Even if you choose private, you can identify other specific GitHub users who can see your repository and commit to it.  However, if you want other people to be able to find your project without you specifically sharing it with them, you should choose public.
 
 For this workshop, make your repository **public.**
@@ -28,7 +32,7 @@ Note the last question, “Initialize this repository with a README”.  We will
 
 Click Create repository.
 
-On the next page, GitHub now very helpfully gives us directions for how to get our code on GitHub.  The most relevant set of instructions for our current situation is the third set **push an existing repository from the command line**.  
+We now have an empty spot on GitHub where we can put a copy of our code. On the next page, GitHub now very helpfully gives us directions for how to get our code on GitHub.  The most relevant set of instructions for our current situation is the third set **push an existing repository from the command line**.  
 
 > ## Local and Remote Repositories
 > We are using the word "repository" here to refer to both the local copy of the code on your machine, and to the
@@ -38,7 +42,9 @@ On the next page, GitHub now very helpfully gives us directions for how to get o
 > the terminal to get our local copy onto GitHub (our online repository). That is what is meant by "push an existing repository from the command line."
 {: .callout}
 
-Before we follow these directions, let’s look at a few things. When you want to be able to put the code that is on your computer (your local repo) into an online in a repository, you have to add what git calls remotes to your local repository.  Think of remotes like roads; if there is a road between two places you can travel between them.  If there is a remote between two repos, information can travel between them.  
+## Pushing your code online
+
+Before we follow these directions, let’s talk about what the directions mean. First, we have to tell `git` that the online repository we created exists. When you want to be able to put the code that is on your computer (your local repo) into an online repository, you have to add what git calls remotes to your local repository.  Think of remotes like roads; if there is a road between two places you can travel between them.  If there is a remote between two repos, information can travel between them.  
 
 Currently, our repository has no remotes.  You can see this by typing
 ~~~
@@ -181,6 +187,147 @@ This will make something that looks like this:
 {: .challenge}
 
 Now if you refresh the GitHub page for your project, you will see your project description at the bottom of the page.  That's it!  Your code is now on GitHub for the world to see, download, and use!
+
+## Working With Multiple Repositories
+
+One of the most potentially frustrating problems in software development is keeping track of all the different copies of the code.
+For example, we might start a project on a local desktop computer, switch to working on a laptop during a conference, and then do performance optimization on a supercomputer.
+In ye olden days, switching between computers was typically accomplished by copying files via a USB drive, or with ssh, or by emailing things to oneself.
+After copying the files, it was very easy to make an important change on one computer, forget about it, and go back to working on the original version of the code on another computer.
+Of course, when collaborating with other people these problems get dramatically worse.
+
+Git greatly simplifies the process of having multiple copies of a code development project.
+Let's see this in action by making another clone of our GitHub repository. For this next exercise **you must first navigate out of your project folder**.
+
+~~~
+$ cd ../
+$ git status
+~~~
+{: .bash}
+
+Before continuing to the next command, make sure you see the following output:
+
+~~~
+fatal: Not a git repository (or any of the parent directories): .git
+~~~
+{: .output}
+
+If you do not get this message, do `cd ../` until you see it.
+
+Next, make another copy of your repository. We'll use this to simulate working on another computer.
+
+~~~
+$ git clone https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME.git friend
+$ cd friend
+~~~
+{: .bash}
+
+Check the remote on this repository. Notice that when you clone a repository from GitHub, it automatically has that repository listed as `origin`, and you do not have to add
+the remote the way we did when we did not clone the repository.
+
+~~~
+$ git remote -v
+~~~
+{: .language-bash}
+
+~~~
+origin  https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME.git (fetch)
+origin  https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME.git (push)
+~~~
+
+Create the file `testing.txt` in this new directory and make it contain the following.
+
+~~~
+I added this file from a new clone!
+~~~
+
+Now we will commit this new file:
+
+~~~
+$ git status
+~~~
+{: .bash}
+
+~~~
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+  testing.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+~~~
+{: .output}
+
+~~~
+$ git add .
+$ git status
+~~~
+{: .bash}
+
+
+~~~
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  new file:   testing.txt
+
+~~~
+{: .output}
+
+~~~
+$ git commit -m "Adds testing.txt"
+$ git log
+~~~
+{: .bash}
+
+Now push the commit:
+
+~~~
+$ git push
+~~~
+{: .bash}
+
+If you check the GitHub page, you should see the testing.txt file.
+
+Now change directories into the original local repository, and check if `testing.txt` is there:
+
+~~~
+$ cd ../<original clone>
+$ ls -l
+~~~
+{: .bash}
+
+To get the newest commit into this clone, we need to pull from the GitHub repository:
+
+~~~
+$ git pull origin master
+~~~
+{: .bash}
+
+~~~
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/YOUR_GITHUB_USERNAME/molecool
+ * branch            master     -> FETCH_HEAD
+   2ac4843..754da2b  master     -> origin/master
+Updating 2ac4843..754da2b
+Fast-forward
+ testing.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 testing.txt
+~~~
+{: .output}
+
+Now we can actually see `testing.txt` in our original repository.
 
 > ## Time Check
 >
