@@ -259,7 +259,7 @@ Now we have raised an error, and tested that this error was actually raised.
 >> def open_xyz(filename):
 >>     fpath, extension = os.path.splitext(filename)
 >>
->>     if extension.lower() != 'xyz':
+>>     if extension.lower() != '.xyz':
 >>         raise ValueError("Incorrect file type! File must be type xyz")
 >> 
 >>     xyz_file = numpy.genfromtxt(fname=filename, skip_header=2, dtype='unicode')
