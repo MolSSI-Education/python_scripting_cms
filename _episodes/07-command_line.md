@@ -526,7 +526,7 @@ if __name__ == "__main__":
 >> parser = argparse.ArgumentParser("This script parses amber mdout file to extract the total energy.")
 >> 
 >> parser.add_argument("path", help="The filepath of the file to be analyzed.", args='*')
->> parser.add_argument("-make_plots", help="Flag to create plots", action='store_true)
+>> parser.add_argument("-make_plots", help="Flag to create plots", action='store_true')
 >> 
 >> args = parser.parse_args()
 >> 
