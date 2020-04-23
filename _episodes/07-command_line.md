@@ -352,14 +352,15 @@ if __name__ == "__main__":
 >> if __name__ == "__main__":
 >>
 >>     # Create the argument parser
->>     parser = argparse.ArgumentParser("This script parses amber mdout files to extract the total energy. You can also use it to create plots.")
->>     parser.add_argument("path", help="The filepath to the file(s) to be analyzed. To analyze multiple files, you can use the `*` pattern.", type=str)
+>>     parser = argparse.ArgumentParser("This script parses amber mdout files to extract the total energy.")
+>>     parser.add_argument("path", help="The filepath to the file(s) to be analyzed.", type=str)
 >>     parser.add_argument("--make_plots", help="Create a line plot of the values.", action='store_true')
 >> 
 >>     args = parser.parse_args()
+>>     filename = args.path
 >>
 >>     # Read the data from the specified file.
->>     f = open(args.path)
+>>     f = open(filename)
 >>     data = f.readlines()
 >>     f.close()
 >> 
@@ -399,7 +400,114 @@ if __name__ == "__main__":
 > ~~~
 > {: .language-bash}
 >> ## Solution 
->> Coming soon :D
+>> This first solution will work with the given prompt and uses `glob`. However, there is a better way which you could have gotten from reading argparse documentation. It is given after this first solution.
+>>
+>> ~~~
+>> import os
+>> import argparse
+>> import glob
+>> 
+>> # Get filename from argparse
+>> 
+>> parser = argparse.ArgumentParser("This script parses amber mdout file to extract the total energy.")
+>> 
+>> parser.add_argument("path", help="The filepath of the file to be analyzed.")
+>> 
+>> args = parser.parse_args()
+>> 
+>> filenames = glob.glob(args.path)
+>> 
+>> for filename in filenames:
+>> 
+>>     # Figure out the file name for writing output
+>>     fname = os.path.basename(filename).split('.')[0]
+>>
+>>    # Open the file.
+>> 
+>>     f = open(filename, 'r')
+>> 
+>>     # Read the data.
+>>     data = f.readlines()
+>> 
+>>     # Close the file.
+>>     f.close()
+>>
+>> 
+>>     etot = []
+>>     # Loop through lines in the file.
+>>     for line in data:
+>>         # Get information from lines.
+>>         split_line = line.split()
+>> 
+>>         if 'Etot' in line:
+>>             #print(split_line[2])
+>>             etot.append(f'{split_line[2]}')
+>>      values = etot[:-2]
+>> 
+>>     # Open a file for writing
+>>     outfile_location = F'{fname}_Etot.txt'
+>>     outfile = open(outfile_location, 'w+')
+>> 
+>>     for value in values:
+>>         outfile.write(f'{value}\n')
+>> 
+>>    outfile.close()
+>> ~~~
+>> {: .language-python}
+>>
+>> A second way to do this adds another argument to `add_argument` (nargs) which tells argparse that it may receive more than one value for the argument. Then, the use of `glob` is not required.
+>>
+>> ~~~
+>> import os
+>> import argparse
+>> 
+>> # Get filename from argparse
+>> 
+>> parser = argparse.ArgumentParser("This script parses amber mdout file to extract the total energy.")
+>> 
+>> parser.add_argument("path", help="The filepath of the file to be analyzed.", args='*')
+>> 
+>> args = parser.parse_args()
+>> 
+>> filenames = args.path
+>> 
+>> for filename in filenames:
+>> 
+>>     # Figure out the file name for writing output
+>>     fname = os.path.basename(filename).split('.')[0]
+>>
+>>    # Open the file.
+>> 
+>>    f = open(filename, 'r')
+>> 
+>>    # Read the data.
+>>    data = f.readlines()
+>> 
+>>    # Close the file.
+>>    f.close()
+>> 
+>>    etot = []
+>>    # Loop through lines in the file.
+>>    for line in data:
+>>         # Get information from lines.
+>>         split_line = line.split()
+>> 
+>>         if 'Etot' in line:
+>>             #print(split_line[2])
+>>             etot.append(f'{split_line[2]}')
+>>      values = etot[:-2]
+>> 
+>>     # Open a file for writing
+>>     outfile_location = F'{fname}_Etot.txt'
+>>     outfile = open(outfile_location, 'w+')
+>> 
+>>     for value in values:
+>>         outfile.write(f'{value}\n')
+>> 
+>>    outfile.close()
+>> ~~~
+>> {: .language-python}
+>> 
 > {: .solution}
 {: .challenge}
 
@@ -407,8 +515,64 @@ if __name__ == "__main__":
 > Add an additional optional argument to your script which allows the user to output a plot of the total energy. The names of the plot files should be `file_name.png` where the name of the file was `file_name.mdout`.
 > 
 >> ## Solution
->> Coming soon :D
+>> 
+>> We have to add an optional argument for this. You will also need to use `store_true`. This will mean the variable is True if the optional argument is given, and False otherwise.
+>> ~~~
+>> import os
+>> import argparse
+>> 
+>> # Get filename from argparse
+>> 
+>> parser = argparse.ArgumentParser("This script parses amber mdout file to extract the total energy.")
+>> 
+>> parser.add_argument("path", help="The filepath of the file to be analyzed.", args='*')
+>> parser.add_argument("-make_plots", help="Flag to create plots", action='store_true)
+>> 
+>> args = parser.parse_args()
+>> 
+>> filenames = args.path
+>> 
+>> for filename in filenames:
+>> 
+>>     # Figure out the file name for writing output
+>>     fname = os.path.basename(filename).split('.')[0]
 >>
+>>    # Open the file.
+>> 
+>>    f = open(filename, 'r')
+>> 
+>>    # Read the data.
+>>    data = f.readlines()
+>> 
+>>    # Close the file.
+>>    f.close()
+>> 
+>>    etot = []
+>>    # Loop through lines in the file.
+>>    for line in data:
+>>         # Get information from lines.
+>>         split_line = line.split()
+>> 
+>>         if 'Etot' in line:
+>>             #print(split_line[2])
+>>             etot.append(f'{split_line[2]}')
+>>      values = etot[:-2]
+>> 
+>>     # Open a file for writing
+>>     outfile_location = F'{fname}_Etot.txt'
+>>     outfile = open(outfile_location, 'w+')
+>> 
+>>     for value in values:
+>>         outfile.write(f'{value}\n')
+>> 
+>>    outfile.close()
+>>    
+>>    if make_plots == True:
+>>      plt.figure()
+>>      plt.plot(values)
+>>      plt.savefig(F'{fname}.png')
+>> ~~~
+>> {: .language-python}
 > {: .solution}
 {: .challenge}
 
