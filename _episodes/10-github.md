@@ -188,6 +188,11 @@ This will make something that looks like this:
 
 Now if you refresh the GitHub page for your project, you will see your project description at the bottom of the page.  That's it!  Your code is now on GitHub for the world to see, download, and use!
 
+> ## Time Check
+>
+> If you are running out of time, this is a good place to end the lesson.  Especially if the GitHub lesson is the last lesson being covered in the workshop, this is a good place to stop.
+{: .callout}
+
 ## Working With Multiple Repositories
 
 One of the most potentially frustrating problems in software development is keeping track of all the different copies of the code.
@@ -328,11 +333,6 @@ Fast-forward
 {: .output}
 
 Now we can actually see `testing.txt` in our original repository.
-
-> ## Time Check
->
-> If you are running out of time, this is a good place to end the lesson.  Especially if the GitHub lesson is the last lesson being covered in the workshop, this is a good place to stop.
-{: .callout}
 
 ## Collaborating with others using GitHub
 

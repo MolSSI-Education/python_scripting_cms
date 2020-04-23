@@ -260,6 +260,10 @@ Finally, there will be a blank line followed by a commit message. The commit mes
 
 `git log` will shows a history of commits to our repositry, and they will all have the same format discussed above. Notice that commits are in reverse chronological order, **with the most recent change listed first**.
 
+> ## Time Check
+> If you are running a two day workshop, you may not complete material past this point. If you are running a longer workshop, or have more time, consider adding the material below. Otherwise, make sure you get to the next lesson so you can at least introduce the basics of GitHub.
+{: .callout}
+
 ## Viewing changes
 
 If you want to see what changed between commits, use the command 

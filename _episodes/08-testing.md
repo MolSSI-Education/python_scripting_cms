@@ -191,6 +191,10 @@ Let's think some more about our testing of the `bond_check` function.  We are us
 > {: .solution}
 {: .challenge}
 
+> ## Time Check
+> If you are running a  two day workshop, you will likely stop here and not use the next section.
+{: .callout}
+
 ## Extension - Raising Errors
 
 One concept we have not yet discussed in programming is raising errors. You have probably already seen errors in Python if you have been programming for a while. One error you might have seen is `FileNotFoundError` which happens when you try to open a file that Python can't find (if you constructed your file path incorrectly, for example).
