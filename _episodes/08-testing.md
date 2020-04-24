@@ -239,7 +239,7 @@ def test_bond_check_negative():
     calculated = ga.bond_check(distance)
     assert expected == calculated
 ~~~
-{: .language}
+{: .language-python}
 
 With our new exception, this test will fail. We can use a feature of pytest to make sure the correct error is raised. To do this, you must add `import pytest` and modify your test.
 
