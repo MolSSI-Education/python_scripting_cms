@@ -54,6 +54,7 @@ def test_calculate_distance():
     observed = ga.calculate_distance(coord1,coord2)
     assert observed == expected
 ~~~
+{: .language-python}
 
 Notice a few things about this function.  The name of our function begins with `test`.  This must be true for your test to run with `pytest`  Since the `calculate_distance` function is expecting two inputs, the coordinates of two atoms, we define those variables in our function.  We try to make the tests as simple as possible; in our real code, these coordinates will come from a list we are counting over in a `for` loop.  That is not necessary here; we want to make the test as simple as possible so that we can be sure which part of our code is working or not.  For instance, if we had already tested our `calculate_distance` function and we knew it was working, if our code then did not give the correct bond distances for a molecule, we know the problem is in our `for` loop in the way we are passing the information to the function.  This type of information is valuable when you are trying to solve problems in your code.
 
