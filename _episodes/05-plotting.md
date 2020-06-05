@@ -153,18 +153,61 @@ plt.savefig('all_samples.png')
 > {: .solution}
 {: .challenge}
 
+#### Normalizing your axes across plots
+
+For the plots showing our data so far, the y axis limits have all been different. Since these data sets are related, you may want to have all of the plots show the same axis ranges. We can manually set the y axis range of an axis for a plot using the command
+
+~~~
+plt.ylim(low_limit, high_limit)
+~~~
+{: .language-python}
+
+where `low_limit` and `high_limit` are the lowest number we want on our `y axis` and the highest number we want on our `y axis` respectively.
+
+> ## Check your understanding
+> Take a minute to think - for our example what would be a good lower limit and higher limit for our plots? Do you have any idea of how we could calculate these values?
+>
+>> ## Solution
+>> One good choice for lower and higher limits might be the minimum and maximum distance encountered in our data.
+>>
+>> We can calculate these for our datasets using 
+>> ~~~
+>> data_min = numpy.min(data[:, 1:])
+>> data_max = numpy.max(data[:, 1:])
+>> ~~~
+>> {: .language-python}
+> {: .solution}
+{: .challenge}
+
+Using the solution to the previous exercise, we can make the plots all have the same y axis range. You might consider scaling your minimum and maximum as well to give your data some breathing room.
+
+~~~
+data_min = numpy.min(data[:,1:])*0.9
+data_max = numpy.max(data[:,1:])*1.1
+
+for col in range(1, len(headers)):
+    plt.figure()
+    sample = headers[col]
+
+    plt.plot(data[:,col], label=sample)
+    plt.ylim(data_min, data_max)
+    plt.legend()
+    plt.xlabel('Simulation Frame')
+    plt.ylabel('Distance (angstrom)')
+
+    plt.savefig(F'{sample}.png')
+~~~
+
 ### Plotting with `x` and `y`
 
 The `plot` function creates a line plot. If there is only one argument in the function, it will use that as as the `y` variable, with the `x` variable just being a count.
 
 If we wanted to use the `Frame` column for our `x` value, we would add it as the first argument of the `plot` function. This won't change the graph at all.
 
-```
-import matplotlib.pyplot as plt
-
+~~~
 plt.figure()
 plt.plot(data[:,0], data[:,1])
-```
+~~~
 {: .language-python}
 
 However, if we did not want to plot every frame, or if the data we were plotting was not sequential, we would have to specify `x` and `y`.
@@ -299,5 +342,105 @@ character	color
 >> Here we have used `:ok`. `:` tells matplotlib we want a dashed line, `o` tells matplotlib we want circular markers, and `k` says we want the color to be black.
 > {: .solution}
 {: .challenge}
+
+### Multiple Plots with Subplot 
+
+Instead of making multiple different figures with your plots, you might want to make one figure which has many plots. Matplotlib's answer to this is `subplots`. To create a figure which has several plots, you use the syntax
+
+~~~
+fig, ax = plt.subplots(nrows, ncolumns)
+~~~
+
+Subplot allows for you to lay plots out on a grid. You specify the number of rows and columns you want in your grid when you start. 
+
+Let's create a subplot figure for our data:
+
+~~~
+fig, ax = plt.subplots(len(headers)-1, 1)
+~~~
+{: .language-python}
+
+This should show four empty plots which are all part of the same figure. We have two variables which resulted from this function `fig` and `ax`. `Fig` is our figure, while `ax` is a numpy array that represents our figure axes. The shape of this array will be dependent on the shape we specify that we want our subplots.
+
+~~~
+ax.shape
+~~~
+{: .language-python}
+
+~~~
+(4,)
+~~~
+{: .output}
+
+~~~
+fig2, ax2 = plt.subplots(2,2)
+ax2.shape
+~~~
+{: .language-python}
+
+~~~
+(2,2)
+~~~
+{: .output}
+
+When we want to add data to our plots, we using the same slicing syntax we used with numpy arrays. For example, on `ax`, we can add data to the first row:
+
+~~~
+ax[0].plot(data[0::100,0], data[0::100,col])
+fig
+~~~
+{: .language-python}
+
+The fig command on the second line allows us to see our updated plot.
+
+If we wanted to plot the same data on `fig2`, we would do
+
+~~~
+ax2[0,0].plot(data[0::100,0], data[0::100,col])
+fig2
+~~~
+{: .language-python}
+
+> ## Check your understanding
+> How could you use a `for` loop to add all of your data to `fig`?
+>
+>> ## Solution
+>> 
+>> ~~~
+>> fig, ax = plt.subplots(len(headers)-1, 1)
+>> 
+>> for col in range(1, len(headers)):
+>>     sample = headers[col]
+>>    
+>>     ax[col-1].plot(data[0::100,0], data[0::100,col], label=sample)
+>>     ax[col-1].set_xlabel('Simulation Frame')
+>>     ax[col-1].set_ylabel('Distance (angstrom)')
+>>     ax[col-1].legend()
+>> ~~~
+>> {: .language-python}
+> {: .solution}
+{: .challenge}
+
+#### Improving the figure
+
+Let's make this look a little nicer. We probably want the figure to be a little bigger. We can add another argument `figsize` to our `subplot` command. You specify the desired figure width and height in inches (it will not appear this size on your screen, but this will be the size when you save the figure).
+
+Finally, you might want all of the y-axes to have the same limits. With subplots, we can achieve this by adding another argument `sharey=True` to  make all the y axes the same (you can also do this with `sharex`, but we don't need to). 
+
+~~~
+fig, ax = plt.subplots(len(headers)-1, 1, figsize=(10, 10), sharey=True)
+#fig.set_figheight(10)
+
+for col in range(1, len(headers)):
+    sample = headers[col]
+    
+    ax[col-1].plot(data[0::100,0], data[0::100,col], label=sample)
+    ax[col-1].set_xlabel('Simulation Frame')
+    ax[col-1].set_ylabel('Distance (angstrom)')
+    ax[col-1].legend()
+~~~
+{: .language-python}
+
+<img src="../fig/subplots.png" style="display: block; margin: auto;" />
 
 Matpotlib is highly customizable. What we've shown here is only the beginning of the types of plots you can make. If you would like to make more plots, we strongly recommend you check out the [matplotlib tutorials](https://matplotlib.org/2.1.1/tutorials/index.html) online.
