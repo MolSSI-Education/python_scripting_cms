@@ -311,9 +311,11 @@ if __name__ == "__main__":
 
 > ## Project Assignment
 >
-> For this homework assignment, you will return to your Project from Lesson 3.
+> For this homework assignment, you will return to your first project where you processed the file `03_Prod.mdout`.
 >
-> Create a command line script using `argparse` which can take in an `mdout` file from Amber,  pull out total energy for each time step, and write a new file containing these values. The script should take a file name (`03_Prod.mdout`) and output a file with the names `filename_Etot.txt`. Modify your week 1 homework to do this. In contrast to week 1, truncate the last two values from your script (these are an average value and a fluctuation value) from the file you write.
+> Create a command line script using `argparse` which can take in an `mdout` file from Amber,  pull out total energy for each time step, and write a new file containing these values. The script should take a file name (`03_Prod.mdout`) and output a file with the names `filename_Etot.txt`. Modify your week 1 homework to do this. 
+>
+> In the week 1 homework, the file we wrote had two values at the end which we did not want for the total energy. The last two values were some statistics associated with the md simulation and were not total energies. Excluded these two values from the file you write this time.
 >
 > You can download a directory containing more mdout files [here](../data/mdout.zip) 
 >
@@ -395,66 +397,13 @@ if __name__ == "__main__":
 > You should be able to call the script using:
 >
 > ~~~
-> $ python analyze_mdout.py 'data/*.mdout'
+> $ python analyze_mdout.py data/*.mdout
 > ~~~
 > {: .language-bash}
+>
+> You will need find a way for an argument in argparse to be a list for this. See [the documentation](https://docs.python.org/3/library/argparse.html#the-add-argument-method) for the `add_argument` function - you will find the answer there!
 >> ## Solution 
->> This first solution will work with the given prompt and uses `glob`. However, there is a better way which you could have gotten from reading argparse documentation. It is given after this first solution.
->>
->> ~~~
->> import os
->> import argparse
->> import glob
->> 
->> # Get filename from argparse
->> 
->> parser = argparse.ArgumentParser("This script parses amber mdout file to extract the total energy.")
->> 
->> parser.add_argument("path", help="The filepath of the file to be analyzed.")
->> 
->> args = parser.parse_args()
->> 
->> filenames = glob.glob(args.path)
->> 
->> for filename in filenames:
->> 
->>     # Figure out the file name for writing output
->>     fname = os.path.basename(filename).split('.')[0]
->>
->>    # Open the file.
->> 
->>     f = open(filename, 'r')
->> 
->>     # Read the data.
->>     data = f.readlines()
->> 
->>     # Close the file.
->>     f.close()
->>
->> 
->>     etot = []
->>     # Loop through lines in the file.
->>     for line in data:
->>         # Get information from lines.
->>         split_line = line.split()
->> 
->>         if 'Etot' in line:
->>             #print(split_line[2])
->>             etot.append(f'{split_line[2]}')
->>      values = etot[:-2]
->> 
->>     # Open a file for writing
->>     outfile_location = F'{fname}_Etot.txt'
->>     outfile = open(outfile_location, 'w+')
->> 
->>     for value in values:
->>         outfile.write(f'{value}\n')
->> 
->>    outfile.close()
->> ~~~
->> {: .language-python}
->>
->> A second way to do this adds another argument to `add_argument` (nargs) which tells argparse that it may receive more than one value for the argument. Then, the use of `glob` is not required.
+>> For this solution, you would have to find the option `nargs` which would be added to `add_argument` which tells argparse that it may receive more than one value for the argument. T
 >>
 >> ~~~
 >> import os
