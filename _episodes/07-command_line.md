@@ -315,7 +315,32 @@ if __name__ == "__main__":
 >
 > Create a command line script using `argparse` which can take in an `mdout` file from Amber,  pull out total energy for each time step, and write a new file containing these values. The script should take a file name (`03_Prod.mdout`) and output a file with the names `filename_Etot.txt`. Modify your week 1 homework to do this. 
 >
-> In the week 1 homework, the file we wrote had two values at the end which we did not want for the total energy. The last two values were some statistics associated with the md simulation and were not total energies. Excluded these two values from the file you write this time.
+> In the first project, the file we wrote had two values at the end which we did not want for the total energy. The last two values were some statistics associated with the md simulation and were not total energies. They are in a section that looks like this:
+>
+> ~~~
+>  AV E R A G E S   O V E R   30000 S T E P S
+> NSTEP =    30000   TIME(PS) =      80.000  TEMP(K) =   300.15  PRESS =  -181.0
+> Etot   =     -4829.8013  EKtot   =      1143.4036  EPtot      =     -5973.2049
+> BOND   =         3.3064  ANGLE   =         9.2114  DIHED      =        11.7034
+> 1-4 NB =         3.2267  1-4 EEL =        46.8587  VDWAALS    =       881.6358>
+> EELEC  =     -6929.1472  EHBOND  =         0.0000  RESTRAINT  =         0.0000
+> EKCMT  =       565.5639  VIRIAL  =       662.5977  VOLUME     =     21294.1310
+>                                                    Density    =         0.9143
+> Ewald error estimate:   0.2084E-03
+> ------------------------------------------------------------------------------>
+>      R M S  F L U C T U A T I O N S
+> NSTEP =    30000   TIME(PS) =      80.000  TEMP(K) =     6.93  PRESS =   433.7
+> Etot   =       120.4662  EKtot   =        26.3938  EPtot      =       116.6099
+> BOND   =         1.5276  ANGLE   =         2.4317  DIHED      =         1.3004
+> 1-4 NB =         0.7537  1-4 EEL =         2.1899  VDWAALS    =        35.3865
+> EELEC  =       130.4192  EHBOND  =         0.0000  RESTRAINT  =         0.0000
+> EKCMT  =        18.9219  VIRIAL  =       210.0413  VOLUME     =      3338.3220
+>                                                    Density    =         0.1153
+> Ewald error estimate:   0.1568E-03
+> ------------------------------------------------------------------------------
+> ~~~
+> 
+> Exclude these two values from the file you write this time.
 >
 > You can download a directory containing more mdout files [here](../data/mdout.zip) 
 >
@@ -333,7 +358,7 @@ if __name__ == "__main__":
 > {: .language-bash}
 >
 > ~~~
-> usage: This script parses amber mdout files to extract the total energy. You can also use it to create plots.
+> usage: This script parses amber mdout files to extract the total energy.
 >       [-h] [--make_plots] path
 >
 > positional arguments:
@@ -355,7 +380,7 @@ if __name__ == "__main__":
 >>
 >>     # Create the argument parser
 >>     parser = argparse.ArgumentParser("This script parses amber mdout files to extract the total energy.")
->>     parser.add_argument("path", help="The filepath to the file(s) to be analyzed.", type=str)
+>>     parser.add_argument("path", help="The filepath to the file(s) to be analyzed.")
 >> 
 >>     args = parser.parse_args()
 >>     filename = args.path
