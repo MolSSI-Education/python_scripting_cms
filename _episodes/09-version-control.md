@@ -180,6 +180,7 @@ $ python geometry_analysis.py --help
 to see input options.
 """
 ~~~
+{: .language-python}
 
 Save this change and commit it.
 
