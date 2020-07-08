@@ -8,6 +8,10 @@ title: Setup
 2. Download the appropriate installer for your operating system. **Make sure you get the installer listed under Python 3** (not 2.7).
 3. Double click the installer icon and follow the set-up instructions, keeping most of the default options. If you are Windows, make sure to choose to choose the option **Make Anaconda the default Python** during installation.
 
+## Installing a Text Editor
+
+You will need a text editor for this workshop. If you do not have a preferred text editor for writing code, we recommend [Atom](https://atom.io). Download Atom at the link and install on your computer.
+
 ## Obtain lesson materials
 1. Download the files needed for these lessons [here](./data/data.zip)
 2. Create a folder called `cms-workshop` on your Desktop.
