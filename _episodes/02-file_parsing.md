@@ -258,7 +258,7 @@ energy = float(words[3])
 ```
 {: .language-python}
 
->## Exercise on File Parsing (should we move this to the end?)
+>## Exercise on File Parsing
 Use the provided sapt.out file.  In this output file, the program calculates the interaction energy for an ethene-ethyne complex.  The output reports four interaction energy components: electrostatics, induction, exchange, and dispersion.  Parse each of these energies, in kcal/mole, from the output file.  (Hint: study the file in a text editor to help you decide what to search for.) Calculate the total interaction energy by adding the four components together.  Your code's output should look something like this:
 > ~~~
 > Electrostatics : -2.25850118 kcal/mol
