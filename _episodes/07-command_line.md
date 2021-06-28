@@ -483,8 +483,17 @@ if __name__ == "__main__":
 >> {: .language-python}
 >> 
 > {: .solution}
+>
 >> ## Solution - Mac and Linux 
->> For this solution, you would have to find the option `nargs` which would be added to `add_argument` which tells argparse that it may receive more than one value for the argument. T
+>> This solution will work for Mac and Linux operating systems. For this solution, you would use the script without the quotes (below). 
+>> Note that the solution given above will work for any operating system.
+>>
+>> ~~~
+>> $ python analyze_mdout.py data/*.mdout
+>> ~~~
+>> {: .language-bash}
+>>
+>> For this solution, you would have to find the option `nargs` which would be added to `add_argument` which tells argparse that it may receive more than one value for the argument. This works on Mac and Linux because these operating systems will automatically create a list of files when you use the wildcard character (`*`).
 >>
 >> ~~~
 >> import os
@@ -498,6 +507,7 @@ if __name__ == "__main__":
 >> 
 >> args = parser.parse_args()
 >> 
+>> # This will already be a list, so we don't need to use glob.
 >> filenames = args.path
 >> 
 >> for filename in filenames:
@@ -548,17 +558,20 @@ if __name__ == "__main__":
 >> ~~~
 >> import os
 >> import argparse
+>> import glob
 >> 
 >> # Get filename from argparse
 >> 
 >> parser = argparse.ArgumentParser("This script parses amber mdout file to extract the total energy.")
 >> 
 >> parser.add_argument("path", help="The filepath of the file to be analyzed.", nargs='*')
+>>
+>> # store_true makes this True by default
 >> parser.add_argument("-make_plots", help="Flag to create plots", action='store_true')
 >> 
 >> args = parser.parse_args()
 >> 
->> filenames = args.path
+>> filenames = glob.glob(args.path)
 >> 
 >> for filename in filenames:
 >> 
