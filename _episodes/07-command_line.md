@@ -417,17 +417,73 @@ if __name__ == "__main__":
 {: .challenge}
 
 > ## Extension 1
-> Modify your script so that people can specify a wildcard character to read and write multiple files at once.
+> Modify your script so that people can specify a wildcard character to read and write multiple files at once. 
 >
 > You should be able to call the script using:
 >
 > ~~~
-> $ python analyze_mdout.py data/*.mdout
+> $ python analyze_mdout.py "data/*.mdout"
 > ~~~
 > {: .language-bash}
->
-> You will need find a way for an argument in argparse to be a list for this. See [the documentation](https://docs.python.org/3/library/argparse.html#the-add-argument-method) for the `add_argument` function - you will find the answer there!
->> ## Solution 
+> **Note** - In the command above, we have used quotations around the filename. If you are on Linux or Mac, you can leave out the quotations. Your computer will expand the `data/*.mdout` into a list of all the files. This will not work on Windows. If you use the apprroach which works for Mac/Linux, you will need find a way for an argument in argparse to be a list for this. See [the documentation](https://docs.python.org/3/library/argparse.html#the-add-argument-method) for the `add_argument` function - you will find the answer there!
+>> ## Solution - All operating systems
+>> If you are working on Windows, this is the solution you will need. For this solution, you use quotation marks around the filename, and 
+>> include the wildcard character (`*`). Recall that we used this character along with the `glob` library in the multiple file parsing lesson.
+>>
+>> ~~~
+>> import os
+>> import argparse
+>> import glob
+>> 
+>> # Get filename from argparse
+>> 
+>> parser = argparse.ArgumentParser("This script parses amber mdout file to extract the total energy.")
+>> 
+>> parser.add_argument("path", help="The filepath of the file to be analyzed.")
+>> 
+>> args = parser.parse_args()
+>> 
+>> # Use glob to get a list of the files.
+>> filenames = glob.glob(args.path)
+>> 
+>> for filename in filenames:
+>> 
+>>     # Figure out the file name for writing output
+>>     fname = os.path.basename(filename).split('.')[0]
+>>
+>>    # Open the file.
+>>    f = open(filename, 'r')
+>> 
+>>    # Read the data.
+>>    data = f.readlines()
+>> 
+>>    # Close the file.
+>>    f.close()
+>> 
+>>    etot = []
+>>    # Loop through lines in the file.
+>>    for line in data:
+>>         # Get information from lines.
+>>         split_line = line.split()
+>> 
+>>         if 'Etot' in line:
+>>             #print(split_line[2])
+>>             etot.append(f'{split_line[2]}')
+>>      values = etot[:-2]
+>> 
+>>     # Open a file for writing
+>>     outfile_location = F'{fname}_Etot.txt'
+>>     outfile = open(outfile_location, 'w+')
+>> 
+>>     for value in values:
+>>         outfile.write(f'{value}\n')
+>> 
+>>    outfile.close()
+>> ~~~
+>> {: .language-python}
+>> 
+> {: .solution}
+>> ## Solution - Mac and Linux 
 >> For this solution, you would have to find the option `nargs` which would be added to `add_argument` which tells argparse that it may receive more than one value for the argument. T
 >>
 >> ~~~
@@ -450,7 +506,6 @@ if __name__ == "__main__":
 >>     fname = os.path.basename(filename).split('.')[0]
 >>
 >>    # Open the file.
->> 
 >>    f = open(filename, 'r')
 >> 
 >>    # Read the data.
