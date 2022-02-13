@@ -3,7 +3,8 @@ title: "Running code from the Linux Command Line"
 teaching: 15
 exercises: 10
 questions:
-- "How do I move my code from the interactive jupyter notebook to run from the Linux command line?"
+- "How do I move my code from the interactive Jupyter notebook to run from the Linux command line?"
+- "How do I make Python scripts with help messages and user inputs using argparse?"
 objectives:
 - "Make code executable from the Linux command line."
 - "Use argparse to accept user inputs."

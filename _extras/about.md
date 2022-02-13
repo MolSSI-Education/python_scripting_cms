@@ -10,5 +10,5 @@ title: About
   </div>
 </div>
 <br/>
-{% include carpentries.html %}
+{% include molssi.html %}
 {% include links.md %}
