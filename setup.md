@@ -10,7 +10,7 @@ title: Setup
 
 ## Installing a Text Editor
 
-You will need a text editor for this workshop. If you do not have a preferred text editor for writing code, we recommend [Atom](https://atom.io). Download Atom at the link and install on your computer.
+You will need a text editor for this workshop. If you do not have a preferred text editor for writing code, we recommend [Visual Studio Code]([https://atom.io](https://code.visualstudio.com/)). Download Atom at the link and install on your computer.
 
 ## Obtain lesson materials
 1. Download the files needed for these lessons [here](./data/data.zip)
