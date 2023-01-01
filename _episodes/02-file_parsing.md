@@ -221,7 +221,7 @@ print(energy)
 > print(energy)
 > ```
 >
-> In the example above,  the index value of `-1` gives the last element, and `-2` would give the second last element of a list, and so on. An excelent tutorial on Python list accessed by index can be found [here](https://realpython.com/python-lists-tuples/#list-elements-can-be-accessed-by-index)
+> In the example above,  the index value of `-1` gives the last element, and `-2` would give the second last element of a list, and so on. An excellent tutorial on Python list accessed by index can be found [here](https://realpython.com/python-lists-tuples/#list-elements-can-be-accessed-by-index)
 {: .callout}
 
 
